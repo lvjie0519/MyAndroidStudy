@@ -4,17 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.study.example.MainActivity">
+    tools:context="com.android.study.example.butterknife.ButterKnifeTestActivity">
 
-    <Button
-        android:id="@+id/btn_butterknife_test"
+    <TextView
+        android:id="@+id/tv_show_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="butterknife 测试"
+        android:text="信息显示"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
-
 </android.support.constraint.ConstraintLayout>
