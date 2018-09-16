@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.android.study.example.butterknife.ButterKnifeTestActivity;
+import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.annotaions.example.MyAnnotation;
 
 @MyAnnotation("hello world")
@@ -23,6 +24,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ButterKnifeTestActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_mybutterknife_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyButterKnifeTestActivity.startActivity(MainActivity.this);
             }
         });
     }
