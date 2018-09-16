@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.android.study.example.butterknife.ButterKnifeTestActivity;
+import com.annotaions.example.MyAnnotation;
 
+@MyAnnotation("hello world")
 public class MainActivity extends AppCompatActivity {
 
     @Override
