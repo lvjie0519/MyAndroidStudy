@@ -22,6 +22,7 @@ public class AndroidApiTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        alterDisplayMetrics();
         setContentView(R.layout.activity_android_api_test);
 
         initView();
@@ -36,14 +37,28 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 getScreenInfos();
             }
         });
+
+        findViewById(R.id.btn_alter_DisplayMetrics).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alterDisplayMetrics();
+            }
+        });
+
+        findViewById(R.id.btn_go_next_activity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AndroidApiTestActivity.this, AndroidApiTestActivity.class));
+            }
+        });
     }
 
     private void getScreenInfos(){
         StringBuilder stringBuilder = new StringBuilder();
 
         DisplayMetrics dm = new DisplayMetrics();
-//        dm = getResources().getDisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        dm = getResources().getDisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(dm);
         int pxWidth = dm.widthPixels;
         int pxHeight = dm.heightPixels;
         int dpi = dm.densityDpi;
@@ -55,6 +70,17 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 .append("屏幕density(dpi/160)值： ").append(density).append("\n");
 
         tvShowInfo.setText(stringBuilder.toString());
+
+        tvShowInfo.setTextSize(1);
+        tvShowInfo.setMaxHeight(12);
+    }
+
+    public void alterDisplayMetrics(){
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        displayMetrics.density = 2.13333334f;
+        displayMetrics.densityDpi = 341;
+        displayMetrics.scaledDensity = 2.13333334f;
+        displayMetrics.xdpi = 320;
     }
 
 }

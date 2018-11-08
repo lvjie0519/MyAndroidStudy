@@ -33,4 +33,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     // okhttp
     compile  'com.squareup.okhttp3:okhttp:3.11.0'
+
+    // 屏幕适配   https://github.com/JessYanCoding/AndroidAutoSize   //
+    compile 'me.jessyan:autosize:1.0.1'
 }

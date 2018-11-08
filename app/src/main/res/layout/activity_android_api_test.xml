@@ -6,11 +6,48 @@
     android:orientation="vertical"
     tools:context="com.android.study.example.androidapi.AndroidApiTestActivity">
 
-    <Button
-        android:id="@+id/btn_get_screen_info"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="获取屏幕相关信息"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_get_screen_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取屏幕相关信息"/>
+
+        <Button
+            android:id="@+id/btn_alter_DisplayMetrics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="修改屏幕相关信息"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_go_next_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="go next page"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="控件： 180*wrap_content dp"/>
+
+    <Button
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="控件： 360*60 dp"/>
 
     <TextView
         android:id="@+id/tv_show_info"
