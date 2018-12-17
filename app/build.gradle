@@ -37,5 +37,5 @@ dependencies {
     // 屏幕适配   https://github.com/JessYanCoding/AndroidAutoSize
     compile 'me.jessyan:autosize:1.0.1'
 
-    // test ee e
+    // test ee e e
 }
