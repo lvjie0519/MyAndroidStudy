@@ -10,3 +10,5 @@ Android 学习记录
 * okhttp 使用
 
 * 今日头条屏幕适配方案
+
+* aidl
