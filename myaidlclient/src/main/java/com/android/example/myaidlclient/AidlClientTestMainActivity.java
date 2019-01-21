@@ -83,7 +83,7 @@ public class AidlClientTestMainActivity extends AppCompatActivity {
         // 获取服务
         Intent intent = new Intent();
         // 显示intent启动服务
-        intent.setComponent(new ComponentName("com.android.study.example", "com.android.study.example.MyAidlService"));
+        intent.setComponent(new ComponentName("com.android.study.example", "com.android.study.example.aidl.MyAidlService"));
 
         bindService(intent, conn, Context.BIND_AUTO_CREATE);
     }

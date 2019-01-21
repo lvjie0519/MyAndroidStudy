@@ -1,4 +1,4 @@
-package com.android.study.example;
+package com.android.study.example.aidl;
 
 import android.app.Service;
 import android.content.Intent;

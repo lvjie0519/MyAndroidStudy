@@ -33,7 +33,7 @@
         <activity android:name=".androidapi.AndroidApiTestActivity" />
 
         <service
-            android:name=".MyAidlService"
+            android:name=".aidl.MyAidlService"
             android:enabled="true"
             android:exported="true"/>
 
