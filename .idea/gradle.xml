@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/lib-anno-processors" />
             <option value="$PROJECT_DIR$/lib-annotaions" />
+            <option value="$PROJECT_DIR$/myaidlclient" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

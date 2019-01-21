@@ -3,9 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyAndroidStudy.iml" filepath="$PROJECT_DIR$/MyAndroidStudy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib-anno-processors/lib-anno-processors.iml" filepath="$PROJECT_DIR$/lib-anno-processors/lib-anno-processors.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib-annotaions/lib-annotaions.iml" filepath="$PROJECT_DIR$/lib-annotaions/lib-annotaions.iml" />
     </modules>
   </component>
 </project>

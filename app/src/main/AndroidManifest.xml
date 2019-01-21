@@ -14,13 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="design_width_in_dp"
-            android:value="360"/>
+            android:value="360" />
         <meta-data
             android:name="design_height_in_dp"
-            android:value="640"/>
+            android:value="640" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -31,7 +30,13 @@
         </activity>
         <activity android:name=".butterknife.ButterKnifeTestActivity" />
         <activity android:name=".butterknife.MyButterKnifeTestActivity" />
-        <activity android:name=".androidapi.AndroidApiTestActivity"></activity>
+        <activity android:name=".androidapi.AndroidApiTestActivity" />
+
+        <service
+            android:name=".MyAidlService"
+            android:enabled="true"
+            android:exported="true"/>
+
     </application>
 
 </manifest>
