@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.android.study.example.IMyAidlInterface;
 
-public class AidlClientTestMainActivity extends AppCompatActivity {
+public class AidlClientSecondTestActivity extends AppCompatActivity {
 
     private EditText mEtData1;
     private EditText mEtData2;
@@ -40,10 +40,15 @@ public class AidlClientTestMainActivity extends AppCompatActivity {
         }
     };
 
+    public static void startActivity(Context context){
+        Intent intent = new Intent(context, AidlClientSecondTestActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aidl_client_test_main);
+        setContentView(R.layout.activity_aidl_client_second_test);
 
         initView();
     }
@@ -88,10 +93,6 @@ public class AidlClientTestMainActivity extends AppCompatActivity {
         bindService(intent, conn, Context.BIND_AUTO_CREATE);
     }
 
-    public void onClickNextActivityBtn(View view){
-        AidlClientSecondTestActivity.startActivity(this);
-    }
-
 
     @Override
     protected void onDestroy() {
@@ -100,4 +101,5 @@ public class AidlClientTestMainActivity extends AppCompatActivity {
             unbindService(conn);
         }
     }
+
 }

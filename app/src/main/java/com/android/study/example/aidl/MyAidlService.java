@@ -11,6 +11,13 @@ import com.android.study.example.IMyAidlInterface;
 public class MyAidlService extends Service {
 
     public MyAidlService() {
+        Log.i("lvjie", "MyAidlService--->MyAidlService()...");
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.i("lvjie", "MyAidlService--->onCreate()...");
     }
 
     /**
@@ -20,8 +27,16 @@ public class MyAidlService extends Service {
      */
     @Override
     public IBinder onBind(Intent intent) {
+        Log.i("lvjie", "MyAidlService--->onBind()...");
         return iBinder;
     }
+
+    @Override
+    public void onRebind(Intent intent) {
+        super.onRebind(intent);
+        Log.i("lvjie", "MyAidlService--->onRebind()...");
+    }
+
 
     private IBinder iBinder = new IMyAidlInterface.Stub() {
         @Override
@@ -32,4 +47,15 @@ public class MyAidlService extends Service {
         }
     };
 
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Log.i("lvjie", "MyAidlService--->onUnbind()...");
+        return super.onUnbind(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("lvjie", "MyAidlService--->onDestroy()...");
+    }
 }
