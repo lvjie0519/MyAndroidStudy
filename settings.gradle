@@ -1,1 +1,2 @@
-include ':app', ':lib-annotaions', ':lib-anno-processors', ':myaidlclient'
+include ':app', ':lib-annotaions', ':lib-anno-processors'
+//include ':myaidlclient'
