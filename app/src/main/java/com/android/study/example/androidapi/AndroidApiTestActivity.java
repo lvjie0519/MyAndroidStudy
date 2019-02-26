@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.android.study.example.R;
@@ -49,6 +50,7 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AndroidApiTestActivity.this, AndroidApiTestActivity.class));
+//                keepScreenNotLock(true);
             }
         });
     }
@@ -81,6 +83,14 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         displayMetrics.densityDpi = 341;
         displayMetrics.scaledDensity = 2.13333334f;
         displayMetrics.xdpi = 320;
+    }
+
+    public void keepScreenNotLock(boolean light) {
+        if (light) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
     }
 
 }
