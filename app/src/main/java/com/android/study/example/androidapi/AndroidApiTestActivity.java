@@ -2,14 +2,20 @@ package com.android.study.example.androidapi;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.android.study.example.R;
+
+import java.util.Locale;
 
 public class AndroidApiTestActivity extends AppCompatActivity {
 
@@ -51,6 +57,7 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(AndroidApiTestActivity.this, AndroidApiTestActivity.class));
 //                keepScreenNotLock(true);
+                showPhoneInfo();
             }
         });
     }
@@ -85,6 +92,10 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         displayMetrics.xdpi = 320;
     }
 
+    /**
+     * 屏幕常亮
+     * @param light
+     */
     public void keepScreenNotLock(boolean light) {
         if (light) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -92,5 +103,42 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
     }
+
+    public void showPhoneInfo(){
+        String language = Locale.getDefault().getLanguage();    // 获取当前手机系统语言
+        String sysVersion = android.os.Build.VERSION.RELEASE;   // 获取当前手机系统版本号
+        String phoneModel = android.os.Build.MODEL;             // 获取手机型号
+        String phoneCatory = android.os.Build.BRAND;            // 获取手机厂商
+
+        Log.i("lvjie", ""+language+"    "+sysVersion+"    "+phoneModel+"    "+phoneCatory);
+    }
+
+    public static boolean isAllScreenDevice(Context context) {
+
+        // 低于 API 21的，都不会是全面屏。。。
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return false;
+        }
+
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        if (windowManager != null) {
+            Display display = windowManager.getDefaultDisplay();
+            Point point = new Point();
+            display.getRealSize(point);
+            float width, height;
+            if (point.x < point.y) {
+                width = point.x;
+                height = point.y;
+            } else {
+                width = point.y;
+                height = point.x;
+            }
+            if (height / width >= 1.97f) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
