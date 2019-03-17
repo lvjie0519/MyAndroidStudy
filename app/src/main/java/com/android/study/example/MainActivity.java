@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.android.study.example.androidapi.AndroidApiTestActivity;
+import com.android.study.example.androidapi.BlueMainTestActivity;
 import com.android.study.example.butterknife.ButterKnifeTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.annotaions.example.MyAnnotation;
@@ -71,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 asynOkHttpTest();
+            }
+        });
+
+        findViewById(R.id.btn_blu_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BlueMainTestActivity.startActivity(MainActivity.this);
             }
         });
     }
