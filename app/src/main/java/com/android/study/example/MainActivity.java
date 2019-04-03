@@ -1,8 +1,12 @@
 package com.android.study.example;
 
+import android.content.Context;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.NumberPicker;
 
 import com.android.study.example.androidapi.AndroidApiTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
@@ -12,6 +16,7 @@ import com.annotaions.example.MyAnnotation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Formatter;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -88,6 +93,25 @@ public class MainActivity extends AppCompatActivity {
                 .cache(new Cache(new File("cache"), 24*1024))
                 .build();
         mRequest = new Request.Builder().url("http://www.baidu.com").get().build();
+    }
+
+    public static String getAppFilesDir(Context context) {
+
+        String filesDir;
+        try {
+            filesDir = context.getFilesDir().getPath();
+        } catch (Throwable e) {
+            try {
+                filesDir = File.separator + "data" + File.separator + "data" + File.separator + context.getPackageName() + File.separator + "files";
+                File file = new File(filesDir);
+                file.mkdirs();
+            } catch (Throwable ep) {
+                File files = context.getDir("files", Context.MODE_PRIVATE);
+                files.mkdirs();
+                filesDir = files.getPath();
+            }
+        }
+        return filesDir;
     }
 
     private void synOkHttpTest(){
