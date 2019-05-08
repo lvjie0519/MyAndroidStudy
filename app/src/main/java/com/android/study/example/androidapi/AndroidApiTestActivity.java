@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.JsonWriter;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -15,6 +16,22 @@ import android.widget.TextView;
 
 import com.android.study.example.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class AndroidApiTestActivity extends AppCompatActivity {
@@ -58,6 +75,20 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 startActivity(new Intent(AndroidApiTestActivity.this, AndroidApiTestActivity.class));
 //                keepScreenNotLock(true);
                 showPhoneInfo();
+            }
+        });
+
+        findViewById(R.id.btn_write_file).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                writeFile();
+            }
+        });
+
+        findViewById(R.id.btn_read_file).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                readFile();
             }
         });
     }
@@ -138,6 +169,102 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private void writeFile(){
+        String filePath = getFilesDir().getPath()+File.separator+"debug_list.txt";
+        Log.i("lvjie", filePath);
+        File file = new File(filePath);
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        List<JSONObject> datas = new ArrayList<>();
+        for(int i=0; i<10; i++){
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("pluginName", "com.xiaomi.demo"+i);
+                jsonObject.put("devicModel", "chuangmi.plugin.m"+i);
+                jsonObject.put("isCheck", true);
+            } catch (JSONException e) {
+
+            }
+            datas.add(jsonObject);
+        }
+
+        try {
+            OutputStream outputStream = new FileOutputStream(file);
+            if (outputStream != null)
+            {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+                BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+                String line;
+                for(int i=0; i<datas.size(); i++){
+                    bufferedWriter.write(datas.get(i).toString());
+                    bufferedWriter.newLine();
+                }
+                bufferedWriter.close();
+                outputStreamWriter.close();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void initData(){
+
+    }
+
+    private void readFile(){
+
+        String filePath = getFilesDir().getPath()+File.separator+"debug_list.txt";
+        File file = new File(filePath);
+        if(!file.exists()){
+            Log.i("lvjie", filePath + " file is not exit");
+            return;
+        }
+
+        List<String> listStr = new ArrayList<>();
+
+        try {
+            InputStream instream = new FileInputStream(file);
+            if (instream != null)
+            {
+                InputStreamReader inputreader = new InputStreamReader(instream);
+                BufferedReader buffreader = new BufferedReader(inputreader);
+                String line;
+                //分行读取
+                while (( line = buffreader.readLine()) != null) {
+                    listStr.add(line);
+                }
+                buffreader.close();
+                instream.close();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (int i=0; i<listStr.size(); i++){
+            Log.i("lvjie", listStr.get(i));
+            try {
+                JSONObject jsonObject = new JSONObject(listStr.get(i));
+                Log.i("lvjie", jsonObject.getString("pluginName"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 
