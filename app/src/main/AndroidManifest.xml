@@ -40,7 +40,10 @@
         </activity>
         <activity android:name=".butterknife.ButterKnifeTestActivity" />
         <activity android:name=".butterknife.MyButterKnifeTestActivity" />
-        <activity android:name=".androidapi.AndroidApiTestActivity" />
+        <activity
+            android:name=".androidapi.AndroidApiTestActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            />
 
         <service
             android:name=".aidl.MyAidlService"

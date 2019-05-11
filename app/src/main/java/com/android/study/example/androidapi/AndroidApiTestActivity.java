@@ -49,6 +49,18 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         alterDisplayMetrics();
         setContentView(R.layout.activity_android_api_test);
 
+        Log.i("lvjie", "是否开启了导航栏:  "+QuanMianPingUtils.hasNavigationBar1(AndroidApiTestActivity.this));
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        Point realSize = new Point();
+        display.getSize(size);
+        display.getRealSize(realSize);
+
+        Log.i("lvjie", "size: "+size.y+"    realSize: "+realSize.y);
+
+        Log.i("lvjie", "getHeight: "+getHeight(this)+"   getRealHeight: "+getRealHeight(this));
+
         initView();
     }
 
@@ -58,6 +70,10 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         findViewById(R.id.btn_get_screen_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("lvjie", getHeight(AndroidApiTestActivity.this)+"   "+getRealHeight(AndroidApiTestActivity.this));
+                QuanMianPingUtils.hasNavBar(AndroidApiTestActivity.this);
+                QuanMianPingUtils.getNavigationBarHeight(AndroidApiTestActivity.this);
+                boolean hs = QuanMianPingUtils.hasNavigationBar1(AndroidApiTestActivity.this);
                 getScreenInfos();
             }
         });
@@ -93,6 +109,29 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         });
     }
 
+    public static int getHeight(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        DisplayMetrics dm = new DisplayMetrics();
+        display.getMetrics(dm);
+        int height = dm.heightPixels;
+        return height;
+    }
+
+    public static int getRealHeight(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        DisplayMetrics dm = new DisplayMetrics();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            display.getRealMetrics(dm);
+        } else {
+            display.getMetrics(dm);
+        }
+        int realHeight = dm.heightPixels;
+        return realHeight;
+    }
+
+
     private void getScreenInfos(){
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -110,9 +149,6 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 .append("屏幕density(dpi/160)值： ").append(density).append("\n");
 
         tvShowInfo.setText(stringBuilder.toString());
-
-        tvShowInfo.setTextSize(1);
-        tvShowInfo.setMaxHeight(12);
     }
 
     public void alterDisplayMetrics(){
