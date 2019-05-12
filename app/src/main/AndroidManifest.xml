@@ -42,8 +42,7 @@
         <activity android:name=".butterknife.MyButterKnifeTestActivity" />
         <activity
             android:name=".androidapi.AndroidApiTestActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <service
             android:name=".aidl.MyAidlService"
@@ -53,7 +52,9 @@
 
         <activity android:name=".androidapi.BlueMainTestActivity" />
         <activity android:name=".uidemo.RnPluginDebugListActivity" />
-        <activity android:name=".uidemo.RnPluginDebugAddActivity"></activity>
+        <activity android:name=".uidemo.RnPluginDebugAddActivity" />
+        <activity android:name=".leak.LeakTest1Activity" />
+        <activity android:name=".leak.LeakTest2Activity"></activity>
     </application>
 
 </manifest>

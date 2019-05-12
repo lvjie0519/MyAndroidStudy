@@ -12,6 +12,8 @@ import com.android.study.example.androidapi.AndroidApiTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
 import com.android.study.example.butterknife.ButterKnifeTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
+import com.android.study.example.leak.LeakTest1Activity;
+import com.android.study.example.leak.LeakTestInstance;
 import com.annotaions.example.MyAnnotation;
 
 import java.io.File;
@@ -84,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 BlueMainTestActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_leak_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LeakTestInstance.getInstance().clean();
+                LeakTest1Activity.startActivity(MainActivity.this);
             }
         });
     }
