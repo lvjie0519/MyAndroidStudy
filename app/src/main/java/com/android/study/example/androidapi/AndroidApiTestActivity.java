@@ -2,6 +2,8 @@ package com.android.study.example.androidapi;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -105,6 +107,20 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 readFile();
+            }
+        });
+
+        findViewById(R.id.btn_package_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testPackageInfo();
+            }
+        });
+
+        findViewById(R.id.btn_app_file_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testAppFileInfo();
             }
         });
     }
@@ -300,6 +316,37 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
+    }
+
+    public void testPackageInfo(){
+        PackageInfo info = null;
+        try {
+            info = AndroidApiTestActivity.this.getPackageManager().getPackageInfo(AndroidApiTestActivity.this.getPackageName(),
+                    0);
+
+            String packageInfo = "this.getPackageName(): "+AndroidApiTestActivity.this.getPackageName()
+                    +"\n   info.packageName: "+info.packageName             // 应用程序包名
+                    +"\n  info.versionName: "+info.versionName              // 版本名称， 对应build.gradle versionName
+                    +"\n  info.versionCode: "+info.versionCode+"";          // 版本号， 对应build.gradle  versionCode
+            tvShowInfo.setText(packageInfo);
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void testAppFileInfo(){
+
+        String fileInfo = "this.getFilesDir().getPath():  "+this.getFilesDir().getPath()        // /data/user/0/com.android.study.example/files
+                +"\n  this.getFilesDir().getAbsolutePath(): "+this.getFilesDir().getAbsolutePath()  // /data/user/0/com.android.study.example/files
+                +"\n  this.getCacheDir().getPath(): "+this.getCacheDir().getPath()      // /data/user/0/com.android.study.example/cache
+                +"\n  this.getCacheDir().getAbsolutePath(): "+this.getCacheDir().getAbsolutePath() // /data/user/0/com.android.study.example/cache
+                +"\n  this.getApplicationInfo().dataDir: "+this.getApplicationInfo().dataDir;   // /data/user/0/com.android.study.example
+
+        Log.i("lvjie", fileInfo);
+        tvShowInfo.setText(fileInfo);
+
 
     }
 

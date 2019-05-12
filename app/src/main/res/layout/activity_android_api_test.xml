@@ -55,6 +55,24 @@
             android:text="读文件"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_package_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取package 相关信息"/>
+
+        <Button
+            android:id="@+id/btn_app_file_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取app 文件路径相关信息"/>
+
+    </LinearLayout>
 
     <Button
         android:layout_width="180dp"
