@@ -54,7 +54,10 @@
         <activity android:name=".uidemo.RnPluginDebugListActivity" />
         <activity android:name=".uidemo.RnPluginDebugAddActivity" />
         <activity android:name=".leak.LeakTest1Activity" />
-        <activity android:name=".leak.LeakTest2Activity"></activity>
+        <activity android:name=".leak.LeakTest2Activity" />
+        <activity
+            android:name=".uidemo.dragging.FloatingActionBtnTestActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 
 </manifest>

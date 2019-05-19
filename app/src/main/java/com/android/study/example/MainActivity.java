@@ -14,6 +14,7 @@ import com.android.study.example.butterknife.ButterKnifeTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
+import com.android.study.example.uidemo.dragging.FloatingActionBtnTestActivity;
 import com.annotaions.example.MyAnnotation;
 
 import java.io.File;
@@ -94,6 +95,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 LeakTestInstance.getInstance().clean();
                 LeakTest1Activity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_dragging_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FloatingActionBtnTestActivity.startActivity(MainActivity.this);
             }
         });
     }
