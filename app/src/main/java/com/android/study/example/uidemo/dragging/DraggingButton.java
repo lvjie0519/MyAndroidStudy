@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
-public class DraggingTextView extends android.support.v7.widget.AppCompatTextView {
+public class DraggingButton extends android.support.v7.widget.AppCompatButton {
 
     private int lastX = 0;
     private int lastY = 0;
@@ -19,15 +19,15 @@ public class DraggingTextView extends android.support.v7.widget.AppCompatTextVie
     private  int screenHeight = 1280;
 
 
-    public DraggingTextView(Context context) {
+    public DraggingButton(Context context) {
         this(context, null);
     }
 
-    public DraggingTextView(Context context, @Nullable AttributeSet attrs) {
+    public DraggingButton(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DraggingTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public DraggingButton(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         initData(context);

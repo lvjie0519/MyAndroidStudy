@@ -6,12 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".uidemo.dragging.FloatingActionBtnTestActivity">
 
-    <com.android.study.example.uidemo.dragging.DraggingTextView
+    <com.android.study.example.uidemo.dragging.DraggingButton
         android:id="@+id/tv_dragging"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="20dp"
         android:text="悬浮按钮"/>
 
 </LinearLayout>

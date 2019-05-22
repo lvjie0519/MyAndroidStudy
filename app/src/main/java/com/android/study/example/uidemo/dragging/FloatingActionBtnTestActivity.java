@@ -13,7 +13,7 @@ import com.android.study.example.R;
  */
 public class FloatingActionBtnTestActivity extends AppCompatActivity {
 
-    private DraggingTextView mDraggintTextView;
+    private DraggingButton mDraggintTextView;
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, FloatingActionBtnTestActivity.class);
@@ -25,7 +25,7 @@ public class FloatingActionBtnTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_floating_action_btn_test);
 
-        mDraggintTextView = (DraggingTextView) findViewById(R.id.tv_dragging);
+        mDraggintTextView = (DraggingButton) findViewById(R.id.tv_dragging);
         mDraggintTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
