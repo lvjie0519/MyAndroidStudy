@@ -57,7 +57,8 @@
         <activity android:name=".leak.LeakTest2Activity" />
         <activity
             android:name=".uidemo.dragging.FloatingActionBtnTestActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".uidemo.picker.PickerTestActivity"></activity>
     </application>
 
 </manifest>
