@@ -39,8 +39,6 @@ public class DraggingButton extends android.support.v7.widget.AppCompatButton {
         wm.getDefaultDisplay().getMetrics(dm);
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
-
-        Log.i("lvjie", "screenWidth="+screenWidth+"   screenHeight="+screenHeight);
     }
 
     @Override
@@ -56,6 +54,7 @@ public class DraggingButton extends android.support.v7.widget.AppCompatButton {
                 beginY = lastY;
                 break;
             case MotionEvent.ACTION_MOVE:
+
                 int dx =(int)event.getRawX() - lastX;       // x轴拖动的绝对距离
                 int dy =(int)event.getRawY() - lastY;       // y轴拖动的绝对距离
 
@@ -77,20 +76,22 @@ public class DraggingButton extends android.support.v7.widget.AppCompatButton {
                     top = 0;
                     bottom = top + getHeight();
                 }
-                if(event.getRawY()+getHeight()>screenHeight){
-                    bottom = screenHeight-getHeight();
+                if(bottom>screenHeight){
+                    bottom = screenHeight;
                     top = bottom - getHeight();
                 }
-                Log.i("lvjie", "  bottom="+bottom+"  event.getRawY()="+event.getRawY()+"  screenHeight="+screenHeight);
                 layout(left, top, right, bottom);
                 lastX = (int) event.getRawX();
                 lastY = (int) event.getRawY();
                 break;
             case MotionEvent.ACTION_UP:
-                if (Math.abs(lastX - beginX) < 10 && Math.abs(lastY - beginY) < 10)
+                // 解决拖拽的时候松手点击事件触发
+                if (Math.abs(lastX - beginX) < 10 && Math.abs(lastY - beginY) < 10){
                     return super.onTouchEvent(event);
-                else
+                }else{
+                    setPressed(false);
                     return true;
+                }
             default:
                 break;
         }
