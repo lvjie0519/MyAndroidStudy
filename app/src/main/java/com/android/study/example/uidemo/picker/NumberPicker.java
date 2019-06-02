@@ -231,6 +231,13 @@ public class NumberPicker extends LinearLayout {
     private final Paint mSelectorWheelPaint;
 
     /**
+     * 选中和未选中的字体颜色及大小
+     */
+    protected int mSelectTextColor = Color.parseColor("#1dc58a");
+    protected int mUnSelectTextColor = 0x7f000000;
+    protected int mSelectItemBgColor = 0x00000000;
+
+    /**
      * The {@link Drawable} for pressed virtual (increment/decrement) buttons.
      */
     private final Drawable mVirtualButtonPressedDrawable;
@@ -1408,15 +1415,28 @@ public class NumberPicker extends LinearLayout {
         float centerY = mInitialScrollOffset + SELECTOR_WHEEL_ITEM_COUNT / 2 * mSelectorElementHeight;
         final SparseArray<String> selectorIndexToStringCache = mSelectorIndexToStringCache;
         int[] selectorIndices = mSelectorIndices;
+
+        // 绘制选中的背景
+        float startY = centerY - mSelectorElementHeight * 0.5f;
+        float endY = startY+mSelectorElementHeight;
+        mSelectorWheelPaint.setColor(mSelectItemBgColor);
+        canvas.drawRect(0, startY, getWidth(), endY, mSelectorWheelPaint);
+
         for (int selectorIndex : selectorIndices) {
             String scrollSelectorValue = selectorIndexToStringCache.get(selectorIndex);
             float posy = Math.abs(centerY - y) / mSelectorElementHeight;
+
+            // 此处绘制非选中条目文字
             float sizeFg = getTextSize(posy, TEXT_SIZE_MAX, TEXT_SIZE_MIN);
             mSelectorWheelPaint.setTextSize(sizeFg);
-            mSelectorWheelPaint.setColor(getAlphaGradient(posy, /*TEXT_COLOR_BG*/0x7f000000, false));
+            mSelectorWheelPaint.setColor(getAlphaGradient(posy, mUnSelectTextColor/*TEXT_COLOR_BG*/, false));
             canvas.drawText(scrollSelectorValue, x, y + (sizeFg - TEXT_SIZE_MIN) / 2.0f, mSelectorWheelPaint);
+
             if (posy < 1) {
-                mSelectorWheelPaint.setColor(getAlphaGradient(posy, getResources().getColor(R.color.picker_text_17)/*TEXT_COLOR_FG*/, true));
+                // 此处是绘制选中的文字
+                sizeFg = getTextSize(posy, TEXT_SIZE_MAX, TEXT_SIZE_MIN);
+                mSelectorWheelPaint.setTextSize(sizeFg);
+                mSelectorWheelPaint.setColor(getAlphaGradient(posy, mSelectTextColor/*TEXT_COLOR_FG*/, true));
                 canvas.drawText(scrollSelectorValue, x, y + (sizeFg - TEXT_SIZE_MIN) / 2.0f, mSelectorWheelPaint);
                 if(mUnitPos < sizeFg){
                     mUnitPos = sizeFg;
@@ -2567,6 +2587,32 @@ public class NumberPicker extends LinearLayout {
             }
             return null;
         }
+    }
+
+    public void setSelectTextColor(int selectTextColor) {
+        this.mSelectTextColor = selectTextColor;
+    }
+
+    public void setUnSelectTextColor(int unSelectTextColor) {
+        this.mUnSelectTextColor = unSelectTextColor;
+    }
+
+    public void setSelectItemBgColor(int selectItemBgColor) {
+        this.mSelectItemBgColor = selectItemBgColor;
+    }
+
+    public void setSelectTextSize(int selectTextSize) {
+        if(selectTextSize <= 0){
+            return;
+        }
+        TEXT_SIZE_MAX = selectTextSize;
+    }
+
+    public void setUnSelectTextSize(int unSelectTextSize) {
+        if(unSelectTextSize <= 0){
+            return;
+        }
+        TEXT_SIZE_MIN = unSelectTextSize;
     }
 
     private void refreshWheel() {

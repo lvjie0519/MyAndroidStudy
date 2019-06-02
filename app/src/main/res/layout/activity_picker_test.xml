@@ -7,18 +7,34 @@
     android:orientation="vertical"
     tools:context=".uidemo.picker.PickerTestActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="aaa"
+        android:textColor="#333333"/>
+
     <com.android.study.example.uidemo.picker.NumberPicker
         android:id="@+id/number_picker"
         android:layout_width="fill_parent"
-        android:layout_height="130dp"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:background="#eeeeee"
+        android:focusableInTouchMode="false"/>
+
+    <com.android.study.example.uidemo.picker.NumberPicker
+        android:id="@+id/number_picker_2"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
         android:focusable="false"
         android:focusableInTouchMode="false"/>
 
     <NumberPicker
         android:id="@+id/native_number_picker"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="220dp"
         android:focusable="false"
         android:focusableInTouchMode="false"/>
 
