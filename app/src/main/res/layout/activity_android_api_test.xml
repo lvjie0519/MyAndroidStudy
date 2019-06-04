@@ -73,6 +73,19 @@
             android:text="获取app 文件路径相关信息"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_test_nfc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试手机是否具有NFC"/>
+
+
+    </LinearLayout>
 
     <Button
         android:layout_width="180dp"

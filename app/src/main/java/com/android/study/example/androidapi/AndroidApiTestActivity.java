@@ -15,7 +15,9 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.study.example.MainActivity;
 import com.android.study.example.R;
 
 import org.json.JSONException;
@@ -121,6 +123,13 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 testAppFileInfo();
+            }
+        });
+
+        findViewById(R.id.btn_test_nfc).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testHasNFCFunc();
             }
         });
     }
@@ -348,6 +357,12 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         tvShowInfo.setText(fileInfo);
 
 
+    }
+
+    public void testHasNFCFunc(){
+        PackageManager pm = getPackageManager();
+        boolean nfc = pm.hasSystemFeature(PackageManager.FEATURE_NFC);
+        Toast.makeText(this, String.format("NFC支持%s", nfc), Toast.LENGTH_SHORT).show();
     }
 
 
