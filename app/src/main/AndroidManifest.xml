@@ -16,7 +16,6 @@
     <!-- 在 Android 6.0 及以上，还需要打开位置权限。如果应用没有位置权限，蓝牙扫描功能不能使用（其它蓝牙操作例如连接蓝牙设备和写入数据不受影响） -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
@@ -60,7 +59,8 @@
         <activity
             android:name=".uidemo.dragging.FloatingActionBtnTestActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".uidemo.picker.PickerTestActivity"></activity>
+        <activity android:name=".uidemo.picker.PickerTestActivity" />
+        <activity android:name=".androidapi.AudioDemoTestActivity"></activity>
     </application>
 
 </manifest>

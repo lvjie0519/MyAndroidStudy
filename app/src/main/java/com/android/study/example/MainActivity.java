@@ -10,6 +10,7 @@ import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.android.study.example.androidapi.AndroidApiTestActivity;
+import com.android.study.example.androidapi.AudioDemoTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
 import com.android.study.example.butterknife.ButterKnifeTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
@@ -106,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FloatingActionBtnTestActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_audio_demo_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AudioDemoTestActivity.startActivity(MainActivity.this);
             }
         });
     }

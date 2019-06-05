@@ -58,5 +58,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="悬浮按钮测试"/>
+    <Button
+        android:id="@+id/btn_audio_demo_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="媒体播放测试"/>
 
 </LinearLayout>
