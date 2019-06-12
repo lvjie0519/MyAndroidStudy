@@ -1,13 +1,16 @@
 package com.android.study.example.androidapi;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.JsonWriter;
 import android.util.Log;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import com.android.study.example.MainActivity;
 import com.android.study.example.R;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,11 +42,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import rx.functions.Action1;
+
 public class AndroidApiTestActivity extends AppCompatActivity {
 
     private TextView tvShowInfo;
 
-    public static void startActivity(Context context){
+    private RxPermissions rxPermissions;
+
+    public static void startActivity(Context context) {
         Intent intent = new Intent(context, AndroidApiTestActivity.class);
         context.startActivity(intent);
     }
@@ -53,28 +61,17 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         alterDisplayMetrics();
         setContentView(R.layout.activity_android_api_test);
 
-        Log.i("lvjie", "是否开启了导航栏:  "+QuanMianPingUtils.hasNavigationBar1(AndroidApiTestActivity.this));
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        Point realSize = new Point();
-        display.getSize(size);
-        display.getRealSize(realSize);
-
-        Log.i("lvjie", "size: "+size.y+"    realSize: "+realSize.y);
-
-        Log.i("lvjie", "getHeight: "+getHeight(this)+"   getRealHeight: "+getRealHeight(this));
-
+        rxPermissions = RxPermissions.getInstance(this);
         initView();
     }
 
-    private void initView(){
+    private void initView() {
         tvShowInfo = (TextView) findViewById(R.id.tv_show_info);
 
         findViewById(R.id.btn_get_screen_info).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("lvjie", getHeight(AndroidApiTestActivity.this)+"   "+getRealHeight(AndroidApiTestActivity.this));
+                Log.i("lvjie", getHeight(AndroidApiTestActivity.this) + "   " + getRealHeight(AndroidApiTestActivity.this));
                 QuanMianPingUtils.hasNavBar(AndroidApiTestActivity.this);
                 QuanMianPingUtils.getNavigationBarHeight(AndroidApiTestActivity.this);
                 boolean hs = QuanMianPingUtils.hasNavigationBar1(AndroidApiTestActivity.this);
@@ -132,6 +129,14 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 testHasNFCFunc();
             }
         });
+
+        findViewById(R.id.btn_test_operators).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 获取运营商
+                getOperator(AndroidApiTestActivity.this);
+            }
+        });
     }
 
     public static int getHeight(Context context) {
@@ -157,7 +162,7 @@ public class AndroidApiTestActivity extends AppCompatActivity {
     }
 
 
-    private void getScreenInfos(){
+    private void getScreenInfos() {
         StringBuilder stringBuilder = new StringBuilder();
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -176,7 +181,7 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         tvShowInfo.setText(stringBuilder.toString());
     }
 
-    public void alterDisplayMetrics(){
+    public void alterDisplayMetrics() {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         displayMetrics.density = 2.13333334f;
         displayMetrics.densityDpi = 341;
@@ -196,13 +201,13 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         }
     }
 
-    public void showPhoneInfo(){
+    public void showPhoneInfo() {
         String language = Locale.getDefault().getLanguage();    // 获取当前手机系统语言
         String sysVersion = android.os.Build.VERSION.RELEASE;   // 获取当前手机系统版本号
         String phoneModel = android.os.Build.MODEL;             // 获取手机型号
         String phoneCatory = android.os.Build.BRAND;            // 获取手机厂商
 
-        Log.i("lvjie", ""+language+"    "+sysVersion+"    "+phoneModel+"    "+phoneCatory);
+        Log.i("lvjie", "" + language + "    " + sysVersion + "    " + phoneModel + "    " + phoneCatory);
     }
 
     public static boolean isAllScreenDevice(Context context) {
@@ -232,11 +237,11 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         return false;
     }
 
-    private void writeFile(){
-        String filePath = getFilesDir().getPath()+File.separator+"debug_list.txt";
+    private void writeFile() {
+        String filePath = getFilesDir().getPath() + File.separator + "debug_list.txt";
         Log.i("lvjie", filePath);
         File file = new File(filePath);
-        if(!file.exists()){
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -245,11 +250,11 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         }
 
         List<JSONObject> datas = new ArrayList<>();
-        for(int i=0; i<10; i++){
+        for (int i = 0; i < 10; i++) {
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("pluginName", "com.xiaomi.demo"+i);
-                jsonObject.put("devicModel", "chuangmi.plugin.m"+i);
+                jsonObject.put("pluginName", "com.xiaomi.demo" + i);
+                jsonObject.put("devicModel", "chuangmi.plugin.m" + i);
                 jsonObject.put("isCheck", true);
             } catch (JSONException e) {
 
@@ -259,12 +264,11 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
         try {
             OutputStream outputStream = new FileOutputStream(file);
-            if (outputStream != null)
-            {
+            if (outputStream != null) {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
                 BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
                 String line;
-                for(int i=0; i<datas.size(); i++){
+                for (int i = 0; i < datas.size(); i++) {
                     bufferedWriter.write(datas.get(i).toString());
                     bufferedWriter.newLine();
                 }
@@ -280,15 +284,15 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
     }
 
-    private void initData(){
+    private void initData() {
 
     }
 
-    private void readFile(){
+    private void readFile() {
 
-        String filePath = getFilesDir().getPath()+File.separator+"debug_list.txt";
+        String filePath = getFilesDir().getPath() + File.separator + "debug_list.txt";
         File file = new File(filePath);
-        if(!file.exists()){
+        if (!file.exists()) {
             Log.i("lvjie", filePath + " file is not exit");
             return;
         }
@@ -297,13 +301,12 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
         try {
             InputStream instream = new FileInputStream(file);
-            if (instream != null)
-            {
+            if (instream != null) {
                 InputStreamReader inputreader = new InputStreamReader(instream);
                 BufferedReader buffreader = new BufferedReader(inputreader);
                 String line;
                 //分行读取
-                while (( line = buffreader.readLine()) != null) {
+                while ((line = buffreader.readLine()) != null) {
                     listStr.add(line);
                 }
                 buffreader.close();
@@ -316,7 +319,7 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        for (int i=0; i<listStr.size(); i++){
+        for (int i = 0; i < listStr.size(); i++) {
             Log.i("lvjie", listStr.get(i));
             try {
                 JSONObject jsonObject = new JSONObject(listStr.get(i));
@@ -328,16 +331,16 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
     }
 
-    public void testPackageInfo(){
+    public void testPackageInfo() {
         PackageInfo info = null;
         try {
             info = AndroidApiTestActivity.this.getPackageManager().getPackageInfo(AndroidApiTestActivity.this.getPackageName(),
                     0);
 
-            String packageInfo = "this.getPackageName(): "+AndroidApiTestActivity.this.getPackageName()
-                    +"\n   info.packageName: "+info.packageName             // 应用程序包名
-                    +"\n  info.versionName: "+info.versionName              // 版本名称， 对应build.gradle versionName
-                    +"\n  info.versionCode: "+info.versionCode+"";          // 版本号， 对应build.gradle  versionCode
+            String packageInfo = "this.getPackageName(): " + AndroidApiTestActivity.this.getPackageName()
+                    + "\n   info.packageName: " + info.packageName             // 应用程序包名
+                    + "\n  info.versionName: " + info.versionName              // 版本名称， 对应build.gradle versionName
+                    + "\n  info.versionCode: " + info.versionCode + "";          // 版本号， 对应build.gradle  versionCode
             tvShowInfo.setText(packageInfo);
 
         } catch (PackageManager.NameNotFoundException e) {
@@ -345,13 +348,13 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         }
     }
 
-    public void testAppFileInfo(){
+    public void testAppFileInfo() {
 
-        String fileInfo = "this.getFilesDir().getPath():  "+this.getFilesDir().getPath()        // /data/user/0/com.android.study.example/files
-                +"\n  this.getFilesDir().getAbsolutePath(): "+this.getFilesDir().getAbsolutePath()  // /data/user/0/com.android.study.example/files
-                +"\n  this.getCacheDir().getPath(): "+this.getCacheDir().getPath()      // /data/user/0/com.android.study.example/cache
-                +"\n  this.getCacheDir().getAbsolutePath(): "+this.getCacheDir().getAbsolutePath() // /data/user/0/com.android.study.example/cache
-                +"\n  this.getApplicationInfo().dataDir: "+this.getApplicationInfo().dataDir;   // /data/user/0/com.android.study.example
+        String fileInfo = "this.getFilesDir().getPath():  " + this.getFilesDir().getPath()        // /data/user/0/com.android.study.example/files
+                + "\n  this.getFilesDir().getAbsolutePath(): " + this.getFilesDir().getAbsolutePath()  // /data/user/0/com.android.study.example/files
+                + "\n  this.getCacheDir().getPath(): " + this.getCacheDir().getPath()      // /data/user/0/com.android.study.example/cache
+                + "\n  this.getCacheDir().getAbsolutePath(): " + this.getCacheDir().getAbsolutePath() // /data/user/0/com.android.study.example/cache
+                + "\n  this.getApplicationInfo().dataDir: " + this.getApplicationInfo().dataDir;   // /data/user/0/com.android.study.example
 
         Log.i("lvjie", fileInfo);
         tvShowInfo.setText(fileInfo);
@@ -359,10 +362,45 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
     }
 
-    public void testHasNFCFunc(){
+    public void testHasNFCFunc() {
         PackageManager pm = getPackageManager();
         boolean nfc = pm.hasSystemFeature(PackageManager.FEATURE_NFC);
         Toast.makeText(this, String.format("NFC支持%s", nfc), Toast.LENGTH_SHORT).show();
+    }
+
+    public void getOperator(final Context context) {
+
+
+        rxPermissions.request(Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_COARSE_LOCATION).subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean granted) {
+
+                if (granted) {
+                    // 权限申请成功
+
+                    String providerName = "";
+                    TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+
+                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                        String IMSI = telephonyManager.getSubscriberId();
+                        Log.i("qweqwes", "运营商代码" + IMSI);
+                        if (IMSI != null) {
+                            if (IMSI.startsWith("46000") || IMSI.startsWith("46002") || IMSI.startsWith("46007")) {
+                                providerName = "中国移动";
+                            } else if (IMSI.startsWith("46001")  || IMSI.startsWith("46006")) {
+                                providerName = "中国联通";
+                            } else if (IMSI.startsWith("46003")) {
+                                providerName = "中国电信";
+                            }
+                        }
+                    }
+
+
+                }
+
+            }
+        });
+
     }
 
 

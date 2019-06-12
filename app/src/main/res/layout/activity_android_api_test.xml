@@ -84,6 +84,11 @@
             android:layout_height="wrap_content"
             android:text="测试手机是否具有NFC"/>
 
+        <Button
+            android:id="@+id/btn_test_operators"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试手机运营商信息"/>
 
     </LinearLayout>
 
