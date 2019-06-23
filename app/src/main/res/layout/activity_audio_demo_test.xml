@@ -10,28 +10,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MediaPlayer 测试"
-        android:textColor="#333333"
-        android:textSize="16sp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/btn_audio_start_play"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="开始播放"/>
-        <Button
-            android:id="@+id/btn_audio_stop_play"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="结束播放"/>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="MediaRecorder 测试"
         android:textColor="#333333"
         android:textSize="16sp"/>
@@ -54,6 +32,28 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="MediaPlayer 测试"
+        android:textColor="#333333"
+        android:textSize="16sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_audio_start_play"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="开始播放"/>
+        <Button
+            android:id="@+id/btn_audio_stop_play"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="结束播放"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="AudioRecord 测试"
         android:textColor="#333333"
         android:textSize="16sp"/>
@@ -71,6 +71,28 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="结束录音"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AudioTrack 测试"
+        android:textColor="#333333"
+        android:textSize="16sp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_audio_start_play_track"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="开始播放"/>
+        <Button
+            android:id="@+id/btn_audio_stop_play_track"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="结束播放"/>
     </LinearLayout>
 
 </LinearLayout>

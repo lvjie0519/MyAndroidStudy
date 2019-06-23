@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioFormat;
+import android.media.AudioManager;
 import android.media.AudioRecord;
+import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Handler;
@@ -19,7 +21,9 @@ import android.widget.TextView;
 import com.android.study.example.R;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,6 +51,9 @@ public class AudioDemoTestActivity extends AppCompatActivity {
     private String audioRecordFileName = "";
     private AudioRecord mAudioRecord;
     private boolean mIsAudioRecording = false;
+
+    private AudioTrack mAudioTrack;
+    private boolean mIsAudioTrackPlaying = false;
 
     private Handler mHandler = new Handler(){
         @Override
@@ -140,6 +147,22 @@ public class AudioDemoTestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 结束录音
                 stopAudioRecord();
+            }
+        });
+
+        findViewById(R.id.btn_audio_start_play_track).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 开始播放
+                startPlayTrack();
+            }
+        });
+
+        findViewById(R.id.btn_audio_stop_play_track).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 结束播放
+                stopPlayTrack();
             }
         });
 
@@ -459,5 +482,71 @@ public class AudioDemoTestActivity extends AppCompatActivity {
     }
 
 
+    private void startPlayTrack(){
+
+        // 音频源：指的是从哪里采集音频。这里我们当然是从麦克风采集音频，所以此参数的值为MIC
+        int audioSource = MediaRecorder.AudioSource.MIC;
+        // 采样率：音频的采样频率，每秒钟能够采样的次数，采样率越高，音质越高。
+        int sampleRateInHz = 9500;
+        // 声道设置：android支持双声道立体声和单声道。MONO单声道，STEREO立体声
+        int channelConfig = AudioFormat.CHANNEL_OUT_MONO;
+        // 编码制式和采样大小   android支持的采样大小16bit 或者8bit。当然采样大小越大，那么信息量越多，音质也越高，现在主流的采样大小都是16bit，在低质量的语音传输的时候8bit足够了。
+        int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
+        // 采集数据需要的缓冲区的大小，如果不知道最小需要的大小可以在getMinBufferSize()查看。
+        final int bufferSizeInBytes = AudioTrack.getMinBufferSize(sampleRateInHz, channelConfig, audioFormat);
+
+        if(mAudioTrack != null){
+            stopPlayTrack();
+        }
+
+        // int streamType, int sampleRateInHz, int channelConfig, int audioFormat, int bufferSizeInBytes, int mode
+        mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRateInHz, channelConfig, audioFormat, bufferSizeInBytes, AudioTrack.MODE_STREAM);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataInputStream inputStream = null;
+                try {
+                    inputStream = new DataInputStream(new BufferedInputStream(new FileInputStream(audioRecordFileName)));
+                    byte[] buffer = new byte[bufferSizeInBytes];
+                    int readCount = inputStream.read(buffer);
+                    Log.i("lvjie", Thread.currentThread().getName()+"  开始播放   readCount="+readCount);
+                    mIsAudioTrackPlaying = true;
+                    mAudioTrack.play();
+                    while (mIsAudioTrackPlaying && readCount > 0) {
+                        int writeResult = mAudioTrack.write(buffer, 0, readCount);
+                        if (writeResult >= 0) {
+                            //success
+                        } else {
+                            //fail
+                            //丢掉这一块数据
+
+                        }
+                        readCount = inputStream.read(buffer);
+                        Log.i("lvjie", Thread.currentThread().getName()+"  播放   readCount="+readCount);
+                    }
+                    Log.i("lvjie", Thread.currentThread().getName()+"  停止播放   readCount="+readCount);
+                    stopPlayTrack();
+                    inputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private synchronized void stopPlayTrack(){
+
+        Log.i("lvjie", Thread.currentThread().getName()+"  stopPlayTrack...");
+        mIsAudioTrackPlaying = false;
+        if(mAudioTrack != null){
+            if(mAudioTrack.getPlayState() == AudioTrack.PLAYSTATE_PLAYING){
+                mAudioTrack.flush();
+                mAudioTrack.stop();
+            }
+            mAudioTrack.release();
+            mAudioTrack = null;
+        }
+    }
 
 }
