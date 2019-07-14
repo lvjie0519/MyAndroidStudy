@@ -1,16 +1,24 @@
 package com.android.study.example.androidapi;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.JsonWriter;
 import android.util.Log;
@@ -135,6 +143,14 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 获取运营商
                 getOperator(AndroidApiTestActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_test_wifi_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 获取wifi信息
+                printWifiInfo();
             }
         });
     }
@@ -403,5 +419,51 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
     }
 
+
+    private void printWifiInfo() {
+
+        // 获取wifi的SSID， 在Android9.0之前，可以直接获取，9.0及之后，需要手机先开启位置服务，才能获取. Android 9（API 级别 28）
+        if(Build.VERSION.SDK_INT < 28){
+            WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            Log.i("lvjie", "BSSID: "+wifiInfo.getBSSID()+"  SSID: "+wifiInfo.getSSID());
+        }else{
+            if(isLocationEnabled()){
+                WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+                Log.i("lvjie", "BSSID: "+wifiInfo.getBSSID()+"  SSID: "+wifiInfo.getSSID());
+            }else {
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+        }
+
+    }
+
+    /**
+     * 系统服务是否开启定位功能
+     *
+     * @return
+     */
+    public boolean isLocationEnabled() {
+        int locationMode = 0;
+        String locationProviders;
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                try {
+                    locationMode = Settings.Secure.getInt(this.getApplicationContext().getContentResolver(), Settings.Secure.LOCATION_MODE);
+                } catch (Settings.SettingNotFoundException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+            } else {
+                locationProviders = Settings.Secure.getString(this.getApplicationContext().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+                return !TextUtils.isEmpty(locationProviders);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }
