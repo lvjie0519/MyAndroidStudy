@@ -17,6 +17,8 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -384,6 +386,7 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         Toast.makeText(this, String.format("NFC支持%s", nfc), Toast.LENGTH_SHORT).show();
     }
 
+    // 获取运营商
     public void getOperator(final Context context) {
 
 
@@ -410,6 +413,23 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                             }
                         }
                     }
+
+                    // 参考网址  http://cn.voidcc.com/question/p-cjhgdmrt-bkk.html
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1){
+                        SubscriptionManager subscriptionManager=(SubscriptionManager)getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
+                        List<SubscriptionInfo> subscriptionInfoList=subscriptionManager.getActiveSubscriptionInfoList();
+                        if(subscriptionInfoList!=null && subscriptionInfoList.size()>0){
+                            for(SubscriptionInfo info:subscriptionInfoList){
+                                String carrierName = info.getCarrierName().toString();
+                                String mobileNo=info.getNumber();
+                                String countyIso=info.getCountryIso();
+                                int dataRoaming=info.getDataRoaming();
+                                Log.i("lvjie", "carrierName: "+carrierName+"  mobileNo: "+mobileNo
+                                        +"  countyIso: "+countyIso+"   dataRoaming: "+dataRoaming);
+                            }
+                        }
+                    }
+
 
 
                 }
