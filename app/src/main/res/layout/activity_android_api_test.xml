@@ -1,124 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.android.study.example.androidapi.AndroidApiTestActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_get_screen_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取屏幕相关信息"/>
+
+            <Button
+                android:id="@+id/btn_alter_DisplayMetrics"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改屏幕相关信息"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_go_next_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="go next page"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_write_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="写文件"/>
+            <Button
+                android:id="@+id/btn_read_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="读文件"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_package_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取package 相关信息"/>
+
+            <Button
+                android:id="@+id/btn_app_file_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取app 文件路径相关信息"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_test_nfc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试手机是否具有NFC"/>
+
+            <Button
+                android:id="@+id/btn_test_operators"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试手机运营商信息"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_test_wifi_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取手机wifi信息"/>
+
+            <Button
+                android:id="@+id/btn_test_build_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取Build相关信息"/>
+
+        </LinearLayout>
 
         <Button
-            android:id="@+id/btn_get_screen_info"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="获取屏幕相关信息"/>
+            android:text="控件： 180*wrap_content dp"/>
 
         <Button
-            android:id="@+id/btn_alter_DisplayMetrics"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="控件： 360*60 dp"/>
+
+        <TextView
+            android:id="@+id/tv_show_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="修改屏幕相关信息"/>
+            android:layout_marginTop="20dp"/>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+</ScrollView>
 
-        <Button
-            android:id="@+id/btn_go_next_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="go next page"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_write_file"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="写文件"/>
-        <Button
-            android:id="@+id/btn_read_file"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="读文件"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_package_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="获取package 相关信息"/>
-
-        <Button
-            android:id="@+id/btn_app_file_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="获取app 文件路径相关信息"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_test_nfc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="测试手机是否具有NFC"/>
-
-        <Button
-            android:id="@+id/btn_test_operators"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="测试手机运营商信息"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_test_wifi_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="获取手机wifi信息"/>
-
-    </LinearLayout>
-
-    <Button
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:text="控件： 180*wrap_content dp"/>
-
-    <Button
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="控件： 360*60 dp"/>
-
-    <TextView
-        android:id="@+id/tv_show_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
-
-</LinearLayout>

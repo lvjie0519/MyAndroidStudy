@@ -155,6 +155,14 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 printWifiInfo();
             }
         });
+
+        findViewById(R.id.btn_test_build_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 获取wifi信息
+                printBuildInfo();
+            }
+        });
     }
 
     public static int getHeight(Context context) {
@@ -484,6 +492,22 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return false;
+    }
+
+    private void printBuildInfo() {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("Android系统定制商 Build.BRAND: "+Build.BRAND+"\n");
+        stringBuffer.append("设备参数 Build.DEVICE: "+Build.DEVICE+"\n");
+        stringBuffer.append("显示屏参数 Build.DISPLAY: "+Build.DISPLAY+"\n");
+        stringBuffer.append("手机制造商 Build.PRODUCT: "+Build.PRODUCT+"\n");
+        stringBuffer.append("用户 Build.USER: "+Build.USER+"\n");
+        stringBuffer.append("当前开发代号 Build.VERSION.CODENAME: "+Build.VERSION.CODENAME+"\n");
+        stringBuffer.append("源码控制版本号 Build.VERSION.INCREMENTAL: "+Build.VERSION.INCREMENTAL+"\n");
+        stringBuffer.append("运行系统版本号 Build.VERSION.SDK_INT: "+Build.VERSION.SDK_INT+"\n");
+        stringBuffer.append("Build.VERSION.PREVIEW_SDK_INT: "+Build.VERSION.PREVIEW_SDK_INT+"\n");
+        stringBuffer.append("Build.VERSION_CODES.M: "+Build.VERSION_CODES.M+"\n");
+
+        tvShowInfo.setText(stringBuffer.toString());
     }
 
 }
