@@ -45,6 +45,20 @@ public class MyAidlService extends Service {
             int result = num1+num2;
             return result;
         }
+
+        @Override
+        public String getString() throws RemoteException {
+            return "hello world";
+        }
+
+        @Override
+        public StudentInfo getStudentInfo() throws RemoteException {
+            Log.i("lvjie", "收到了客户端的请求...getStudentInfo()...");
+            StudentInfo studentInfo = new StudentInfo();
+            studentInfo.setUserName("zhangsan");
+            studentInfo.setUserAge(23);
+            return studentInfo;
+        }
     };
 
     @Override

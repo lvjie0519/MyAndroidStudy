@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.study.example.IMyAidlInterface;
+import com.android.study.example.StudentInfo;
 
 public class AidlClientTestMainActivity extends AppCompatActivity {
 
@@ -86,6 +87,15 @@ public class AidlClientTestMainActivity extends AppCompatActivity {
         intent.setComponent(new ComponentName("com.android.study.example", "com.android.study.example.aidl.MyAidlService"));
 
         bindService(intent, conn, Context.BIND_AUTO_CREATE);
+    }
+
+    public void onClickShowStuInfo(View view){
+        try {
+            StudentInfo studentInfo = iMyAidlInterface.getStudentInfo();
+            mTvShowResult.setText("name: "+studentInfo.getUserName()+"   age: "+studentInfo.getUserAge());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     public void onClickNextActivityBtn(View view){

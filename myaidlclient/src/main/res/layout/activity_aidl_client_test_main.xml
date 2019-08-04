@@ -45,6 +45,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="通过AIDL显示StuInfo"
+        android:onClick="onClickShowStuInfo"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="跳转下一个页面"
         android:onClick="onClickNextActivityBtn"/>
 
