@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.android.study.example.androidapi.AndroidApiTestActivity;
 import com.android.study.example.androidapi.AudioDemoTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
+import com.android.study.example.androidapi.LifeCycleTestActivity;
 import com.android.study.example.butterknife.ButterKnifeTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
@@ -114,6 +115,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AudioDemoTestActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_life_cycle_demo_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LifeCycleTestActivity.startActivity(MainActivity.this);
             }
         });
     }

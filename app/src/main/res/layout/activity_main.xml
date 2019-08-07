@@ -63,5 +63,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="媒体播放测试"/>
+    <Button
+        android:id="@+id/btn_life_cycle_demo_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="activity 生命周期测试"
+        android:textAllCaps="false"/>
 
 </LinearLayout>
