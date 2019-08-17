@@ -17,6 +17,7 @@ import com.android.study.example.butterknife.ButterKnifeTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
+import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
 import com.android.study.example.uidemo.dragging.FloatingActionBtnTestActivity;
 import com.android.study.example.uidemo.picker.PickerTestActivity;
 import com.annotaions.example.MyAnnotation;
@@ -122,6 +123,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LifeCycleTestActivity.startActivity(MainActivity.this);
+            }
+        });
+        findViewById(R.id.btn_render_script_blur_demo_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RenderScriptBlurDemoActivity.startActivity(MainActivity.this);
             }
         });
     }

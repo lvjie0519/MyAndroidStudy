@@ -1,73 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    android:orientation="vertical"
-    tools:context="com.android.study.example.MainActivity">
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:orientation="vertical"
+        tools:context="com.android.study.example.MainActivity">
 
-    <Button
-        android:id="@+id/btn_butterknife_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="butterknife 测试"
-        />
+        <Button
+            android:id="@+id/btn_butterknife_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="butterknife 测试"
+            />
 
-    <Button
-        android:id="@+id/btn_mybutterknife_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="mybutterknife 测试"
-        />
+        <Button
+            android:id="@+id/btn_mybutterknife_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mybutterknife 测试"
+            />
 
-    <Button
-        android:id="@+id/btn_androidapi_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Android API 测试"
-        />
+        <Button
+            android:id="@+id/btn_androidapi_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Android API 测试"
+            />
 
-    <Button
-        android:id="@+id/btn_okhttp_sync"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OkHttp-同步"/>
+        <Button
+            android:id="@+id/btn_okhttp_sync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OkHttp-同步"/>
 
-    <Button
-        android:id="@+id/btn_okhttp_async"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OkHttp-异步"/>
+        <Button
+            android:id="@+id/btn_okhttp_async"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OkHttp-异步"/>
 
-    <Button
-        android:id="@+id/btn_blu_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="蓝牙测试"/>
+        <Button
+            android:id="@+id/btn_blu_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="蓝牙测试"/>
 
-    <Button
-        android:id="@+id/btn_leak_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="内存泄漏测试"/>
+        <Button
+            android:id="@+id/btn_leak_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="内存泄漏测试"/>
 
-    <Button
-        android:id="@+id/btn_dragging_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="悬浮按钮测试"/>
-    <Button
-        android:id="@+id/btn_audio_demo_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="媒体播放测试"/>
-    <Button
-        android:id="@+id/btn_life_cycle_demo_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="activity 生命周期测试"
-        android:textAllCaps="false"/>
+        <Button
+            android:id="@+id/btn_dragging_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="悬浮按钮测试"/>
+        <Button
+            android:id="@+id/btn_audio_demo_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="媒体播放测试"/>
+        <Button
+            android:id="@+id/btn_life_cycle_demo_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="activity 生命周期测试"
+            android:textAllCaps="false"/>
+        <Button
+            android:id="@+id/btn_render_script_blur_demo_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="高斯模糊库-RenderScript"
+            android:textAllCaps="false"/>
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
+

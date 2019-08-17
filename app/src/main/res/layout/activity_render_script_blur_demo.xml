@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".thirdlib.RenderScriptBlurDemoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <EditText
+            android:id="@+id/et_blur_degree"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:inputType="number"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btn_blur_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="模糊图片"/>
+            <ImageView
+                android:id="@+id/iv_blur_person_1"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/person1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+            <Button
+                android:id="@+id/btn_blur_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="模糊View"
+                android:textAllCaps="false"/>
+            <View
+                android:id="@+id/view_blur_1"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:background="#32acda"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
