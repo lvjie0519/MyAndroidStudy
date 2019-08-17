@@ -67,7 +67,8 @@
         <activity android:name=".uidemo.picker.PickerTestActivity" />
         <activity android:name=".androidapi.AudioDemoTestActivity" />
         <activity android:name=".androidapi.LifeCycleTestActivity" />
-        <activity android:name=".thirdlib.RenderScriptBlurDemoActivity"></activity>
+        <activity android:name=".thirdlib.RenderScriptBlurDemoActivity" />
+        <activity android:name=".androidapi.SurfaceViewDrawDemoActivity"></activity>
     </application>
 
 </manifest>

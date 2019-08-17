@@ -78,6 +78,12 @@
             android:layout_height="wrap_content"
             android:text="高斯模糊库-RenderScript"
             android:textAllCaps="false"/>
+        <Button
+            android:id="@+id/btn_surface_view_demo_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SurfaceViewDemoTest"
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 </ScrollView>
