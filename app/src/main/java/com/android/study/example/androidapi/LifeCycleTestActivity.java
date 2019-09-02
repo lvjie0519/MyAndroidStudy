@@ -12,6 +12,7 @@ public class LifeCycleTestActivity extends AppCompatActivity {
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, LifeCycleTestActivity.class);
+        intent.putExtra("startTime", System.currentTimeMillis());
         context.startActivity(intent);
     }
 
@@ -19,7 +20,8 @@ public class LifeCycleTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_cycle_test);
-        Log.i("lvjie","onCreate...");
+        long startTime = getIntent().getLongExtra("startTime", 0);
+        Log.i("lvjie","onCreate... timeCost="+(System.currentTimeMillis()-startTime));
     }
 
     @Override
@@ -33,6 +35,13 @@ public class LifeCycleTestActivity extends AppCompatActivity {
         super.onResume();
         Log.i("lvjie","onResume...");
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.i("lvjie","onPostResume...");
+    }
+
 
     @Override
     protected void onPause() {
