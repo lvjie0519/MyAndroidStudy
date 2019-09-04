@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000">
+
+    <LinearLayout
+        android:id="@+id/layout_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#ebebeb"
+        android:alpha="0.8"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_blur_dialog_view"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Blur dialog view"/>
+        <Button
+            android:id="@+id/btn_blur_dialog_close"
+            android:layout_width="120dp"
+            android:layout_height="44dp"
+            android:text="关闭"/>
+    </LinearLayout>
+
+</LinearLayout>

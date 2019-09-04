@@ -1,13 +1,12 @@
 package com.android.study.example.thirdlib;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
@@ -17,12 +16,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.android.study.example.R;
 
 public class RenderScriptBlurDemoActivity extends AppCompatActivity {
@@ -32,6 +31,9 @@ public class RenderScriptBlurDemoActivity extends AppCompatActivity {
     private ImageView ivBlurPerson1;
     private Button btnBlurView;
     private View viewBlur1;
+
+    private Dialog blurDialog;
+    private View dialogRootView;
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, RenderScriptBlurDemoActivity.class);
@@ -89,6 +91,13 @@ public class RenderScriptBlurDemoActivity extends AppCompatActivity {
                 blurByRenderScript(drawableToBitmap(viewBlur1.getBackground()), blurDegree, viewBlur1, RenderScriptBlurDemoActivity.this);
             }
         });
+
+        findViewById(R.id.btn_blur_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBlurDialog();
+            }
+        });
     }
 
 
@@ -143,7 +152,8 @@ public class RenderScriptBlurDemoActivity extends AppCompatActivity {
         if(view instanceof ImageView){
             ((ImageView)view).setImageBitmap(bitmap);
         }else{
-            view.setBackground(new BitmapDrawable(getResources(), bitmap));
+            Canvas canvas = new Canvas(bitmap);
+            view.draw(canvas);
         }
 
 
@@ -182,6 +192,99 @@ public class RenderScriptBlurDemoActivity extends AppCompatActivity {
 
         return outBitmap;
 
+    }
+
+    private void showBlurDialog(){
+
+        if(blurDialog == null){
+            blurDialog = new Dialog(RenderScriptBlurDemoActivity.this, R.style.MyDialogStyle);
+            View layout = View.inflate(RenderScriptBlurDemoActivity.this, R.layout.blur_dialog, null);
+            dialogRootView = layout.findViewById(R.id.layout_dialog);
+            layout.findViewById(R.id.btn_blur_dialog_close).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    blurDialog.dismiss();
+                }
+            });
+
+            layout.findViewById(R.id.btn_blur_dialog_view).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    blurDialogRootView();
+                }
+            });
+
+            blurDialog.setContentView(layout);
+            Window window = blurDialog.getWindow();
+            if (window != null) {
+                window.setGravity(Gravity.BOTTOM);
+            }
+        }
+        blurDialog.show();
+
+    }
+
+    /**
+     * 图片缩放比例
+     */
+    private static float BITMAP_SCALE = 1f;
+    /**
+     * 最大模糊度(在0.0到25.0之间)
+     */
+    private static float BLUR_RADIUS = 15f;
+
+    private void blurDialogRootView(){
+
+        int blurDegree = 10;
+        if(!TextUtils.isEmpty(etBlurDegree.getText().toString().trim())){
+            try {
+                blurDegree = Integer.parseInt(etBlurDegree.getText().toString().trim());
+            } catch (NumberFormatException e) {
+
+            }
+        }
+
+        // 获取activity的背景
+        View activityView = getWindow().getDecorView();
+        activityView.setDrawingCacheEnabled(true);
+        activityView.destroyDrawingCache();
+        activityView.buildDrawingCache();
+        Bitmap image = activityView.getDrawingCache();
+
+        // 计算图片缩小后的长宽
+        int width = Math.round(image.getWidth() * BITMAP_SCALE);
+        int height = Math.round(image.getHeight() * BITMAP_SCALE);
+
+        // 将缩小后的图片做为预渲染的图片。
+        Bitmap inputBitmap = Bitmap.createScaledBitmap(image, width, height, false);
+        // 创建一张渲染后的输出图片。
+        Bitmap outputBitmap = Bitmap.createBitmap(inputBitmap);
+
+        // 创建RenderScript内核对象
+        RenderScript rs = RenderScript.create(this);
+        // 创建一个模糊效果的RenderScript的工具对象
+        ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+
+        // 由于RenderScript并没有使用VM来分配内存,所以需要使用Allocation类来创建和分配内存空间。
+        // 创建Allocation对象的时候其实内存是空的,需要使用copyTo()将数据填充进去。
+        Allocation tmpIn = Allocation.createFromBitmap(rs, inputBitmap);
+        Allocation tmpOut = Allocation.createFromBitmap(rs, outputBitmap);
+
+        // 设置渲染的模糊程度, 25f是最大模糊度
+        blurScript.setRadius(blurDegree);
+        // 设置blurScript对象的输入内存
+        blurScript.setInput(tmpIn);
+        // 将输出数据保存到输出内存中
+        blurScript.forEach(tmpOut);
+
+        // 将数据填充到Allocation中
+        tmpOut.copyTo(outputBitmap);
+
+//        blurDialog.getWindow().setBackgroundDrawable(new BitmapDrawable(getResources(), outputBitmap));
+//        dialogRootView.draw(new Canvas(outputBitmap));
+//        dialogRootView.invalidate();
+        dialogRootView.setBackground(new BitmapDrawable(getResources(), outputBitmap));
+        image.recycle();
     }
 
 

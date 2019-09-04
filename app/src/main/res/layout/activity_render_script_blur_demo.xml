@@ -48,10 +48,16 @@
             <View
                 android:id="@+id/view_blur_1"
                 android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:background="#32acda"/>
+                android:layout_height="200dp"/>
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_blur_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blur Dialog 显示"
+            android:textAllCaps="false"/>
     </LinearLayout>
 
 </ScrollView>
