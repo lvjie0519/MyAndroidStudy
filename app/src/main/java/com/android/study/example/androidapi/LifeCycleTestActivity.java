@@ -18,9 +18,11 @@ public class LifeCycleTestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        long startTime = System.currentTimeMillis();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_cycle_test);
-        long startTime = getIntent().getLongExtra("startTime", 0);
+        Log.i("lvjie","super.onCreate... timeCost="+(System.currentTimeMillis()-startTime));
+        startTime = getIntent().getLongExtra("startTime", 0);
         Log.i("lvjie","onCreate... timeCost="+(System.currentTimeMillis()-startTime));
     }
 
