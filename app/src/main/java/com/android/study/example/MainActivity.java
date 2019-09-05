@@ -14,6 +14,7 @@ import com.android.study.example.androidapi.AudioDemoTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
 import com.android.study.example.androidapi.LifeCycleTestActivity;
 import com.android.study.example.androidapi.SurfaceViewDrawDemoActivity;
+import com.android.study.example.books.BooksMainTestActivity;
 import com.android.study.example.butterknife.ButterKnifeTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
@@ -136,6 +137,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SurfaceViewDrawDemoActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_books_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BooksMainTestActivity.startActivity(MainActivity.this);
             }
         });
     }
