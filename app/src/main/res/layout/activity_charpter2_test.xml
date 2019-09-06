@@ -1,9 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".books.jjzg.chapter2.Chapter2TestActivity">
+    tools:context=".books.jjzg.chapter2.Chapter2TestActivity"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/btn_snackbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Snackbar 测试"
+        android:onClick="snackbarOnClick"/>
+
+    <!--
+        它是一个负责显示界面基本操作的圆形按钮,其使用起来非常便捷，可以把它当作一个Button
+        app：backgroundTint来设定背景填充色。
+        app：elevation用来设置正常状态的阴影大小，
+        app：pressedTranslationZ用来设置点击时阴影的大小
+     -->
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:src="@mipmap/ic_launcher_round"
+        android:clickable="true"
+        app:backgroundTint="#3f51b5"
+        app:elevation="3dp"
+        app:pressedTranslationZ="6dp"/>
+
+    <View
+        android:id="@+id/layout_snackbar_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </View>
+
+</LinearLayout>
