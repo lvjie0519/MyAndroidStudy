@@ -12,6 +12,13 @@
         tools:context="com.android.study.example.MainActivity">
 
         <Button
+            android:id="@+id/btn_books_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="读书笔记"
+            android:textAllCaps="false"/>
+
+        <Button
             android:id="@+id/btn_butterknife_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,10 +93,10 @@
             android:textAllCaps="false"/>
 
         <Button
-            android:id="@+id/btn_books_test"
+            android:id="@+id/btn_view_event_trans_demo_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="读书笔记"
+            android:text="View Event Trans 测试"
             android:textAllCaps="false"/>
 
     </LinearLayout>

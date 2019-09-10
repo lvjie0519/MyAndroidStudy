@@ -21,6 +21,7 @@ import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
 import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
 import com.android.study.example.uidemo.dragging.FloatingActionBtnTestActivity;
+import com.android.study.example.uidemo.eventtrans.ViewEventTransTestActivity;
 import com.android.study.example.uidemo.picker.PickerTestActivity;
 import com.annotaions.example.MyAnnotation;
 
@@ -144,6 +145,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 BooksMainTestActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_view_event_trans_demo_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewEventTransTestActivity.startActivity(MainActivity.this);
             }
         });
     }
