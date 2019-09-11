@@ -7,18 +7,41 @@
     tools:context=".uidemo.eventtrans.ViewEventTransTestActivity"
     android:orientation="vertical">
 
-    <com.android.study.example.uidemo.eventtrans.MyViewGroupA
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:background="#eeeeee"
-        android:gravity="center">
-        <com.android.study.example.uidemo.eventtrans.MyView
-            android:id="@+id/myview"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:text="事件分发"
-            android:textStyle="bold"
-            android:background="#FF4081"/>
-    </com.android.study.example.uidemo.eventtrans.MyViewGroupA>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.android.study.example.uidemo.eventtrans.MyViewGroupA
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:background="#eeeeee"
+                android:gravity="center">
+                <com.android.study.example.uidemo.eventtrans.MyView
+                    android:id="@+id/myview"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:text="事件分发"
+                    android:textStyle="bold"
+                    android:background="#FF4081"/>
+            </com.android.study.example.uidemo.eventtrans.MyViewGroupA>
+
+            <Button
+                android:id="@+id/btn_software_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="测试软键盘支持"
+                android:onClick="onBtnClickToSoftwareTest"/>
+            <EditText
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="300dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>
