@@ -50,12 +50,6 @@ public class MapSweeperView extends RelativeLayout {
         sweeperViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
         addView(this.mSweeperView, sweeperViewParams);
 
-        mSweeperView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("lvjie", "mLayoutSweeper  onClick...");
-            }
-        });
     }
 
     private void initData(Context context){
@@ -64,9 +58,8 @@ public class MapSweeperView extends RelativeLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        heightMeasureSpec = DisplayUtil.dip2px(this.mContext, 200);
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(heightMeasureSpec, MeasureSpec.EXACTLY);
 
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(1080, MeasureSpec.EXACTLY);
         mViewHeight = MeasureSpec.getSize(heightMeasureSpec);
         mViewWidth = MeasureSpec.getSize(widthMeasureSpec);
 
@@ -79,9 +72,17 @@ public class MapSweeperView extends RelativeLayout {
             return;
         }
 
-        Log.i("lvjie", "x: "+point.getPointX()+"  y: "+point.getPointY());
-        this.mSweeperView.smoothScrollTo(point.getPointX(), point.getPointY());
+        this.mSweeperView.smoothScrollTo(convertSweeperViewPoint(point.getPointX()), convertSweeperViewPoint(point.getPointY()));
         this.mMapView.drawNewPoint(point);
+    }
+
+    private int convertSweeperViewPoint(int point){
+        /**
+         * 扫地机最开始处于画布最中心，中心点的坐标为 0，0
+         * 当scroll x为正时，是向左移  需要统一转换下坐标系
+         */
+        int pointCenter = mViewWidth>>1;
+        return pointCenter-point;
     }
 
     public void drawHistoryMap(List<MapView.Point> points){

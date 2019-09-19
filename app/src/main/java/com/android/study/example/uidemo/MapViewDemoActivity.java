@@ -68,9 +68,12 @@ public class MapViewDemoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 开始扫地
 //                mHandler.sendEmptyMessageDelayed(msgMapSweeperView, 1000);
-//                MapView.Point point = generatePoint();
-                mapSweeperView.moveSweeper(new MapView.Point(x, x, 1));
-                x+=20;
+
+//                mapSweeperView.moveSweeper(new MapView.Point(x, x, 1));
+//                x+=20;
+
+                MapView.Point point = generatePoint();
+                mapSweeperView.moveSweeper(point);
             }
         });
         findViewById(R.id.btn_stop_sweeper).setOnClickListener(new View.OnClickListener() {
