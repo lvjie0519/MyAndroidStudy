@@ -7,9 +7,6 @@
     tools:context=".uidemo.MapViewDemoActivity"
     android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,11 +32,20 @@
                     android:layout_height="wrap_content"
                     android:text="停止扫地"/>
             </LinearLayout>
-            <com.android.study.example.uidemo.MapSweeperView
-                android:id="@+id/map_sweeper_view"
+
+            <com.android.study.example.uidemo.ZoomView
+                android:id="@+id/zoom_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content">
+
+                <com.android.study.example.uidemo.MapSweeperView
+                    android:id="@+id/map_sweeper_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.android.study.example.uidemo.ZoomView>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,6 +80,5 @@
                 android:background="#45addc"/>
 
         </LinearLayout>
-    </ScrollView>
 
 </LinearLayout>
