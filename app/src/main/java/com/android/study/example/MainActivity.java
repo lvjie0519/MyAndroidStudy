@@ -20,6 +20,7 @@ import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
 import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
+import com.android.study.example.uidemo.MapViewDemoActivity;
 import com.android.study.example.uidemo.dragging.FloatingActionBtnTestActivity;
 import com.android.study.example.uidemo.eventtrans.ViewEventTransTestActivity;
 import com.android.study.example.uidemo.picker.PickerTestActivity;
@@ -152,6 +153,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ViewEventTransTestActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_self_define_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MapViewDemoActivity.startActivity(MainActivity.this);
             }
         });
     }
