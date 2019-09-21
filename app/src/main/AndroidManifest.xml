@@ -75,7 +75,8 @@
         <activity
             android:name=".uidemo.eventtrans.ViewEventTransTestActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".uidemo.MapViewDemoActivity"></activity>
+        <activity android:name=".uidemo.MapViewDemoActivity" />
+        <activity android:name=".uidemo.animation.AnimationDemoActivity"></activity>
     </application>
 
 </manifest>

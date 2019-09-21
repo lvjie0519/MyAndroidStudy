@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    android:duration="2000"	动画持续时间。即这个动画会持续多长时间，单位(ms)
+    android:fillAfter="false"	动画播放完毕后，是否会停止在动画结束的状态，优先存在于fillBefore
+    android:fillBefore="true"	动画播放完毕后，是否会恢复原始状态
+    android:fillEnabled="true"	是否应用与fillBefore的值，默认:true
+    android:fromXScale="1"	X轴起始缩放倍数
+    android:fromYScale="1"	Y轴起始缩放倍数
+    android:pivotX="50%"	缩放轴点X坐标
+    android:pivotY="50%"	缩放轴点Y坐标
+    android:repeatCount="0"	重复次数，值infinite为无限一直重复
+    android:repeatMode="restart"	播放的动画模式restart表示正序播放，reverse代表倒序播放，默认是restart
+    android:startOffset="0"	动画延迟开始时间(多长时间后开始执行动画)
+    android:toXScale="2.5"	缩放轴点的X坐标
+    android:toYScale="2.5"	缩放轴点的Y坐标
+
+android:fillAfter          用于确定View是否保持动画结束时的状态，如果设置为true，动画结束时，View将保持动画最后时的状态，为false就是不保持,回到View本身的初始值的状态，默认为false；
+android:fillBefore         用于确定动画开始时，View的动画属性值；这里所说的动画开始不是指的调用startAnimation方法，而是界面中动画真正开始动的时候（从调用startAnimation到动画真正开始时，中间有一个startOffset阶段）。若
+                           fillBefore为true，则在startOffset阶段时，将动画属性设置为fromScale的值，为false，则为View本身的初始值，默认为true；
+android:fillEnabled        用来控制fillBefore属性是否有效，若为true，则fillBefore生效；若为false， 则使用fillBefore的默认值，即为true；
+android:repeatCount        重复次数
+android:repeatMode         重复类型，有reverse和restart两个值，reverse表示倒序回放，restart表示重新放一遍，必须与repeatCount一起使用才能看到效果。
+                            因为这里的意义是重复的类型，即回放时的动作。
+android:interpolator       设定插值器，其实就是指定的动作效果，比如弹跳效果等。
+-->
+
+<!--  缩放动画  -->
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000"
+    android:fromXScale="1"
+    android:fromYScale="1"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse"
+    android:toXScale="0.7"
+    android:toYScale="0.7">
+
+</scale>
+
