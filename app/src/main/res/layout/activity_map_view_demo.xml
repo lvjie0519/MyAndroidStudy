@@ -33,7 +33,7 @@
                     android:text="停止扫地"/>
             </LinearLayout>
 
-            <com.android.study.example.uidemo.ZoomView
+            <com.android.study.example.uidemo.ZoomMapSweeperView
                 android:id="@+id/zoom_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     />
 
-            </com.android.study.example.uidemo.ZoomView>
+            </com.android.study.example.uidemo.ZoomMapSweeperView>
 
 
             <LinearLayout

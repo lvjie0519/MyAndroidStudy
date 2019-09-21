@@ -11,19 +11,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-public class ZoomView extends RelativeLayout {
+public class ZoomMapSweeperView extends RelativeLayout {
 
-    public ZoomView(Context context, AttributeSet attrs, int defStyle) {
+    public ZoomMapSweeperView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         // TODO Auto-generated constructor stub
     }
 
-    public ZoomView(Context context, AttributeSet attrs) {
+    public ZoomMapSweeperView(Context context, AttributeSet attrs) {
         super(context, attrs);
         // TODO Auto-generated constructor stub
     }
 
-    public ZoomView(final Context context) {
+    public ZoomMapSweeperView(final Context context) {
         super(context);
     }
 

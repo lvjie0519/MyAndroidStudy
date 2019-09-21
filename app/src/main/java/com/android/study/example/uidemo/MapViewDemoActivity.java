@@ -23,7 +23,7 @@ public class MapViewDemoActivity extends AppCompatActivity {
     private MapSweeperView mapSweeperView;
     private static final int msgMapSweeperView = 10001;
 
-    private ZoomView zoomView;
+    private ZoomMapSweeperView zoomView;
 
     private Handler mHandler = new Handler(){
         @Override
@@ -107,7 +107,7 @@ public class MapViewDemoActivity extends AppCompatActivity {
             }
         });
 
-        zoomView = (ZoomView) findViewById(R.id.zoom_view);
+        zoomView = (ZoomMapSweeperView) findViewById(R.id.zoom_view);
         zoomView.setMaxZoom(2.0f);
     }
 
