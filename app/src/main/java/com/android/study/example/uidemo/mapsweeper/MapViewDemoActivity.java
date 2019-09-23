@@ -1,4 +1,4 @@
-package com.android.study.example.uidemo;
+package com.android.study.example.uidemo.mapsweeper;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import java.util.Random;
 public class MapViewDemoActivity extends AppCompatActivity {
 
     private MapView mapView;
-    private List<MapView.Point> points;
+    private List<MapPoint> points;
     private Random mRandom = new Random();
 
     private MapSweeperView mapSweeperView;
@@ -74,7 +74,7 @@ public class MapViewDemoActivity extends AppCompatActivity {
 //                mapSweeperView.moveSweeper(new MapView.Point(x, x, 1));
 //                x+=20;
 
-                MapView.Point point = generatePoint();
+                MapPoint point = generatePoint();
                 mapSweeperView.moveSweeper(point);
             }
         });
@@ -113,22 +113,22 @@ public class MapViewDemoActivity extends AppCompatActivity {
 
     private void initData(){
         points = new ArrayList<>();
-        points.add(new MapView.Point(100,100, 1));
-        points.add(new MapView.Point(300,100, 1));
-        points.add(new MapView.Point(300,200, 1));
-        points.add(new MapView.Point(100,200, 1));
-        points.add(new MapView.Point(400,200, 1));
-        points.add(new MapView.Point(300,500, 1));
-        points.add(new MapView.Point(900,400, 1));
-        points.add(new MapView.Point(400,100, 1));
+        points.add(new MapPoint(100,100, 1));
+        points.add(new MapPoint(300,100, 1));
+        points.add(new MapPoint(300,200, 1));
+        points.add(new MapPoint(100,200, 1));
+        points.add(new MapPoint(400,200, 1));
+        points.add(new MapPoint(300,500, 1));
+        points.add(new MapPoint(900,400, 1));
+        points.add(new MapPoint(400,100, 1));
 
     }
 
-    private MapView.Point generatePoint(){
+    private MapPoint generatePoint(){
         int x = mRandom.nextInt((int) mapView.getViewWidth());
         int y = mRandom.nextInt((int) mapView.getViewHeight());
 
-        return new MapView.Point(x, y, 1);
+        return new MapPoint(x, y, 1);
     }
 
     @Override

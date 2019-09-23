@@ -1,13 +1,9 @@
-package com.android.study.example.uidemo;
+package com.android.study.example.uidemo.mapsweeper;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-
-import com.android.study.example.utils.DisplayUtil;
 
 import java.util.List;
 
@@ -67,7 +63,7 @@ public class MapSweeperView extends RelativeLayout {
     }
 
 
-    public void moveSweeper(MapView.Point point){
+    public void moveSweeper(MapPoint point){
         if(point == null){
             return;
         }
@@ -85,7 +81,7 @@ public class MapSweeperView extends RelativeLayout {
         return pointCenter-point;
     }
 
-    public void drawHistoryMap(List<MapView.Point> points){
+    public void drawHistoryMap(List<MapPoint> points){
         if(points == null || points.size() == 0){
             return;
         }

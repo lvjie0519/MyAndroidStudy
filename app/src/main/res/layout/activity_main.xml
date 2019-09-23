@@ -107,10 +107,10 @@
             android:textAllCaps="false"/>
 
         <Button
-            android:id="@+id/btn_self_define_view"
+            android:id="@+id/btn_map_sweeper_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="自定义View 测试"
+            android:text="地图扫地机测试"
             android:textAllCaps="false"/>
 
     </LinearLayout>

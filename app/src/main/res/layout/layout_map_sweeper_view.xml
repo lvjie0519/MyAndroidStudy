@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="200dp">
 
-    <com.android.study.example.uidemo.MapView
+    <com.android.study.example.uidemo.mapsweeper.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="200dp" />

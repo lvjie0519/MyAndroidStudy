@@ -1,13 +1,9 @@
 package com.android.study.example;
 
 import android.content.Context;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.NumberPicker;
-import android.widget.Toast;
 
 import com.android.study.example.androidapi.AndroidApiTestActivity;
 import com.android.study.example.androidapi.AudioDemoTestActivity;
@@ -15,12 +11,11 @@ import com.android.study.example.androidapi.BlueMainTestActivity;
 import com.android.study.example.androidapi.LifeCycleTestActivity;
 import com.android.study.example.androidapi.SurfaceViewDrawDemoActivity;
 import com.android.study.example.books.BooksMainTestActivity;
-import com.android.study.example.butterknife.ButterKnifeTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
 import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
-import com.android.study.example.uidemo.MapViewDemoActivity;
+import com.android.study.example.uidemo.mapsweeper.MapViewDemoActivity;
 import com.android.study.example.uidemo.animation.AnimationDemoActivity;
 import com.android.study.example.uidemo.dragging.FloatingActionBtnTestActivity;
 import com.android.study.example.uidemo.eventtrans.ViewEventTransTestActivity;
@@ -29,8 +24,6 @@ import com.annotaions.example.MyAnnotation;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Formatter;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.Call;
@@ -164,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btn_self_define_view).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_map_sweeper_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MapViewDemoActivity.startActivity(MainActivity.this);

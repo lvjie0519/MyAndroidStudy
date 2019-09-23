@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".uidemo.MapViewDemoActivity"
+    tools:context=".uidemo.mapsweeper.MapViewDemoActivity"
     android:orientation="vertical">
 
         <LinearLayout
@@ -33,18 +33,18 @@
                     android:text="停止扫地"/>
             </LinearLayout>
 
-            <com.android.study.example.uidemo.ZoomMapSweeperView
+            <com.android.study.example.uidemo.mapsweeper.ZoomMapSweeperView
                 android:id="@+id/zoom_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.android.study.example.uidemo.MapSweeperView
+                <com.android.study.example.uidemo.mapsweeper.MapSweeperView
                     android:id="@+id/map_sweeper_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
 
-            </com.android.study.example.uidemo.ZoomMapSweeperView>
+            </com.android.study.example.uidemo.mapsweeper.ZoomMapSweeperView>
 
 
             <LinearLayout
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:text="清除轨迹数据"/>
             </LinearLayout>
-            <com.android.study.example.uidemo.MapView
+            <com.android.study.example.uidemo.mapsweeper.MapView
                 android:id="@+id/map_view"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"

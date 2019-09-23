@@ -1,4 +1,4 @@
-package com.android.study.example.uidemo;
+package com.android.study.example.uidemo.mapsweeper;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

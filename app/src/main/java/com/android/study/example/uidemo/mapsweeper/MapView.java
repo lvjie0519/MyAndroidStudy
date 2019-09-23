@@ -1,4 +1,4 @@
-package com.android.study.example.uidemo;
+package com.android.study.example.uidemo.mapsweeper;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -27,7 +27,7 @@ public class MapView extends View {
     private float mViewWidth;
     private float mViewHeight;
 
-    private List<Point> mHistoryPoints;
+    private List<MapPoint> mHistoryPoints;
 
     public MapView(@NonNull Context context) {
         this(context, null);
@@ -98,19 +98,19 @@ public class MapView extends View {
         }
     }
 
-    public void setNewPoint(Point point){
+    public void setNewPoint(MapPoint point){
         if(point == null || point.pointX <0 || point.pointY <0){
             return;
         }
         mMapPath.lineTo(point.pointX, point.pointY);
     }
 
-    public void drawNewPoint(Point point){
+    public void drawNewPoint(MapPoint point){
         setNewPoint(point);
         invalidate();
     }
 
-    public void setHistoryPoints(List<Point> points){
+    public void setHistoryPoints(List<MapPoint> points){
         if(points == null || points.size() == 0){
             return;
         }
@@ -132,32 +132,5 @@ public class MapView extends View {
 
     public void setViewHeight(float mViewHeight) {
         this.mViewHeight = mViewHeight;
-    }
-
-    public static class Point{
-        private int pointX;
-        private int pointY;
-        private int pointStyle;
-
-        public Point() {
-        }
-
-        public Point(int pointX, int pointY, int pointStyle) {
-            this.pointX = pointX;
-            this.pointY = pointY;
-            this.pointStyle = pointStyle;
-        }
-
-        public int getPointX() {
-            return pointX;
-        }
-
-        public int getPointY() {
-            return pointY;
-        }
-
-        public int getPointStyle() {
-            return pointStyle;
-        }
     }
 }
