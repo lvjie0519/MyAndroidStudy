@@ -8,11 +8,17 @@
     android:orientation="vertical"
     android:background="#333333">
 
+    <Button
+        android:id="@+id/btn_anim"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="属性动画-平移"/>
+
     <View
-        android:id="@+id/view_scale_anim"
+        android:id="@+id/view_anim"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/icon_sweeper_circular"/>
 
