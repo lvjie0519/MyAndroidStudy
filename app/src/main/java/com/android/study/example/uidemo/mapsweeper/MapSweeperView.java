@@ -55,9 +55,8 @@ public class MapSweeperView extends RelativeLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        heightMeasureSpec = MeasureSpec.makeMeasureSpec(1080, MeasureSpec.EXACTLY);
-        mViewHeight = MeasureSpec.getSize(heightMeasureSpec);
-        mViewWidth = MeasureSpec.getSize(widthMeasureSpec);
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(this.mViewHeight, MeasureSpec.EXACTLY);
+        widthMeasureSpec = MeasureSpec.makeMeasureSpec(this.mViewWidth, MeasureSpec.EXACTLY);
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
@@ -87,5 +86,21 @@ public class MapSweeperView extends RelativeLayout {
         }
 
         this.mMapView.setHistoryPoints(points);
+    }
+
+    public void setWidth(int width) {
+        this.mViewWidth= width;
+    }
+
+    public void setHeight(int height) {
+        this.mViewHeight = height;
+    }
+
+    public int getViewHeight() {
+        return mViewHeight;
+    }
+
+    public int getViewWidth() {
+        return mViewWidth;
     }
 }

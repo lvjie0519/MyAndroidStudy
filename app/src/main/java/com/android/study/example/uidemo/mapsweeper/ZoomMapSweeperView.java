@@ -9,23 +9,11 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 public class ZoomMapSweeperView extends RelativeLayout {
 
-    public ZoomMapSweeperView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        // TODO Auto-generated constructor stub
-    }
-
-    public ZoomMapSweeperView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        // TODO Auto-generated constructor stub
-    }
-
-    public ZoomMapSweeperView(final Context context) {
-        super(context);
-    }
 
     /**
      * Zooming view listener interface.
@@ -76,6 +64,66 @@ public class ZoomMapSweeperView extends RelativeLayout {
     ZoomViewListener listener;
 
     private Bitmap ch;
+
+    // 地图扫地机
+    private MapSweeperView mMapSweeperView;
+    private int mScreenWidth;       // 屏幕宽度
+
+    public ZoomMapSweeperView(final Context context) {
+        this(context, null);
+    }
+
+    public ZoomMapSweeperView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public ZoomMapSweeperView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+
+        initView(context);
+    }
+
+    private void  initView(Context context){
+        this.mMapSweeperView = new MapSweeperView(context);
+        LayoutParams sweeperViewParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        sweeperViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
+        addView(this.mMapSweeperView, sweeperViewParams);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+
+        int mapSweeperViewHeight = getMapSweeperViewHeight(widthMeasureSpec, heightMeasureSpec);
+        this.mMapSweeperView.setHeight(mapSweeperViewHeight);
+        this.mMapSweeperView.setWidth(mapSweeperViewHeight);
+
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    private int getMapSweeperViewHeight(int widthMeasureSpec, int heightMeasureSpec){
+        int result = mScreenWidth;
+
+        int height = MeasureSpec.getSize(heightMeasureSpec);
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+
+        if(heightMode == MeasureSpec.EXACTLY && (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST)){
+            result = (height <= width) ? height : width;
+            return result;
+        }
+
+        return result;
+    }
+
+    public MapSweeperView getMapSweeperView() {
+        return mMapSweeperView;
+    }
+
+    public void setScreenWidth(int screenWidth) {
+        this.mScreenWidth = screenWidth;
+    }
 
     public float getZoom() {
         return zoom;
