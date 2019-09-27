@@ -18,9 +18,6 @@ import java.util.List;
  */
 public class MapView extends View {
 
-    // 背景Paint
-    private Paint mBackgroundPaint;
-
     // 画线Paint
     private Paint mDrawLinePaint;
     // 画线路径 path
@@ -52,10 +49,6 @@ public class MapView extends View {
     }
 
     private void initPaint(){
-        mBackgroundPaint = new Paint();
-        mBackgroundPaint.setColor(Color.parseColor("#45addc"));
-        mBackgroundPaint.setStyle(Paint.Style.FILL);
-
         mDrawLinePaint = new Paint();
         mDrawLinePaint.setColor(Color.parseColor("#ffffff"));
         mDrawLinePaint.setStrokeWidth(2f);      // 线宽
@@ -79,12 +72,7 @@ public class MapView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-//        drawBackground(canvas);
         canvas.drawPath(mMapPath, mDrawLinePaint);
-    }
-
-    private void drawBackground(Canvas canvas){
-        canvas.drawRect(0, 0, mViewWidth, mViewHeight, mBackgroundPaint);
     }
 
     private void drawHistoryLines(){
@@ -101,7 +89,7 @@ public class MapView extends View {
         }
     }
 
-    public void setNewPoint(MapPoint point){
+    private void setNewPoint(MapPoint point){
         if(point == null || point.pointX <0 || point.pointY <0){
             return;
         }
