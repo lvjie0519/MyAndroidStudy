@@ -7,6 +7,10 @@ import android.widget.RelativeLayout;
 
 import java.util.List;
 
+/**
+ * 扫地机综合管理类
+ * 服务端的点坐标到手机屏幕的坐标系转换在此类进行转换
+ */
 public class MapSweeperView extends RelativeLayout {
 
     private Context mContext;
