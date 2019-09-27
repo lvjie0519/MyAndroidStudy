@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-public class ZoomMapSweeperView extends RelativeLayout {
+public class ZoomMapSweeperViewBak extends RelativeLayout {
 
 
     /**
@@ -32,15 +32,20 @@ public class ZoomMapSweeperView extends RelativeLayout {
     }
 
     // zooming
-    private static final float MIN_ZOOM = 1.0f;
-    private static final float MAX_ZOOM = 2.0f;
-    private static final float SMOOTH_ZOOM_DEFAULT = 1.0f;
-    float zoom = MIN_ZOOM;              //
-    float maxZoom = MAX_ZOOM;
-    float smoothZoom = SMOOTH_ZOOM_DEFAULT;
+    float zoom = 1.0f;
+    float maxZoom = 2.0f;
+    float smoothZoom = 1.0f;
     float zoomX, zoomY;
     float smoothZoomX, smoothZoomY;
-    private boolean scrolling;
+    private boolean scrolling; // NOPMD by karooolek on 29.06.11 11:45
+
+    // minimap variables
+    private boolean showMinimap = false;
+    private int miniMapColor = Color.WHITE;
+    private int miniMapHeight = -1;
+    private String miniMapCaption;
+    private float miniMapCaptionSize = 10.0f;
+    private int miniMapCaptionColor = Color.WHITE;
 
     // touching variables
     private long lastTapTime;
@@ -65,15 +70,15 @@ public class ZoomMapSweeperView extends RelativeLayout {
     private MapSweeperView mMapSweeperView;
     private int mScreenWidth;       // 屏幕宽度
 
-    public ZoomMapSweeperView(final Context context) {
+    public ZoomMapSweeperViewBak(final Context context) {
         this(context, null);
     }
 
-    public ZoomMapSweeperView(Context context, AttributeSet attrs) {
+    public ZoomMapSweeperViewBak(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ZoomMapSweeperView(Context context, AttributeSet attrs, int defStyle) {
+    public ZoomMapSweeperViewBak(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         initView(context);
@@ -130,11 +135,62 @@ public class ZoomMapSweeperView extends RelativeLayout {
     }
 
     public void setMaxZoom(final float maxZoom) {
-        if (maxZoom < MIN_ZOOM || maxZoom>MAX_ZOOM) {
-            this.maxZoom = MAX_ZOOM;
-        }else {
-            this.maxZoom = maxZoom;
+        if (maxZoom < 1.0f) {
+            return;
         }
+
+        this.maxZoom = maxZoom;
+    }
+
+    public void setMiniMapEnabled(final boolean showMiniMap) {
+        this.showMinimap = showMiniMap;
+    }
+
+    public boolean isMiniMapEnabled() {
+        return showMinimap;
+    }
+
+    public void setMiniMapHeight(final int miniMapHeight) {
+        if (miniMapHeight < 0) {
+            return;
+        }
+        this.miniMapHeight = miniMapHeight;
+    }
+
+    public int getMiniMapHeight() {
+        return miniMapHeight;
+    }
+
+    public void setMiniMapColor(final int color) {
+        miniMapColor = color;
+    }
+
+    public int getMiniMapColor() {
+        return miniMapColor;
+    }
+
+    public String getMiniMapCaption() {
+        return miniMapCaption;
+    }
+
+    public void setMiniMapCaption(final String miniMapCaption) {
+        this.miniMapCaption = miniMapCaption;
+    }
+
+    public float getMiniMapCaptionSize() {
+        return miniMapCaptionSize;
+    }
+
+    public void setMiniMapCaptionSize(final float size) {
+        miniMapCaptionSize = size;
+    }
+
+    public int getMiniMapCaptionColor() {
+        return miniMapCaptionColor;
+    }
+
+    public void setMiniMapCaptionColor(final int color) {
+        miniMapCaptionColor = color;
     }
 
     public void zoomTo(final float zoom, final float x, final float y) {
@@ -145,7 +201,7 @@ public class ZoomMapSweeperView extends RelativeLayout {
     }
 
     public void smoothZoomTo(final float zoom, final float x, final float y) {
-        smoothZoom = clamp(MIN_ZOOM, zoom, maxZoom);
+        smoothZoom = clamp(1.0f, zoom, maxZoom);
         smoothZoomX = x;
         smoothZoomY = y;
         if (listener != null) {
@@ -190,7 +246,31 @@ public class ZoomMapSweeperView extends RelativeLayout {
     }
 
     private void processSingleTouchEvent(final MotionEvent ev) {
-        processSingleTouchOutsideMinimap(ev);
+
+        final float x = ev.getX();
+        final float y = ev.getY();
+
+        final float w = miniMapHeight * (float) getWidth() / getHeight();
+        final float h = miniMapHeight;
+        final boolean touchingMiniMap = x >= 10.0f && x <= 10.0f + w
+                && y >= 10.0f && y <= 10.0f + h;
+
+        if (showMinimap && smoothZoom > 1.0f && touchingMiniMap) {
+            processSingleTouchOnMinimap(ev);
+        } else {
+            processSingleTouchOutsideMinimap(ev);
+        }
+    }
+
+    private void processSingleTouchOnMinimap(final MotionEvent ev) {
+        final float x = ev.getX();
+        final float y = ev.getY();
+
+        final float w = miniMapHeight * (float) getWidth() / getHeight();
+        final float h = miniMapHeight;
+        final float zx = (x - 10.0f) / w * getWidth();
+        final float zy = (y - 10.0f) / h * getHeight();
+        smoothZoomTo(smoothZoom, zx, zy);
     }
 
     private void processSingleTouchOutsideMinimap(final MotionEvent ev) {
@@ -198,7 +278,7 @@ public class ZoomMapSweeperView extends RelativeLayout {
         final float y = ev.getY();
         float lx = x - touchStartX;
         float ly = y - touchStartY;
-        final float l = (float) Math.hypot(lx, ly);     // 平方和的平方根
+        final float l = (float) Math.hypot(lx, ly);
         float dx = x - touchLastX;
         float dy = y - touchLastY;
         touchLastX = x;
@@ -218,7 +298,7 @@ public class ZoomMapSweeperView extends RelativeLayout {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                if (scrolling || (l > 30.0f)) {
+                if (scrolling || (smoothZoom > 1.0f && l > 30.0f)) {
                     if (!scrolling) {
                         scrolling = true;
                         ev.setAction(MotionEvent.ACTION_CANCEL);
@@ -226,8 +306,6 @@ public class ZoomMapSweeperView extends RelativeLayout {
                     }
                     smoothZoomX -= dx / zoom;
                     smoothZoomY -= dy / zoom;
-                    Log.i("lvjie", "processSingleTouchOutsideMinimap   dx="+dx
-                            +"  zoom="+zoom+"  smoothZoomX="+smoothZoomX+"  smoothZoomY="+smoothZoomY+"  scrolling="+scrolling);
                     return;
                 }
                 break;
@@ -237,20 +315,21 @@ public class ZoomMapSweeperView extends RelativeLayout {
 
                 // tap
                 if (l < 30.0f) {
-                    // 检查连续两次点击，自动放大或缩小, 暂时先注释
-//                    if (System.currentTimeMillis() - lastTapTime < 500) {
-//                        if (smoothZoom == 1.0f) {
-//                            smoothZoomTo(maxZoom, x, y);
-//                        } else {
-//                            smoothZoomTo(1.0f, getWidth() / 2.0f,
-//                                    getHeight() / 2.0f);
-//                        }
-//                        lastTapTime = 0;
-//                        ev.setAction(MotionEvent.ACTION_CANCEL);
-//                        super.dispatchTouchEvent(ev);
-//                        return;
-//                    }
-//                    lastTapTime = System.currentTimeMillis();
+                    // check double tap
+                    if (System.currentTimeMillis() - lastTapTime < 500) {
+                        if (smoothZoom == 1.0f) {
+                            smoothZoomTo(maxZoom, x, y);
+                        } else {
+                            smoothZoomTo(1.0f, getWidth() / 2.0f,
+                                    getHeight() / 2.0f);
+                        }
+                        lastTapTime = 0;
+                        ev.setAction(MotionEvent.ACTION_CANCEL);
+                        super.dispatchTouchEvent(ev);
+                        return;
+                    }
+
+                    lastTapTime = System.currentTimeMillis();
 
                     performClick();
                 }
@@ -262,6 +341,9 @@ public class ZoomMapSweeperView extends RelativeLayout {
 
         ev.setLocation(zoomX + (x - 0.5f * getWidth()) / zoom, zoomY
                 + (y - 0.5f * getHeight()) / zoom);
+
+        ev.getX();
+        ev.getY();
 
         super.dispatchTouchEvent(ev);
     }
@@ -289,7 +371,7 @@ public class ZoomMapSweeperView extends RelativeLayout {
         lastd = d;
         final float ld = Math.abs(d - startd);      // 绝对值
 
-//        Math.atan2(y2 - y1, x2 - x1);       // 好像没什么用
+        Math.atan2(y2 - y1, x2 - x1);       // 好像没什么用
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startd = d;
@@ -301,7 +383,7 @@ public class ZoomMapSweeperView extends RelativeLayout {
                     pinching = true;
                     final float dxk = 0.5f * (dx1 + dx2);
                     final float dyk = 0.5f * (dy1 + dy2);
-                    smoothZoomTo(Math.max(MIN_ZOOM, zoom * d / (d - dd)), zoomX - dxk
+                    smoothZoomTo(Math.max(1.0f, zoom * d / (d - dd)), zoomX - dxk
                             / zoom, zoomY - dyk / zoom);
                 }
 
@@ -331,21 +413,13 @@ public class ZoomMapSweeperView extends RelativeLayout {
 
     @Override
     protected void dispatchDraw(final Canvas canvas) {
-
-        // nothing to draw
-        if (getChildCount() == 0) {
-            return;
-        }
-
+        Log.i("lvjie", "ZoomMapSweeperView   dispatchDraw...");
         // do zoom
         zoom = lerp(bias(zoom, smoothZoom, 0.05f), smoothZoom, 0.2f);
         smoothZoomX = clamp(0.5f * getWidth() / smoothZoom, smoothZoomX,
                 getWidth() - 0.5f * getWidth() / smoothZoom);
         smoothZoomY = clamp(0.5f * getHeight() / smoothZoom, smoothZoomY,
                 getHeight() - 0.5f * getHeight() / smoothZoom);
-
-        Log.i("lvjie", "dispatchDraw"
-                +"  zoom="+zoom+"  smoothZoomX="+smoothZoomX+"  smoothZoomY="+smoothZoomY+"  smoothZoom="+smoothZoom);
 
         zoomX = lerp(bias(zoomX, smoothZoomX, 0.1f), smoothZoomX, 0.35f);
         zoomY = lerp(bias(zoomY, smoothZoomY, 0.1f), smoothZoomY, 0.35f);
@@ -356,6 +430,11 @@ public class ZoomMapSweeperView extends RelativeLayout {
         final boolean animating = Math.abs(zoom - smoothZoom) > 0.0000001f
                 || Math.abs(zoomX - smoothZoomX) > 0.0000001f
                 || Math.abs(zoomY - smoothZoomY) > 0.0000001f;
+
+        // nothing to draw
+        if (getChildCount() == 0) {
+            return;
+        }
 
         // prepare matrix
         m.setTranslate(0.5f * getWidth(), 0.5f * getHeight());
@@ -383,9 +462,40 @@ public class ZoomMapSweeperView extends RelativeLayout {
         } else { // zoomed or cache unavailable
             ch = null;
             canvas.save();
-            canvas.concat(m);       // 使用矩阵放大或缩小及平移
+            canvas.concat(m);
             v.draw(canvas);
             canvas.restore();
+        }
+
+        // draw minimap
+        if (showMinimap) {
+            if (miniMapHeight < 0) {
+                miniMapHeight = getHeight() / 4;
+            }
+
+            canvas.translate(10.0f, 10.0f);
+
+            p.setColor(0x80000000 | 0x00ffffff & miniMapColor);
+            final float w = miniMapHeight * (float) getWidth() / getHeight();
+            final float h = miniMapHeight;
+            canvas.drawRect(0.0f, 0.0f, w, h, p);
+
+            if (miniMapCaption != null && miniMapCaption.length() > 0) {
+                p.setTextSize(miniMapCaptionSize);
+                p.setColor(miniMapCaptionColor);
+                p.setAntiAlias(true);
+                canvas.drawText(miniMapCaption, 10.0f,
+                        10.0f + miniMapCaptionSize, p);
+                p.setAntiAlias(false);
+            }
+
+            p.setColor(0x80000000 | 0x00ffffff & miniMapColor);
+            final float dx = w * zoomX / getWidth();
+            final float dy = h * zoomY / getHeight();
+            canvas.drawRect(dx - 0.5f * w / zoom, dy - 0.5f * h / zoom, dx
+                    + 0.5f * w / zoom, dy + 0.5f * h / zoom, p);
+
+            canvas.translate(-10.0f, -10.0f);
         }
 
         // redraw

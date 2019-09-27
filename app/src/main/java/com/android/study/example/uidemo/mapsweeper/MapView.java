@@ -13,6 +13,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 扫地机的轨迹图
+ */
 public class MapView extends View {
 
     // 背景Paint
@@ -54,8 +57,8 @@ public class MapView extends View {
         mBackgroundPaint.setStyle(Paint.Style.FILL);
 
         mDrawLinePaint = new Paint();
-        mDrawLinePaint.setColor(Color.parseColor("#333333"));
-        mDrawLinePaint.setStrokeWidth(4f);      // 线宽
+        mDrawLinePaint.setColor(Color.parseColor("#ffffff"));
+        mDrawLinePaint.setStrokeWidth(2f);      // 线宽
         mDrawLinePaint.setStyle(Paint.Style.STROKE);
 
         mMapPath = new Path();
@@ -76,7 +79,7 @@ public class MapView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        drawBackground(canvas);
+//        drawBackground(canvas);
         canvas.drawPath(mMapPath, mDrawLinePaint);
     }
 

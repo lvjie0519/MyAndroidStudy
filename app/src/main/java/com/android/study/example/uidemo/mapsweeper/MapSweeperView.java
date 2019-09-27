@@ -16,6 +16,9 @@ public class MapSweeperView extends RelativeLayout {
     // 地图部分
     private MapView mMapView;
 
+    // 地图底层部分
+    private MapBackgroundView mMapBackgroundView;
+
     private int mViewHeight;
     private int mViewWidth;
 
@@ -36,10 +39,14 @@ public class MapSweeperView extends RelativeLayout {
     }
 
     private void initView(Context context){
-
+        // 背景底图
+        this.mMapBackgroundView = new MapBackgroundView(context);
+        // 扫地机
         this.mSweeperView = new SweeperView(context);
+        // 画线轨迹
         this.mMapView = new MapView(context);
         LayoutParams mapViewParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        addView(this.mMapBackgroundView, mapViewParams);
         addView(this.mMapView, mapViewParams);
 
         LayoutParams sweeperViewParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -62,6 +69,10 @@ public class MapSweeperView extends RelativeLayout {
     }
 
 
+    /**
+     * 移动扫地机 同时 画出轨迹
+     * @param point
+     */
     public void moveSweeper(MapPoint point){
         if(point == null){
             return;
@@ -80,12 +91,32 @@ public class MapSweeperView extends RelativeLayout {
         return pointCenter-point;
     }
 
+    /**
+     * 绘制历史轨迹
+     * @param points
+     */
     public void drawHistoryMap(List<MapPoint> points){
         if(points == null || points.size() == 0){
             return;
         }
 
         this.mMapView.setHistoryPoints(points);
+    }
+
+    /**
+     * 绘制底图 墙、障碍物
+     * @param points
+     */
+    public void drawHistoryMapBackground(List<MapPoint> points){
+        this.mMapBackgroundView.setPoints(points);
+    }
+
+    /**
+     * 基于历史数据， 根据新增的碰撞点绘制底图 墙、障碍物
+     * @param points
+     */
+    public void drawNewPointsToMapBackground(List<MapPoint> points){
+        this.mMapBackgroundView.addNewPoints(points);
     }
 
     public void setWidth(int width) {

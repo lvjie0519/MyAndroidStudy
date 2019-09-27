@@ -18,6 +18,7 @@ public class MapViewDemoActivity extends AppCompatActivity {
 
     private MapView mapView;
     private List<MapPoint> points;
+    private List<MapPoint> backgroundPoints;
     private Random mRandom = new Random();
 
     private static final int msgMapSweeperView = 10001;
@@ -50,6 +51,7 @@ public class MapViewDemoActivity extends AppCompatActivity {
         initView();
 
         zoomView.getMapSweeperView().drawHistoryMap(points);
+        zoomView.getMapSweeperView().drawHistoryMapBackground(backgroundPoints);
     }
 
     private int x = 0;
@@ -79,7 +81,8 @@ public class MapViewDemoActivity extends AppCompatActivity {
         findViewById(R.id.btn_stop_sweeper).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 停止扫地
+                // 回充
+
             }
         });
 
@@ -113,16 +116,34 @@ public class MapViewDemoActivity extends AppCompatActivity {
 
     private void initData(){
         points = new ArrayList<>();
-        points.add(new MapPoint(10,10, 1));
-        points.add(new MapPoint(20,30, 1));
-        points.add(new MapPoint(30,60, 1));
-        points.add(new MapPoint(40,100, 1));
-        points.add(new MapPoint(50,20, 1));
-        points.add(new MapPoint(60,40, 1));
-        points.add(new MapPoint(70,90, 1));
-        points.add(new MapPoint(80,10, 1));
+        points.add(new MapPoint(110,110, 1));
+        points.add(new MapPoint(120,130, 1));
+        points.add(new MapPoint(130,260, 1));
+        points.add(new MapPoint(140,200, 1));
+        points.add(new MapPoint(150,120, 1));
+        points.add(new MapPoint(160,140, 1));
+        points.add(new MapPoint(170,190, 1));
+        points.add(new MapPoint(180,110, 1));
 
+        backgroundPoints = new ArrayList<>();
+        backgroundPoints.add(new MapPoint(10,10, 1));
+        backgroundPoints.add(new MapPoint(20,10, 1));
+        backgroundPoints.add(new MapPoint(30,10, 1));
+        backgroundPoints.add(new MapPoint(80,10, 1));
+        backgroundPoints.add(new MapPoint(90,10, 1));
+
+        backgroundPoints.add(new MapPoint(10,10, 1));
+        backgroundPoints.add(new MapPoint(10,20, 1));
+        backgroundPoints.add(new MapPoint(10,30, 1));
+        backgroundPoints.add(new MapPoint(10,80, 1));
+        backgroundPoints.add(new MapPoint(10,90, 1));
+
+        backgroundPoints.add(new MapPoint(200,200, 1));
+        backgroundPoints.add(new MapPoint(205,200, 1));
+        backgroundPoints.add(new MapPoint(500,500, 1));
     }
+
+
 
     private MapPoint generatePoint(){
         int x = mRandom.nextInt((int) zoomView.getMapSweeperView().getViewWidth());

@@ -4,7 +4,7 @@ public class MapPoint {
 
     public int pointX;
     public int pointY;
-    public int pointStyle;
+    public int pointStyle;  // 1: 无障碍  2： 有障碍  3：当前点   4： 有碰撞点
 
     public MapPoint() {
     }

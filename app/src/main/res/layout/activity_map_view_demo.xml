@@ -30,13 +30,13 @@
                     android:id="@+id/btn_stop_sweeper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="停止扫地"/>
+                    android:text="回充"/>
             </LinearLayout>
 
             <com.android.study.example.uidemo.mapsweeper.ZoomMapSweeperView
                 android:id="@+id/zoom_view"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="300dp"
                 android:background="#1dc58a">
 
             </com.android.study.example.uidemo.mapsweeper.ZoomMapSweeperView>
@@ -45,7 +45,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
                 <Button
                     android:id="@+id/btn_draw_history_data"
                     android:layout_width="wrap_content"
@@ -66,13 +67,15 @@
                 android:id="@+id/map_view"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:visibility="gone"/>
 
             <com.android.study.example.uidemo.SignatureView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="20dp"
-                android:background="#45addc"/>
+                android:background="#45addc"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

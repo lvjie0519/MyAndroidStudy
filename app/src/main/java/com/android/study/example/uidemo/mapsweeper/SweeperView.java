@@ -13,6 +13,9 @@ import android.widget.Scroller;
 import com.android.study.example.R;
 import com.android.study.example.utils.DisplayUtil;
 
+/**
+ * 封装的扫地机
+ */
 public class SweeperView extends RelativeLayout {
 
     private static final int SweeperCircularDefaultSize = 30;   // dp
