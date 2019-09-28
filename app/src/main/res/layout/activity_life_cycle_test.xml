@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".androidapi.LifeCycleTestActivity">
+    tools:context=".androidapi.LifeCycleTestActivity"
+    android:orientation="vertical">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hello world"/>
+        android:text="进入下一个activity"
+        android:onClick="goNextActivity"/>
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+        <com.android.study.example.androidapi.views.MyView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#a12"/>
+    </LinearLayout>
+
+    <com.android.study.example.androidapi.views.MyView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#a12"/>
+
+
+</LinearLayout>

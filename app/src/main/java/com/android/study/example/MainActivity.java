@@ -3,6 +3,7 @@ package com.android.study.example;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.android.study.example.androidapi.AndroidApiTestActivity;
@@ -234,4 +235,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("lvjie","MainActivity onDestroy...");
+    }
 }
