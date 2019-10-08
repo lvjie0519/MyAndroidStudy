@@ -32,7 +32,7 @@ public class ZoomMapSweeperView extends RelativeLayout {
     }
 
     // zooming
-    private static final float MIN_ZOOM = 1.0f;
+    private static final float MIN_ZOOM = 0.5f;
     private static final float MAX_ZOOM = 2.0f;
     private static final float SMOOTH_ZOOM_DEFAULT = 1.0f;
     float zoom = MIN_ZOOM;              //
@@ -359,7 +359,7 @@ public class ZoomMapSweeperView extends RelativeLayout {
 
         // prepare matrix
         m.setTranslate(0.5f * getWidth(), 0.5f * getHeight());
-        m.preScale(zoom, zoom);
+        m.preScale(zoom, zoom);         // x  y  的缩放比例
         m.preTranslate(
                 -clamp(0.5f * getWidth() / zoom, zoomX, getWidth() - 0.5f
                         * getWidth() / zoom),

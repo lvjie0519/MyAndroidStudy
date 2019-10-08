@@ -26,6 +26,8 @@ public class MapSweeperView extends RelativeLayout {
     private int mViewHeight;
     private int mViewWidth;
 
+    private float mMapPointScale = 1.0f;
+
     public MapSweeperView(Context context) {
         this(context, null);
     }
@@ -69,6 +71,8 @@ public class MapSweeperView extends RelativeLayout {
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(this.mViewHeight, MeasureSpec.EXACTLY);
         widthMeasureSpec = MeasureSpec.makeMeasureSpec(this.mViewWidth, MeasureSpec.EXACTLY);
 
+        this.mMapPointScale = (float) this.mViewHeight/255;
+
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -82,8 +86,19 @@ public class MapSweeperView extends RelativeLayout {
             return;
         }
 
+        point = MapPoint.convertToScreenPoint(point, this.mMapPointScale);
         this.mSweeperView.smoothScrollTo(convertSweeperViewPoint(point.getPointX()), convertSweeperViewPoint(point.getPointY()));
         this.mMapView.drawNewPoint(point);
+    }
+
+    /**
+     * 基于历史数据， 根据新增的碰撞点绘制底图 墙、障碍物
+     * @param points
+     */
+    public void drawNewPointsToMapBackground(List<MapPoint> points){
+
+        points = MapPoint.convertToScreenPoints(points, this.mMapPointScale);
+        this.mMapBackgroundView.addNewPoints(points);
     }
 
     private int convertSweeperViewPoint(int point){
@@ -99,7 +114,7 @@ public class MapSweeperView extends RelativeLayout {
      * 绘制历史轨迹
      * @param points
      */
-    public void drawHistoryMap(List<MapPoint> points){
+    public void setHistoryPoints(List<MapPoint> points){
         if(points == null || points.size() == 0){
             return;
         }
@@ -111,16 +126,8 @@ public class MapSweeperView extends RelativeLayout {
      * 绘制底图 墙、障碍物
      * @param points
      */
-    public void drawHistoryMapBackground(List<MapPoint> points){
+    public void setHistoryMapBackground(List<MapPoint> points){
         this.mMapBackgroundView.setPoints(points);
-    }
-
-    /**
-     * 基于历史数据， 根据新增的碰撞点绘制底图 墙、障碍物
-     * @param points
-     */
-    public void drawNewPointsToMapBackground(List<MapPoint> points){
-        this.mMapBackgroundView.addNewPoints(points);
     }
 
     public void setWidth(int width) {
