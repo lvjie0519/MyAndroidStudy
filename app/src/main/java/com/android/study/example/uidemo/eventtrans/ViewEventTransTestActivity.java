@@ -2,12 +2,14 @@ package com.android.study.example.uidemo.eventtrans;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.android.study.example.R;
 import com.android.study.example.utils.AndroidBug5497Workaround;
@@ -15,6 +17,9 @@ import com.android.study.example.utils.TitleBarUtil;
 import com.android.study.example.utils.ToastUtil;
 
 public class ViewEventTransTestActivity extends AppCompatActivity {
+
+    private MyView myView;
+    private MyViewGroupA myViewGroupA;
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, ViewEventTransTestActivity.class);
@@ -28,6 +33,40 @@ public class ViewEventTransTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_event_trans_test);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED);
         AndroidBug5497Workaround.getInstance().assistActivity(this);
+
+        initView();
+    }
+
+    private void initView(){
+
+        myView = (MyView) findViewById(R.id.myview);
+        myViewGroupA = (MyViewGroupA) findViewById(R.id.view_myViewGroupA);
+
+        findViewById(R.id.btn_test_invalidate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myView.invalidate();
+            }
+        });
+
+        findViewById(R.id.btn_test_requestLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myView.requestLayout();
+            }
+        });
+
+        findViewById(R.id.btn_test_addView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                myViewGroupA.removeAllViews();
+                View view = new View(ViewEventTransTestActivity.this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(20, 20);
+                view.setBackgroundColor(Color.parseColor("#21211a"));
+                myViewGroupA.addView(view, layoutParams);
+            }
+        });
     }
 
     @Override

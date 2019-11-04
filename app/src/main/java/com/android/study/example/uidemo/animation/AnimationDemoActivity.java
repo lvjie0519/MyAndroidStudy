@@ -55,18 +55,29 @@ public class AnimationDemoActivity extends AppCompatActivity {
         scaleAnimView.startAnimation(animation);
     }
 
+    private int startX = 0;
+    private int startY = 0;
     // 属性动画-平移
     private void startPopsAnimTrans(){
         if(objectAnimatorX == null){
-            float [] x= {0f,60f,120f, 240f};
-            float [] y= {0f,30f,220f,90f};
+            float [] x= {startX+0f,startX+60f,startX+120f, startX+240f};
+            float [] y= {startY+0f,startY+30f,startY+220f,startY+90f};
 //            objectAnimatorX = ObjectAnimator.ofFloat(scaleAnimView,"alpha", 1f, 0.5f, 1f);
             objectAnimatorX = ObjectAnimator.ofFloat(scaleAnimView,"translationX", x);
             objectAnimatorX.setDuration(2000);
             objectAnimatorY = ObjectAnimator.ofFloat(scaleAnimView,"translationY", y);
             objectAnimatorY.setDuration(2000);
+        }else{
+            float [] x= {startX+0f,startX+60f,startX+120f, startX+240f};
+            float [] y= {startY+0f,startY+30f,startY+220f,startY+90f};
+            objectAnimatorX.setFloatValues(x);
+            objectAnimatorY.setFloatValues(y);
         }
+
         objectAnimatorX.start();
         objectAnimatorY.start();
+
+        startX+=240;
+        startY+=90f;
     }
 }

@@ -14,19 +14,58 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <com.android.study.example.uidemo.eventtrans.MyViewGroupA
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:background="#eeeeee"
-                android:gravity="center">
-                <com.android.study.example.uidemo.eventtrans.MyView
-                    android:id="@+id/myview"
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    android:text="事件分发"
-                    android:textStyle="bold"
-                    android:background="#FF4081"/>
-            </com.android.study.example.uidemo.eventtrans.MyViewGroupA>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/btn_test_requestLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="测试requestLayout"
+                    android:textAllCaps="false"/>
+                <Button
+                    android:id="@+id/btn_test_invalidate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="测试invalidate"
+                    android:textAllCaps="false"/>
+                <Button
+                    android:id="@+id/btn_test_addView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="添加View"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+            <com.android.study.example.uidemo.eventtrans.MyViewGroupB
+
+                android:layout_width="300dp"
+                android:layout_height="200dp"
+                android:background="#12aaba"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.android.study.example.uidemo.eventtrans.MyViewGroupA
+                    android:id="@+id/view_myViewGroupA"
+                    android:layout_width="200dp"
+                    android:layout_height="100dp"
+                    android:background="#eeeeee"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <com.android.study.example.uidemo.eventtrans.MyView
+                        android:id="@+id/myview"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:text="事件分发"
+                        android:textStyle="bold"
+                        android:background="#FF4081"/>
+                </com.android.study.example.uidemo.eventtrans.MyViewGroupA>
+
+            </com.android.study.example.uidemo.eventtrans.MyViewGroupB>
+
+
 
             <Button
                 android:id="@+id/btn_software_test"
