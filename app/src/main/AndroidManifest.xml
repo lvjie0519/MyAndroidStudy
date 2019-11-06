@@ -66,8 +66,9 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".uidemo.picker.PickerTestActivity" />
         <activity android:name=".androidapi.AudioDemoTestActivity" />
-        <activity android:name=".androidapi.LifeCycleTestActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".androidapi.LifeCycleTestActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".thirdlib.RenderScriptBlurDemoActivity" />
         <activity android:name=".androidapi.SurfaceViewDrawDemoActivity" />
         <activity android:name=".books.jjzg.chapter2.Chapter2TestActivity" />
@@ -77,7 +78,8 @@
             android:name=".uidemo.eventtrans.ViewEventTransTestActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".uidemo.mapsweeper.MapViewDemoActivity" />
-        <activity android:name=".uidemo.animation.AnimationDemoActivity"></activity>
+        <activity android:name=".uidemo.animation.AnimationDemoActivity" />
+        <activity android:name=".uidemo.inputdialog.InputDialogDemoActivity"></activity>
     </application>
 
 </manifest>

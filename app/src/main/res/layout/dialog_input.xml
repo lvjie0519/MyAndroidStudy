@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#ffffff">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="测试输入框 立即弹出软键盘"/>
+    
+    <EditText
+        android:id="@+id/et_dialog_input"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:hint="请输入内容"
+        android:layout_margin="10dp"/>
+
+    <Button
+        android:id="@+id/btn_dialog_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="关闭对话框"/>
+
+</LinearLayout>

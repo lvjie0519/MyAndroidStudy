@@ -113,6 +113,13 @@
             android:text="地图扫地机测试"
             android:textAllCaps="false"/>
 
+        <Button
+            android:id="@+id/btn_activity_input_dialog_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="InputDialog 测试"
+            android:textAllCaps="false"/>
+
     </LinearLayout>
 </ScrollView>
 
