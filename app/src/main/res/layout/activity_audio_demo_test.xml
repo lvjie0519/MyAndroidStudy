@@ -95,4 +95,13 @@
             android:text="结束播放"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_show_db"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="录音分贝： "
+        android:layout_margin="10dp"
+        android:textColor="#333333"
+        android:textSize="16sp"/>
+
 </LinearLayout>

@@ -37,6 +37,9 @@ import rx.functions.Action1;
 
 /**
  * 录音播放等相关功能
+ * 获取分贝值
+ * https://blog.csdn.net/cjh_android/article/details/51341004
+ * https://blog.csdn.net/greatpresident/article/details/38402147
  */
 public class AudioDemoTestActivity extends AppCompatActivity {
 
@@ -46,6 +49,7 @@ public class AudioDemoTestActivity extends AppCompatActivity {
     private String recordFileName = "";
     private MediaRecorder mRecorder;
     private RxPermissions rxPermissions;
+    private boolean mIsMediaRecording = false;
 
     // AudioRecord  录音文件
     private String audioRecordFileName = "";
@@ -55,12 +59,23 @@ public class AudioDemoTestActivity extends AppCompatActivity {
     private AudioTrack mAudioTrack;
     private boolean mIsAudioTrackPlaying = false;
 
+    // 显示录音分贝
+    private TextView mTvRecordDB;
+    private int maxRatio = 0;
+    private int maxDb = 0;
+
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            if(mMediaPlayer != null && mMediaPlayer.isPlaying()){
+            if(msg != null && msg.what == 1 && mMediaPlayer != null && mMediaPlayer.isPlaying()){
                 Log.i("lvjie", "handleMessage--> time="+mMediaPlayer.getCurrentPosition()/1000);
                 mHandler.sendEmptyMessageDelayed(1, 1000);
+            }
+
+            if(msg != null && msg.what == 2 && mRecorder != null && mIsMediaRecording){
+                int db = getMediaRecordDb();
+                mTvRecordDB.setText("录音分贝： "+db+"  最大db"+maxDb+"  最大ratio"+maxRatio);
+                mHandler.sendEmptyMessageDelayed(2, 500);
             }
         }
     };
@@ -86,6 +101,9 @@ public class AudioDemoTestActivity extends AppCompatActivity {
     }
 
     private void initView(){
+
+        this.mTvRecordDB = (TextView) findViewById(R.id.tv_show_db);
+
         findViewById(R.id.btn_audio_start_play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -276,8 +294,8 @@ public class AudioDemoTestActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
+        mIsMediaRecording = true;
+        mHandler.sendEmptyMessageDelayed(2, 500);
 
     }
 
@@ -289,6 +307,29 @@ public class AudioDemoTestActivity extends AppCompatActivity {
             mRecorder.release();
             mRecorder = null;
         }
+        mIsMediaRecording = false;
+    }
+
+    private int getMediaRecordDb(){
+
+        int db = 0;
+
+        if(mIsMediaRecording && mRecorder != null){
+            double ratio = (double)mRecorder.getMaxAmplitude() /1;
+            db = 0;// 分贝
+            if (ratio > 1){
+                db = (int) (20 * Math.log10(ratio));
+            }
+            if(db>=maxDb){
+                maxDb = db;
+            }
+            if(ratio>=maxRatio){
+                maxRatio = (int) ratio;
+            }
+            Log.i("lvjie","分贝值："+db+"   ratio="+ratio);
+        }
+
+        return db;
     }
 
 
