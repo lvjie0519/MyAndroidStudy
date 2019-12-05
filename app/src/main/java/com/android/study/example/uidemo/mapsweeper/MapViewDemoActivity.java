@@ -118,7 +118,7 @@ public class MapViewDemoActivity extends AppCompatActivity {
 
         int widthPixels = getResources().getDisplayMetrics().widthPixels;
         zoomView = (ZoomMapSweeperView) findViewById(R.id.zoom_view);
-        zoomView.setMaxZoom(2.0f);
+        zoomView.setMaxZoom(10.0f);
         zoomView.setScreenWidth(widthPixels);
     }
 

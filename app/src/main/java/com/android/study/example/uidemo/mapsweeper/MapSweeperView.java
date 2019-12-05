@@ -130,6 +130,10 @@ public class MapSweeperView extends RelativeLayout {
         this.mMapBackgroundView.setPoints(points);
     }
 
+    public void updateViewByZoom(float zoom){
+        this.mSweeperView.setZoom(zoom);
+    }
+
     public void setWidth(int width) {
         this.mViewWidth= width;
     }

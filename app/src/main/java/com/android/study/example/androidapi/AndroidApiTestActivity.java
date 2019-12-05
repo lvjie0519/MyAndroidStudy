@@ -2,8 +2,10 @@ package com.android.study.example.androidapi;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
@@ -60,6 +62,9 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
     private RxPermissions rxPermissions;
 
+    private NetworkChangeReceiver mNetworkChangeReceiver;
+    private IntentFilter intentFilter;
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AndroidApiTestActivity.class);
         context.startActivity(intent);
@@ -73,6 +78,11 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
         rxPermissions = RxPermissions.getInstance(this);
         initView();
+
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        mNetworkChangeReceiver = new NetworkChangeReceiver();
+        registerReceiver(mNetworkChangeReceiver, intentFilter);
     }
 
     private void initView() {
@@ -508,6 +518,31 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         stringBuffer.append("Build.VERSION_CODES.M: "+Build.VERSION_CODES.M+"\n");
 
         tvShowInfo.setText(stringBuffer.toString());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(mNetworkChangeReceiver);
+    }
+
+    private static class NetworkChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            NetworkInfo networkInfo = null;
+            int networkType = -1;
+            if(intent.getExtras() != null){
+                networkInfo = (NetworkInfo) intent.getExtras().get("networkInfo");
+                networkType = (int) intent.getExtras().get("networkType");
+            }
+            Log.i("lvjie", "networkType="+networkType
+                    +"  getType="+networkInfo.getType()
+                    +"  getTypeName="+networkInfo.getTypeName()
+                    +"  getState().name()="+networkInfo.getState().name());
+            Toast.makeText(context, "网络状态改变", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

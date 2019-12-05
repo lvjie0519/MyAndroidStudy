@@ -32,8 +32,8 @@ public class ZoomMapSweeperView extends RelativeLayout {
     }
 
     // zooming
-    private static final float MIN_ZOOM = 0.5f;
-    private static final float MAX_ZOOM = 2.0f;
+    private static final float MIN_ZOOM = 1.0f;
+    private static final float MAX_ZOOM = 10.0f;
     private static final float SMOOTH_ZOOM_DEFAULT = 1.0f;
     float zoom = MIN_ZOOM;              //
     float maxZoom = MAX_ZOOM;
@@ -386,6 +386,11 @@ public class ZoomMapSweeperView extends RelativeLayout {
             canvas.concat(m);       // 使用矩阵放大或缩小及平移
             v.draw(canvas);
             canvas.restore();
+        }
+
+        // zoom改变,按需修改图片及相关大小
+        if(this.mMapSweeperView != null){
+            this.mMapSweeperView.updateViewByZoom(this.zoom);
         }
 
         // redraw

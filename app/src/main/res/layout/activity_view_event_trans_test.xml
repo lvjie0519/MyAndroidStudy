@@ -60,7 +60,8 @@
                         android:layout_height="40dp"
                         android:text="事件分发"
                         android:textStyle="bold"
-                        android:background="#FF4081"/>
+                        android:textColor="#333333"
+                        android:background="#fedcbd"/>
                 </com.android.study.example.uidemo.eventtrans.MyViewGroupA>
 
             </com.android.study.example.uidemo.eventtrans.MyViewGroupB>
@@ -73,10 +74,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="测试软键盘支持"
+                android:visibility="gone"
                 android:onClick="onBtnClickToSoftwareTest"/>
             <EditText
                 android:layout_width="150dp"
                 android:layout_height="50dp"
+                android:visibility="gone"
                 android:layout_marginTop="300dp"/>
         </LinearLayout>
     </ScrollView>

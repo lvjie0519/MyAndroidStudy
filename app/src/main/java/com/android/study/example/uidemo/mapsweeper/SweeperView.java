@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,7 +19,7 @@ import com.android.study.example.utils.DisplayUtil;
  */
 public class SweeperView extends RelativeLayout {
 
-    private static final int SweeperCircularDefaultSize = 30;   // dp
+    private static final int SweeperCircularDefaultSize = 20;   // dp
     private static final int SweeperDefaultSize = 20;   // dp
 
     private Context mContext;
@@ -27,11 +28,13 @@ public class SweeperView extends RelativeLayout {
     private View mSweeper;
     private Animation mSweeperCircularAnimation;
 
-
+    // 初始化时的view宽高
     private int mViewHeight;
     private int mViewWidth;
 
     private Scroller mScroller;
+
+    private float mZoom = 1.0f;      // 放大的倍数
 
     public SweeperView(@NonNull Context context) {
         this(context, null);
@@ -122,5 +125,39 @@ public class SweeperView extends RelativeLayout {
             postInvalidate();
         }
         super.computeScroll();
+    }
+
+    public void setZoom(float zoom) {
+        if(this.mZoom != zoom){
+            this.mZoom = zoom;
+            updateSweeperViewByZoom();
+        }
+    }
+
+    /**
+     * 但放大地图时，对图片进行适当的缩小，使得图片显示不是非常大
+     */
+    private void updateSweeperViewByZoom(){
+
+        float width = this.mViewWidth / this.mZoom + this.mZoom/2;
+        float height = this.mViewHeight / this.mZoom + this.mZoom/2;
+        if(this.mSweeper != null){
+            LayoutParams params = (LayoutParams) this.mSweeper.getLayoutParams();
+            params.width = width < 1 ? 1 : (int) width;
+            params.height = height < 1 ? 1 : (int) height;
+            this.mSweeper.setLayoutParams(params);
+            Log.i("SweeperView", "Sweeper  updateSweeperViewByZoom-->" +
+                    "params.width="+params.width+"  params.height="+params.height+
+                    "  mZoom="+this.mZoom+
+                    "  mViewWidth="+this.mViewWidth+"  mViewHeight="+this.mViewHeight);
+        }
+
+        if(this.mSweeperCircular != null){
+            LayoutParams params = (LayoutParams) this.mSweeperCircular.getLayoutParams();
+            params.width = width < 1 ? 1 : (int) width;
+            params.height = height < 1 ? 1 : (int) height;
+            this.mSweeperCircular.setLayoutParams(params);
+//            RnPluginLog.i("CommonSweeperView SweeperCircular  updateSweeperViewByZoom-->params.width="+params.width+"  params.height="+params.height);
+        }
     }
 }
