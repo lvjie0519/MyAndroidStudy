@@ -134,6 +134,10 @@ public class MapSweeperView extends RelativeLayout {
         this.mSweeperView.setZoom(zoom);
     }
 
+    public void startAnimSweeperView(){
+        this.mSweeperView.startSweeperCircularAnimatorDelay(100);
+    }
+
     public void setWidth(int width) {
         this.mViewWidth= width;
     }

@@ -1,6 +1,8 @@
 package com.android.study.example.uidemo.mapsweeper;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -35,6 +37,19 @@ public class SweeperView extends RelativeLayout {
     private Scroller mScroller;
 
     private float mZoom = 1.0f;      // 放大的倍数
+
+    private static final short MSG_START_ANIMATION = 1;
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case MSG_START_ANIMATION:
+                    Log.i("lvjie", "startSweeperCircularAnimator...");
+                    startSweeperCircularAnimator();
+                    break;
+            }
+        }
+    };
 
     public SweeperView(@NonNull Context context) {
         this(context, null);
@@ -93,9 +108,22 @@ public class SweeperView extends RelativeLayout {
         this.mSweeperCircular.startAnimation(this.mSweeperCircularAnimation);
     }
 
+    public void startSweeperCircularAnimatorDelay(int delayMillis){
+        Log.i("lvjie", "startSweeperCircularAnimatorDelay...");
+        mHandler.sendEmptyMessageDelayed(MSG_START_ANIMATION, delayMillis);
+    }
+
+    public void stopSweeperCircularAnimator(){
+        if(this.mSweeperCircular != null){
+            this.mSweeperCircular.clearAnimation();
+        }
+        Log.i("lvjie", "stopSweeperCircularAnimator...");
+    }
+
     @Override
     protected void onDetachedFromWindow() {
         // 停止动画等
+        stopSweeperCircularAnimator();
         super.onDetachedFromWindow();
     }
 
@@ -159,5 +187,7 @@ public class SweeperView extends RelativeLayout {
             this.mSweeperCircular.setLayoutParams(params);
 //            RnPluginLog.i("CommonSweeperView SweeperCircular  updateSweeperViewByZoom-->params.width="+params.width+"  params.height="+params.height);
         }
+
+        stopSweeperCircularAnimator();
     }
 }

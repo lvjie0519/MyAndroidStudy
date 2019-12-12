@@ -171,7 +171,7 @@ public class ZoomMapSweeperView extends RelativeLayout {
 
     @Override
     public boolean dispatchTouchEvent(final MotionEvent ev) {
-        Log.i("lvjie", "ZoomMapSweeperView   dispatchTouchEvent() getPointerCount: "+ev.getPointerCount());
+
         // single touch
         if (ev.getPointerCount() == 1) {
             processSingleTouchEvent(ev);
@@ -226,8 +226,7 @@ public class ZoomMapSweeperView extends RelativeLayout {
                     }
                     smoothZoomX -= dx / zoom;
                     smoothZoomY -= dy / zoom;
-                    Log.i("lvjie", "processSingleTouchOutsideMinimap   dx="+dx
-                            +"  zoom="+zoom+"  smoothZoomX="+smoothZoomX+"  smoothZoomY="+smoothZoomY+"  scrolling="+scrolling);
+
                     return;
                 }
                 break;
@@ -306,9 +305,15 @@ public class ZoomMapSweeperView extends RelativeLayout {
                 }
 
                 break;
-
+            case MotionEvent.ACTION_POINTER_2_UP:
+            case MotionEvent.ACTION_POINTER_1_UP:
+                Log.i("lvjie", "double Touch up..."+ev.getAction());
+                this.mMapSweeperView.startAnimSweeperView();
+                break;
             case MotionEvent.ACTION_UP:
+                Log.i("lvjie", "double Touch up..."+ev.getAction());
             default:
+                Log.i("lvjie", "double Touch up..."+ev.getAction());
                 pinching = false;
                 break;
         }
@@ -343,9 +348,6 @@ public class ZoomMapSweeperView extends RelativeLayout {
                 getWidth() - 0.5f * getWidth() / smoothZoom);
         smoothZoomY = clamp(0.5f * getHeight() / smoothZoom, smoothZoomY,
                 getHeight() - 0.5f * getHeight() / smoothZoom);
-
-        Log.i("lvjie", "dispatchDraw"
-                +"  zoom="+zoom+"  smoothZoomX="+smoothZoomX+"  smoothZoomY="+smoothZoomY+"  smoothZoom="+smoothZoom);
 
         zoomX = lerp(bias(zoomX, smoothZoomX, 0.1f), smoothZoomX, 0.35f);
         zoomY = lerp(bias(zoomY, smoothZoomY, 0.1f), smoothZoomY, 0.35f);
