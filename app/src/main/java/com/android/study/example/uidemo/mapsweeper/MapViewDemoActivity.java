@@ -76,12 +76,6 @@ public class MapViewDemoActivity extends AppCompatActivity {
         findViewById(R.id.btn_start_sweeper).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 开始扫地
-//                mHandler.sendEmptyMessageDelayed(msgMapSweeperView, 1000);
-
-//                mapSweeperView.moveSweeper(new MapView.Point(x, x, 1));
-//                x+=20;
-
                 MapPoint point = generatePoint();
                 zoomView.getMapSweeperView().moveSweeper(point);
             }
@@ -90,9 +84,24 @@ public class MapViewDemoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 回充
-
+                zoomView.getMapSweeperView().getSweeperView().getSweeperCircular().setBackgroundResource(R.drawable.icon_sweeper_circular2);
             }
         });
+
+        findViewById(R.id.btn_image_ivalid).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomView.getMapSweeperView().getSweeperView().getSweeperCircular().invalidate();
+            }
+        });
+
+        findViewById(R.id.btn_image_request).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                zoomView.getMapSweeperView().getSweeperView().getSweeperCircular().requestLayout();
+            }
+        });
+
 
         findViewById(R.id.btn_draw_history_data).setOnClickListener(new View.OnClickListener() {
             @Override

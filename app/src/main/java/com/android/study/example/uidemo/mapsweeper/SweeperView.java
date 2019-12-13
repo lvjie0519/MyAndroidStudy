@@ -1,6 +1,7 @@
 package com.android.study.example.uidemo.mapsweeper;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
@@ -26,8 +28,8 @@ public class SweeperView extends RelativeLayout {
 
     private Context mContext;
 
-    private View mSweeperCircular;
-    private View mSweeper;
+    private SweeperImageView mSweeperCircular;
+    private SweeperImageView mSweeper;
     private Animation mSweeperCircularAnimation;
 
     // 初始化时的view宽高
@@ -70,16 +72,18 @@ public class SweeperView extends RelativeLayout {
 
     private void initView(Context context){
 
-        this.mSweeperCircular = new View(context);
-        this.mSweeperCircular.setBackgroundResource(R.drawable.icon_sweeper_circular);
+        this.mSweeperCircular = new SweeperImageView(context);
+        this.mSweeperCircular.setScaleType(ImageView.ScaleType.FIT_XY);
+        this.mSweeperCircular.setImageResource(R.drawable.icon_sweeper_circular);
         mViewHeight = DisplayUtil.dip2px(context, SweeperCircularDefaultSize);
         mViewWidth = mViewHeight;
         RelativeLayout.LayoutParams sweeperCircularParams = new RelativeLayout.LayoutParams(mViewHeight, mViewWidth);
         sweeperCircularParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
         addView(this.mSweeperCircular, sweeperCircularParams);
 
-        this.mSweeper = new View(context);
-        this.mSweeper.setBackgroundResource(R.drawable.icon_sweeper);
+        this.mSweeper = new SweeperImageView(context);
+        this.mSweeper.setScaleType(ImageView.ScaleType.FIT_XY);
+        this.mSweeper.setImageResource(R.drawable.icon_sweeper);
         int sweeperViewPx = DisplayUtil.dip2px(context, SweeperDefaultSize);
         RelativeLayout.LayoutParams sweeperViewParams = new RelativeLayout.LayoutParams(sweeperViewPx, sweeperViewPx);
         sweeperViewParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
@@ -158,7 +162,7 @@ public class SweeperView extends RelativeLayout {
     public void setZoom(float zoom) {
         if(this.mZoom != zoom){
             this.mZoom = zoom;
-            updateSweeperViewByZoom();
+//            updateSweeperViewByZoom();
         }
     }
 
@@ -189,5 +193,14 @@ public class SweeperView extends RelativeLayout {
         }
 
         stopSweeperCircularAnimator();
+    }
+
+    public View getSweeperCircular() {
+        return mSweeperCircular;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
     }
 }
