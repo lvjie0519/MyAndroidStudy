@@ -18,8 +18,8 @@ import com.android.study.example.utils.ToastUtil;
 
 public class ViewEventTransTestActivity extends AppCompatActivity {
 
-    private MyView myView;
-    private MyViewGroupA myViewGroupA;
+    private MyViewC myView;
+    private MyViewGroupB myViewGroupB;
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, ViewEventTransTestActivity.class);
@@ -29,7 +29,7 @@ public class ViewEventTransTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TitleBarUtil.enableTranslucentStatus(this);
+//        TitleBarUtil.enableTranslucentStatus(this);
         setContentView(R.layout.activity_view_event_trans_test);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED);
         AndroidBug5497Workaround.getInstance().assistActivity(this);
@@ -39,8 +39,15 @@ public class ViewEventTransTestActivity extends AppCompatActivity {
 
     private void initView(){
 
-        myView = (MyView) findViewById(R.id.myview);
-        myViewGroupA = (MyViewGroupA) findViewById(R.id.view_myViewGroupA);
+        myView = (MyViewC) findViewById(R.id.myview);
+        myViewGroupB = (MyViewGroupB) findViewById(R.id.view_myViewGroupB);
+
+        myView.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("lvjie", "myView  width="+myView.getWidth()+"  height="+myView.getHeight());
+            }
+        });
 
         findViewById(R.id.btn_test_invalidate).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,11 +67,11 @@ public class ViewEventTransTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                myViewGroupA.removeAllViews();
+                myViewGroupB.removeAllViews();
                 View view = new View(ViewEventTransTestActivity.this);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(20, 20);
                 view.setBackgroundColor(Color.parseColor("#21211a"));
-                myViewGroupA.addView(view, layoutParams);
+                myViewGroupB.addView(view, layoutParams);
             }
         });
     }

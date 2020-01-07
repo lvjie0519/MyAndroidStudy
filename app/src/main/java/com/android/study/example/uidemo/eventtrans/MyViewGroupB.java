@@ -24,27 +24,27 @@ public class MyViewGroupB extends LinearLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.i("lvjie", "MyViewGroupB  onMeasure...");
+        Log.i("lvjie", "MyViewGroupB  onMeasure... width="+MeasureSpec.getSize(widthMeasureSpec));
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        Log.i("lvjie", "MyViewGroupB  onLayout...");
-        super.onLayout(changed, left, top, right, bottom);
 
+        super.onLayout(changed, left, top, right, bottom);
+        Log.i("lvjie", "MyViewGroupB  onLayout...left="+left+"  right="+right);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.i("lvjie", "MyViewGroupB  onDraw...");
-        super.onDraw(canvas);
 
+        super.onDraw(canvas);
+        Log.i("lvjie", "MyViewGroupB  onDraw...");
     }
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        Log.i("lvjie", "MyViewGroupB  dispatchDraw...");
+        Log.i("lvjie", "MyViewGroupB  before super dispatchDraw...");
         super.dispatchDraw(canvas);
-
+        Log.i("lvjie", "MyViewGroupB  after super dispatchDraw...");
     }
 }
