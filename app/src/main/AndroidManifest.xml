@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".thirdlib.FrescoDemoActivity"></activity>
+        <activity android:name=".uidemo.webview.WebViewDemoActivity"></activity>
+        <activity android:name=".thirdlib.FrescoDemoActivity" />
 
         <meta-data
             android:name="design_width_in_dp"
@@ -69,7 +70,7 @@
         <activity android:name=".books.jjzg.chapter2.Chapter2TestActivity" />
         <activity android:name=".books.BooksMainTestActivity" />
         <activity android:name=".books.jjzg.JjzgMainTestActivity" />
-        <activity android:name=".uidemo.eventtrans.ViewEventTransTestActivity"/>
+        <activity android:name=".uidemo.eventtrans.ViewEventTransTestActivity" />
         <activity android:name=".uidemo.mapsweeper.MapViewDemoActivity" />
         <activity android:name=".uidemo.animation.AnimationDemoActivity" />
         <activity android:name=".uidemo.inputdialog.InputDialogDemoActivity" />

@@ -22,6 +22,7 @@ import com.android.study.example.uidemo.animation.AnimationDemoActivity;
 import com.android.study.example.uidemo.dragging.FloatingActionBtnTestActivity;
 import com.android.study.example.uidemo.eventtrans.ViewEventTransTestActivity;
 import com.android.study.example.uidemo.picker.PickerTestActivity;
+import com.android.study.example.uidemo.webview.WebViewDemoActivity;
 import com.annotaions.example.MyAnnotation;
 
 import java.io.File;
@@ -170,6 +171,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 InputDialogDemoActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_activity_webview_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebViewDemoActivity.startActivity(MainActivity.this);
             }
         });
     }
