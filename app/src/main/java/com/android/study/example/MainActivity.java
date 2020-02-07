@@ -1,6 +1,7 @@
 package com.android.study.example;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -123,7 +124,16 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_life_cycle_demo_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                overridePendingTransition(0, 0);
                 LifeCycleTestActivity.startActivity(MainActivity.this);
+                Log.i("lvjie", "overridePendingTransition...");
+//                overridePendingTransition(0, 0);
+
+//                Intent intent = new Intent(MainActivity.this, LifeCycleTestActivity.class);
+//                intent.putExtra("startTime", System.currentTimeMillis());
+//                startActivity(intent);
+//                overridePendingTransition(0, 0);
             }
         });
         findViewById(R.id.btn_render_script_blur_demo_test).setOnClickListener(new View.OnClickListener() {
