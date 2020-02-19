@@ -58,6 +58,8 @@ dependencies {
     // 开源有进度webview
     implementation 'com.github.youlookwhat:WebProgress:1.1.0'
 
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6'
+
     // test ff
     // test ee e e
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".androidapi.AndroidOOMActivity"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_current_memory_use"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前进程的内存占用"
+                />
+
+            <Button
+                android:id="@+id/btn_haha_lib_use"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HAHA 开源库使用"
+                />
+
+            <Button
+                android:id="@+id/btn_thread_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="APP 线程信息"
+                />
+
+            <TextView
+                android:id="@+id/tv_show_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"
+                />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

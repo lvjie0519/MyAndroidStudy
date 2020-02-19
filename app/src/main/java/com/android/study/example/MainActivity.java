@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.study.example.androidapi.AndroidApiTestActivity;
+import com.android.study.example.androidapi.AndroidOOMActivity;
 import com.android.study.example.androidapi.AudioDemoTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
 import com.android.study.example.androidapi.LifeCycleTestActivity;
@@ -188,6 +189,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 WebViewDemoActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_activity_oom_api_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AndroidOOMActivity.startActivity(MainActivity.this);
             }
         });
     }
