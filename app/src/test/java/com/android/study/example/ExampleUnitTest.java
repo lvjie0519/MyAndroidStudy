@@ -1,5 +1,7 @@
 package com.android.study.example;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,12 +12,19 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
+    @Before
+    public void startUnitTest(){
+        System.out.println("=========== 单元测试开始 ===========");
+    }
+
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+    }
 
-        String action = "issue_mifare", type="1", product_id="66666-00211", source_channel=null;
-        String url = "https://tsmclient.miui.com?action=%1$s&type=%2$s&product_id=%3$s&source_channel=%4$s";
-        System.out.println(String.format(url, action, type, product_id, source_channel));
+    @After
+    public void endUnitTest(){
+        System.out.println("=========== 单元测试结束 ===========");
     }
 }
