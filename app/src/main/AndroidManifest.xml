@@ -23,7 +23,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".androidapi.AndroidOOMActivity"></activity>
+        <activity
+            android:name=".androidapi.OrientationTestActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".androidapi.AndroidOOMActivity" />
         <activity android:name=".uidemo.webview.WebViewDemoActivity" />
         <activity android:name=".thirdlib.FrescoDemoActivity" />
 

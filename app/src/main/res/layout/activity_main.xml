@@ -133,6 +133,13 @@
             android:text="Android OOM API Test"
             android:textAllCaps="false"/>
 
+        <Button
+            android:id="@+id/btn_activity_oritentation_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Android8.0 横屏测试"
+            android:textAllCaps="false"/>
+
     </LinearLayout>
 </ScrollView>
 
