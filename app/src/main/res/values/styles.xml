@@ -46,4 +46,7 @@
         <item name="android:windowIsFloating">true</item>
     </style>
 
+    <style name="ActivityTheme" parent="android:Theme.Translucent.NoTitleBar">
+    </style>
+
 </resources>
