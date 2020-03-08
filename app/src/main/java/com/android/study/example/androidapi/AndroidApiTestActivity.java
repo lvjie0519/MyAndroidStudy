@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.android.study.example.MainActivity;
 import com.android.study.example.R;
+import com.android.study.example.androidapi.utils.FileUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.json.JSONException;
@@ -53,6 +54,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import rx.functions.Action1;
 
@@ -118,7 +120,10 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         findViewById(R.id.btn_write_file).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                writeFile();
+                String filePath = getExternalFilesDir("logs12").getAbsolutePath() + File.separator + "plugin.log";
+                int tag = new Random().nextInt();
+                FileUtils.writeLog(tag+"、  aaaaaaa", filePath);
+//                writeFile();
             }
         });
 
@@ -326,7 +331,8 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
     private void readFile() {
 
-        String filePath = getFilesDir().getPath() + File.separator + "debug_list.txt";
+//        String filePath = getFilesDir().getPath() + File.separator + "debug_list.txt";
+        String filePath = this.getExternalFilesDir("logs12").getAbsolutePath() + File.separator + "plugin.log";
         File file = new File(filePath);
         if (!file.exists()) {
             Log.i("lvjie", filePath + " file is not exit");
@@ -390,8 +396,8 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 + "\n  this.getFilesDir().getAbsolutePath(): " + this.getFilesDir().getAbsolutePath()  // /data/user/0/com.android.study.example/files
                 + "\n  this.getCacheDir().getPath(): " + this.getCacheDir().getPath()      // /data/user/0/com.android.study.example/cache
                 + "\n  this.getCacheDir().getAbsolutePath(): " + this.getCacheDir().getAbsolutePath() // /data/user/0/com.android.study.example/cache
-                + "\n  this.getApplicationInfo().dataDir: " + this.getApplicationInfo().dataDir;   // /data/user/0/com.android.study.example
-
+                + "\n  this.getApplicationInfo().dataDir: " + this.getApplicationInfo().dataDir   // /data/user/0/com.android.study.example
+                + "\n  this.getExternalFilesDir(\"logs\").getAbsolutePath(): " + this.getExternalFilesDir("logs").getAbsolutePath();   // /storage/emulated/0/Android/data/com.android.study.example/files/logs
         Log.i("lvjie", fileInfo);
         tvShowInfo.setText(fileInfo);
 
