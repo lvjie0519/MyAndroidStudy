@@ -1,7 +1,10 @@
 package com.android.study.example;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +28,7 @@ import com.android.study.example.uidemo.animation.AnimationDemoActivity;
 import com.android.study.example.uidemo.dragging.FloatingActionBtnTestActivity;
 import com.android.study.example.uidemo.eventtrans.ViewEventTransTestActivity;
 import com.android.study.example.uidemo.picker.PickerTestActivity;
+import com.android.study.example.uidemo.screenshot.ScreenshotTestActivity;
 import com.android.study.example.uidemo.webview.WebViewDemoActivity;
 import com.annotaions.example.MyAnnotation;
 
@@ -204,6 +208,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 OrientationTestActivity.startActivity(MainActivity.this);
+
+//                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)); //直接进入手机中的wifi网络设置界面
+//
+//                Intent intent = new Intent();
+//                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                intent.setData(uri);
+//                startActivity(intent);
+
+            }
+        });
+
+        findViewById(R.id.btn_activity_screen_shot_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScreenshotTestActivity.startActivity(MainActivity.this);
             }
         });
     }

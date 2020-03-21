@@ -21,6 +21,10 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+
+        String aa = "aa";
+        String bb = "单元";
+        System.out.println(aa.length()+"   "+bb.length());
     }
 
     @After
