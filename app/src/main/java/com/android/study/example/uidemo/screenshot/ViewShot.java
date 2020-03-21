@@ -360,7 +360,6 @@ public class ViewShot{
                 recycleBitmap(childBitmapBuffer);
             }else if(child instanceof SurfaceView){
                 final SurfaceView surfaceViewChild = (SurfaceView) child;
-                surfaceViewChild.getd
             }
 
 
