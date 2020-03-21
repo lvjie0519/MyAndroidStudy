@@ -22,6 +22,7 @@ import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
 import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
+import com.android.study.example.uidemo.filedownload.FileDownLoadDemoActivity;
 import com.android.study.example.uidemo.inputdialog.InputDialogDemoActivity;
 import com.android.study.example.uidemo.mapsweeper.MapViewDemoActivity;
 import com.android.study.example.uidemo.animation.AnimationDemoActivity;
@@ -224,6 +225,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ScreenshotTestActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_activity_download_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FileDownLoadDemoActivity.startActivity(MainActivity.this);
             }
         });
     }
