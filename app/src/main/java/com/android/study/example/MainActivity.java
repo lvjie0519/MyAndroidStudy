@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
+import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,8 @@ import com.annotaions.example.MyAnnotation;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import okhttp3.Cache;
 import okhttp3.Call;
@@ -309,5 +312,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i("lvjie","MainActivity onDestroy...");
+
+    }
+
+    public static class AA{
+        public static final int UI_PERF_LEVEL_0 = 0;
+        public static final int UI_PERF_LEVEL_1 = 2;
+
+        @IntDef({UI_PERF_LEVEL_0,UI_PERF_LEVEL_1})
+        @Retention(RetentionPolicy.SOURCE)
+        public @interface PERF_LEVEL {
+        }
+
+        public @PERF_LEVEL int getLevel(@PERF_LEVEL int level){
+            return UI_PERF_LEVEL_0;
+        }
     }
 }
