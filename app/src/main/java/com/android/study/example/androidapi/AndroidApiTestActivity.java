@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.android.study.example.MainActivity;
 import com.android.study.example.R;
 import com.android.study.example.androidapi.utils.FileUtils;
+import com.android.study.example.utils.ToastUtil;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.json.JSONException;
@@ -176,6 +177,21 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 获取wifi信息
                 printBuildInfo();
+            }
+        });
+
+        findViewById(R.id.btn_get_gps_status).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkGpsOpen();
+            }
+        });
+
+        findViewById(R.id.btn_start_system_gps).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 打开系统gps设置页
+                openGpsSettingPage();
             }
         });
     }
@@ -524,6 +540,28 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         stringBuffer.append("Build.VERSION_CODES.M: "+Build.VERSION_CODES.M+"\n");
 
         tvShowInfo.setText(stringBuffer.toString());
+    }
+
+    private void checkGpsOpen(){
+        boolean result = false;
+
+        // 获取gps 是否开启状态
+        LocationManager locationManager
+                = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        // 通过GPS卫星定位，定位级别可以精确到街（通过24颗卫星定位，在室外和空旷的地方定位准确、速度快）
+        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        // 通过WLAN或移动网络(3G/2G)确定的位置（也称作AGPS，辅助GPS定位。主要用于在室内或遮盖物（建筑群或茂密的深林等）密集的地方定位）
+        boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (gps|| network) {
+            result = true;
+        }
+
+        ToastUtil.showToast(this, "gps 是否打开： "+result);
+    }
+
+    private void openGpsSettingPage(){
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(intent);
     }
 
     @Override
