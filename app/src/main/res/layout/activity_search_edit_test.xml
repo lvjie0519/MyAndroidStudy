@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".uidemo.search.SearchEditTestActivity"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:background="@drawable/list_icon_selector_rules"
+        android:drawableStart="@drawable/icon_search"
+        android:drawablePadding="8dp"
+        android:ellipsize="end"
+        android:hint="请输入搜索内容..."
+        android:imeOptions="actionSearch"
+        android:paddingStart="10dp"
+        android:singleLine="true"
+        android:textColor="#999"
+        android:textColorHint="#FF999999"
+        android:textSize="13sp"
+        android:paddingEnd="35dp"
+        android:focusableInTouchMode="false"
+        />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_search_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+</LinearLayout>

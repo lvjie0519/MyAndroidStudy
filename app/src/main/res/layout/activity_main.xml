@@ -153,6 +153,13 @@
             android:text="断点续传测试"
             android:textAllCaps="false"/>
 
+        <Button
+            android:id="@+id/btn_activity_rv_search_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="输入框rv测试"
+            android:textAllCaps="false"/>
+
     </LinearLayout>
 </ScrollView>
 

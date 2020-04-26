@@ -31,6 +31,8 @@ import com.android.study.example.uidemo.dragging.FloatingActionBtnTestActivity;
 import com.android.study.example.uidemo.eventtrans.ViewEventTransTestActivity;
 import com.android.study.example.uidemo.picker.PickerTestActivity;
 import com.android.study.example.uidemo.screenshot.ScreenshotTestActivity;
+import com.android.study.example.uidemo.search.RvSearchAdapter;
+import com.android.study.example.uidemo.search.SearchEditTestActivity;
 import com.android.study.example.uidemo.webview.WebViewDemoActivity;
 import com.annotaions.example.MyAnnotation;
 
@@ -235,6 +237,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FileDownLoadDemoActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_activity_rv_search_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchEditTestActivity.startActivity(MainActivity.this);
             }
         });
     }
