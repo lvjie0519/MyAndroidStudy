@@ -108,6 +108,20 @@ public class SearchEditTestActivity extends AppCompatActivity {
         });
 
 
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                etSearch.setFocusable(false);
+//                etSearch.requestFocus();
+                etSearch.setFocusableInTouchMode(false);
+//                etSearch.requestFocusFromTouch();
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
+                }
+            }
+        });
     }
 
 
