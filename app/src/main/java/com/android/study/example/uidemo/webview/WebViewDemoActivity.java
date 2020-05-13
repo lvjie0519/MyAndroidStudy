@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -38,8 +41,35 @@ public class WebViewDemoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view_demo);
 
+        setWebViewCookie();
         initData();
         initView();
+    }
+
+    private void setWebViewCookie(){
+
+        CookieSyncManager.createInstance(this);
+
+        String StringCookie = "key=" + "aaaaaa" + ";path=bbb";
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeSessionCookies(null);
+            cookieManager.flush();
+        } else {
+            cookieManager.removeSessionCookie();
+            CookieSyncManager.getInstance().sync();
+        }
+        cookieManager.setAcceptCookie(true);
+        cookieManager.setCookie("www.baidu.com", StringCookie);
+        cookieManager.setCookie("www.baidu.com:443", StringCookie);
+        cookieManager.setCookie("https://www.baidu.com/", StringCookie);
+
+        if (Build.VERSION.SDK_INT < 21) {
+            CookieSyncManager.getInstance().sync();
+        } else {
+            CookieManager.getInstance().flush();
+        }
     }
 
     private void initView(){
@@ -108,17 +138,32 @@ public class WebViewDemoActivity extends AppCompatActivity {
 
         this.mWebView = findViewById(R.id.wb_webView);
 
+        //支持javascript
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setSupportZoom(true);
+
+        //缩放操作
+        mWebView.getSettings().setSupportZoom(true);  // 支持缩放，默认为true。是下面那个的前提。
+        mWebView.getSettings().setBuiltInZoomControls(true);  // 设置内置的缩放控件。若为false，则该WebView不可缩放
+        mWebView.getSettings().setDisplayZoomControls(false); // 隐藏原生的缩放控件
+
+
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.getSettings().setAllowFileAccess(true);
         mWebView.getSettings().setUseWideViewPort(true);
-        mWebView.getSettings().setBuiltInZoomControls(true);
+
+        //设置WebView缓存
+        //优先使用缓存:
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        //缓存模式如下：
+        //LOAD_CACHE_ONLY: 不使用网络，只读取本地缓存数据
+        //LOAD_DEFAULT: （默认）根据cache-control决定是否从网络上取数据。
+        //LOAD_NO_CACHE: 不使用缓存，只从网络获取数据.
+        //LOAD_CACHE_ELSE_NETWORK，只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。
+
         mWebView.requestFocus();
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        String pdfUrl = "http://www.lumiunited.com/docs/Mi_Smart_Motorized_Curtain/Privacy_Policy_Mi_Smart_Motorized_Curtain_CN.pdf";
-        mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=" +pdfUrl);
+        mWebView.loadUrl("https://www.baidu.com/");
 
     }
 
