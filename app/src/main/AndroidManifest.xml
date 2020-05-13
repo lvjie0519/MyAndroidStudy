@@ -22,9 +22,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".uidemo.search.SearchEditTestActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".uidemo.other.OtherAppActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="mihome" android:host="plugin111"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".uidemo.search.SearchEditTestActivity" />
         <activity android:name=".uidemo.filedownload.FileDownLoadDemoActivity" />
         <activity android:name=".uidemo.screenshot.ScreenshotTestActivity" />
         <activity android:name=".androidapi.OrientationTestActivity" />

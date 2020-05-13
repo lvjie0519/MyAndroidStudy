@@ -44,10 +44,14 @@ public class WebViewDemoActivity extends AppCompatActivity {
 
     private void initView(){
         initWebProgress();
-        initWebView();
+//        initWebViewStyle1();
+        initWebViewStyle2();
     }
 
-    private void initWebView(){
+    /**
+     * 加载本地html文件
+     */
+    private void initWebViewStyle1(){
         this.mWebView = findViewById(R.id.wb_webView);
         this.mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
 
@@ -94,6 +98,27 @@ public class WebViewDemoActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+    }
+
+    /**
+     * 加载线上html文件
+     */
+    private void initWebViewStyle2(){
+
+        this.mWebView = findViewById(R.id.wb_webView);
+
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setDomStorageEnabled(true);
+        mWebView.getSettings().setAllowFileAccess(true);
+        mWebView.getSettings().setUseWideViewPort(true);
+        mWebView.getSettings().setBuiltInZoomControls(true);
+        mWebView.requestFocus();
+        mWebView.getSettings().setLoadWithOverviewMode(true);
+        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        String pdfUrl = "http://www.lumiunited.com/docs/Mi_Smart_Motorized_Curtain/Privacy_Policy_Mi_Smart_Motorized_Curtain_CN.pdf";
+        mWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=" +pdfUrl);
 
     }
 
