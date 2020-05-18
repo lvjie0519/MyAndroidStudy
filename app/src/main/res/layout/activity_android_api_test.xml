@@ -150,6 +150,32 @@
 
         </LinearLayout>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无损FPS实时显示"
+            android:onClick="onClickShowPageFps"/>
+
+        <com.android.study.example.androidapi.views.MyFpsTestView
+            android:id="@+id/view_myfps"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="#a12"/>
+
+        <com.android.study.example.uidemo.dragging.DraggingButton
+            android:id="@+id/tv_dragging"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:background="@drawable/drag_button_bg"
+            android:layout_margin="20dp"
+            android:padding="10dp"
+            android:text="悬浮\n按钮1"
+            android:textSize="15sp"
+            android:layout_gravity="right"
+            android:textColor="#ffffff"/>
+
     </LinearLayout>
 
 </ScrollView>

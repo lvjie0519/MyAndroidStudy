@@ -12,9 +12,12 @@ import android.graphics.Point;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +29,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.JsonWriter;
 import android.util.Log;
+import android.view.Choreographer;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -35,6 +39,8 @@ import android.widget.Toast;
 import com.android.study.example.MainActivity;
 import com.android.study.example.R;
 import com.android.study.example.androidapi.utils.FileUtils;
+import com.android.study.example.androidapi.views.MyFpsTestView;
+import com.android.study.example.uidemo.dragging.DraggingButton;
 import com.android.study.example.utils.ToastUtil;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
@@ -67,6 +73,9 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
     private NetworkChangeReceiver mNetworkChangeReceiver;
     private IntentFilter intentFilter;
+
+    private DraggingButton mDraggintTextView;
+    private MyFpsTestView myFpsTestView;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AndroidApiTestActivity.class);
@@ -194,6 +203,16 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 openGpsSettingPage();
             }
         });
+
+        mDraggintTextView = (DraggingButton) findViewById(R.id.tv_dragging);
+        mDraggintTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(AndroidApiTestActivity.this, "click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        myFpsTestView = findViewById(R.id.view_myfps);
     }
 
     public static int getHeight(Context context) {
@@ -563,6 +582,50 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(intent);
     }
+
+
+    /**
+     * 显示界面刷新 帧率
+     * @param view
+     */
+    public void onClickShowPageFps(View view){
+        double data = ((double) (1) * 1e9);
+        Log.i("lvjie", "1e9="+((long)data));
+        subscriberFrame = !subscriberFrame;
+        lastFrameTimeNanos = System.currentTimeMillis();
+        Choreographer.getInstance().postFrameCallback(frameCallback);
+        mHandler.sendMessage(new Message());
+    }
+
+    /**
+     * Choreographer.getInstance().postFrameCallback   仅仅只是监听即将显示下一帧的时间，frameTimeNanos 纳秒
+     * doFrame  回调时机受到view绘制的影响
+     */
+    private int times = 0;
+    private long lastFrameTimeNanos = 0;
+    private boolean subscriberFrame = false;
+    private Choreographer.FrameCallback frameCallback = new Choreographer.FrameCallback() {
+        @Override
+        public void doFrame(long frameTimeNanos) {
+
+            Log.i("lvjie", "times: "+times+"  frameTimeNanos: "+frameTimeNanos+"  divide: "+((frameTimeNanos-lastFrameTimeNanos)/1000000));
+            times++;
+            lastFrameTimeNanos = frameTimeNanos;
+            if(subscriberFrame){
+                Choreographer.getInstance().postFrameCallback(frameCallback);
+            }
+        }
+    };
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            myFpsTestView.invalidate();
+            if(subscriberFrame){
+                mHandler.sendMessageDelayed(new Message(), 5);
+            }
+        }
+    };
 
     @Override
     protected void onDestroy() {
