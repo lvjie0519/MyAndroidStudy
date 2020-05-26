@@ -24,13 +24,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".androidapi.ScreenAdapterTestActivity"></activity>
         <activity
             android:name=".uidemo.other.OtherAppActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="mihome" android:host="plugin111"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="plugin111"
+                    android:scheme="mihome" />
             </intent-filter>
         </activity>
         <activity android:name=".uidemo.search.SearchEditTestActivity" />

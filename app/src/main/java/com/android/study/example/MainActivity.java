@@ -17,6 +17,7 @@ import com.android.study.example.androidapi.AudioDemoTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
 import com.android.study.example.androidapi.LifeCycleTestActivity;
 import com.android.study.example.androidapi.OrientationTestActivity;
+import com.android.study.example.androidapi.ScreenAdapterTestActivity;
 import com.android.study.example.androidapi.SurfaceViewDrawDemoActivity;
 import com.android.study.example.books.BooksMainTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
@@ -244,6 +245,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SearchEditTestActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_activity_screen_font_adapter).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScreenAdapterTestActivity.startActivity(MainActivity.this);
             }
         });
     }
