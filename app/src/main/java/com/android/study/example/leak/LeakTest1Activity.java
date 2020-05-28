@@ -57,4 +57,8 @@ public class LeakTest1Activity extends AppCompatActivity {
         LeakTest2Activity.startActivity(this);
         finish();
     }
+
+    public void onClickGlobalCatch(View view){
+        int i = 100 / 0;
+    }
 }

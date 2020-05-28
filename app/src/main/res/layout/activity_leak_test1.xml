@@ -10,6 +10,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="全局捕获异常"
+        android:onClick="onClickGlobalCatch"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="测试内存泄漏，不finish自己"
         android:onClick="onClick1"/>
 
