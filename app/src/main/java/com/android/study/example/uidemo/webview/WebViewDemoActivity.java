@@ -74,8 +74,8 @@ public class WebViewDemoActivity extends AppCompatActivity {
 
     private void initView(){
         initWebProgress();
-//        initWebViewStyle1();
-        initWebViewStyle2();
+        initWebViewStyle1();
+//        initWebViewStyle2();
     }
 
     /**

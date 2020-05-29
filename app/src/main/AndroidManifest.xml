@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".androidapi.ScreenAdapterTestActivity"></activity>
+        <activity android:name=".uidemo.webview.AgentwebTestActivity"></activity>
+        <activity android:name=".androidapi.ScreenAdapterTestActivity" />
         <activity
             android:name=".uidemo.other.OtherAppActivity"
             android:exported="true">
