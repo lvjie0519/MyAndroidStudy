@@ -141,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
 
 //                overridePendingTransition(0, 0);
                 LifeCycleTestActivity.startActivity(MainActivity.this);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 Log.i("lvjie", "overridePendingTransition...");
 //                overridePendingTransition(0, 0);
 
@@ -254,6 +259,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ScreenAdapterTestActivity.startActivity(MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.btn_activity_goto_mijia).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                String url = "mihome://plugin?pageName=feedBack";
+//                String url = "https://g.home.mi.com/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=xxxx";
+                String url = "https://home.mi.com/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=xxxx";
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
     }

@@ -166,6 +166,12 @@
             android:layout_height="wrap_content"
             android:text="屏幕字体适配"
             android:textAllCaps="false"/>
+        <Button
+            android:id="@+id/btn_activity_goto_mijia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跳转到米家"
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 </ScrollView>

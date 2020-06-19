@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 
 import com.android.study.example.R;
 import com.android.study.example.utils.ToastUtil;
@@ -18,6 +19,9 @@ public class AnimationDemoActivity extends AppCompatActivity {
 
     private ObjectAnimator objectAnimatorX;
     private ObjectAnimator objectAnimatorY;
+
+    private View scanView;
+    private Animation animation;
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, AnimationDemoActivity.class);
@@ -47,6 +51,33 @@ public class AnimationDemoActivity extends AppCompatActivity {
                 ToastUtil.showToast(AnimationDemoActivity.this, "我被点击了...");
             }
         });
+
+        scanView = findViewById(R.id.iv_scan_ing);
+        animation = AnimationUtils.loadAnimation(this,R.anim.anim_scan_circular);
+        LinearInterpolator lin = new LinearInterpolator();
+        animation.setInterpolator(lin);     // 代码设置下，旋转不会停顿
+
+
+
+        findViewById(R.id.btn_start_rotate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(scanView.getAnimation() == null){
+                    scanView.startAnimation(animation);
+                }
+            }
+        });
+
+        findViewById(R.id.btn_stop_rotate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(scanView.getAnimation() != null){
+                    scanView.clearAnimation();
+                }
+            }
+        });
+
+
     }
 
     // 区间动画-缩放
