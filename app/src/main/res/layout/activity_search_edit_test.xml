@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".uidemo.search.SearchEditTestActivity"
+    android:background="#ffffff"
     android:orientation="vertical">
 
     <Button
@@ -39,6 +40,7 @@
             android:id="@+id/rv_search_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="5dp"
             />
 
 </LinearLayout>

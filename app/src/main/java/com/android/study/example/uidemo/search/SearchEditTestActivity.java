@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -15,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.android.study.example.R;
+import com.android.study.example.utils.DisplayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +60,8 @@ public class SearchEditTestActivity extends AppCompatActivity {
 
         this.rvSearchData = findViewById(R.id.rv_search_data);
         this.mAdapter = new RvSearchAdapter(this, mSearchData);
-        this.rvSearchData.setLayoutManager(new LinearLayoutManager(this));
+        this.rvSearchData.setLayoutManager(new GridLayoutManager(this, 2));
+        this.rvSearchData.addItemDecoration(new MyItemDecoration(this, DisplayUtil.dip2px(this, 5)));
         this.rvSearchData.setAdapter(this.mAdapter);
 
         this.etSearch.setOnClickListener(new View.OnClickListener() {

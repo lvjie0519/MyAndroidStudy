@@ -31,7 +31,7 @@ public class RvSearchAdapter extends RecyclerView.Adapter<RvSearchAdapter.Search
 
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder searchViewHolder, int position) {
-        searchViewHolder.tvSearchInfo.setText(mDatas.get(position));
+        searchViewHolder.tvSearchInfo.setText("大门门锁 "+mDatas.get(position));
     }
 
     @Override
