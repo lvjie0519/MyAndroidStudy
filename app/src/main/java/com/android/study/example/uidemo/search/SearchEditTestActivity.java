@@ -22,6 +22,9 @@ import com.android.study.example.utils.DisplayUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * https://www.jianshu.com/p/41ae13016243
+ */
 public class SearchEditTestActivity extends AppCompatActivity {
 
     private static String TAG = "SearchEditTestActivity";
