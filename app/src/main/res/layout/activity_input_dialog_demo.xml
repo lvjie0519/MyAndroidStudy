@@ -10,9 +10,17 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="显示dialog"
+        android:text="显示input dialog"
         android:textAllCaps="false"
         android:onClick="onBtnShowDialogClick"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示CommonDialog"
+        android:textAllCaps="false"
+        android:onClick="onBtnShowCommonDialogClick"/>
+
 
     <EditText
         android:id="@+id/et_dialog_input"

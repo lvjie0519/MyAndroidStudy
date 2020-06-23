@@ -13,6 +13,7 @@ import com.android.study.example.R;
 public class InputDialogDemoActivity extends AppCompatActivity {
 
     private InputDialog mInputDialog;
+    private CommonMsgDialog commonMsgDialog;
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, InputDialogDemoActivity.class);
@@ -52,6 +53,17 @@ public class InputDialogDemoActivity extends AppCompatActivity {
 
     public void onBtnShowDialogClick(View view){
         showDialog();
+    }
+
+    public void onBtnShowCommonDialogClick(View view){
+        showCommonMsgDialog();
+    }
+
+    private void showCommonMsgDialog(){
+        if(commonMsgDialog == null){
+            commonMsgDialog = new CommonMsgDialog();
+        }
+        commonMsgDialog.show(this.getSupportFragmentManager(), "commonMsgDialog");
     }
 
 }
