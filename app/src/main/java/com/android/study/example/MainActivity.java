@@ -265,10 +265,10 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_activity_goto_mijia).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String url = "mihome://plugin?pageName=feedBack";
+                String url = "mihome://plugin?action=ACTIVATE_NFC_FOR_LOCK&uid=894158";
 //                String url = "https://g.home.mi.com/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=xxxx";
-//                String url = "https://g.home.mi.com/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
-                String url = "https://com.jack.demo/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
+//                String url = "mihome://plugin?pageName=feedBack&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
+//                String url = "https://com.jack.demo/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
                 Uri uri = Uri.parse(url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

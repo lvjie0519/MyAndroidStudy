@@ -21,11 +21,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        Log.i("lvjie", "aidl app MainActivity onStart task id is "+getTaskId());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("lvjie", "aidl app MainActivity onResume task id is "+getTaskId());
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("lvjie", "aidl app MainActivity onStop task id is "+getTaskId());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("lvjie", "aidl app MainActivity onDestroy task id is "+getTaskId());
     }
 
     public void btnTestAidl(View view){

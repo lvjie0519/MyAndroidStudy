@@ -26,6 +26,19 @@ public class OutAppTestActivity extends AppCompatActivity {
         Log.i("lvjie", "OutAppTestActivity onCreate task id is "+getTaskId());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("lvjie", "OutAppTestActivity onStart task id is "+getTaskId());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("lvjie", "OutAppTestActivity onResume task id is "+getTaskId());
+    }
+
+
     public void btnGoMainActivity(View view){
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
