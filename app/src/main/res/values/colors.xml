@@ -6,4 +6,7 @@
 
     <color name="picker_text_17">#1dc58a</color>
     <color name="transparent">#00000000</color>
+
+    <color name="color_text_1">#000000</color>
+    <color name="color_bg_1">#ffffff</color>
 </resources>

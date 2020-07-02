@@ -24,6 +24,7 @@ import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
 import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
+import com.android.study.example.uidemo.darkmode.DarkModeTestActivity;
 import com.android.study.example.uidemo.filedownload.FileDownLoadDemoActivity;
 import com.android.study.example.uidemo.inputdialog.InputDialogDemoActivity;
 import com.android.study.example.uidemo.mapsweeper.MapViewDemoActivity;
@@ -265,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_activity_goto_mijia).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "mihome://plugin?action=ACTIVATE_NFC_FOR_LOCK&uid=894158";
+                String url = "mihome://plugin?action=ACTIVATE_NFC_FOR_LOCK&uid=133165651";
 //                String url = "https://g.home.mi.com/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=xxxx";
 //                String url = "mihome://plugin?pageName=feedBack&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
 //                String url = "https://com.jack.demo/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
@@ -274,6 +275,13 @@ public class MainActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 Log.i("lvjie", "app main activity task id is "+getTaskId());
+            }
+        });
+
+        findViewById(R.id.btn_activity_dark_mode).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DarkModeTestActivity.startActivity(MainActivity.this);
             }
         });
     }

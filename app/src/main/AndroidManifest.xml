@@ -25,7 +25,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".uidemo.webview.AgentwebTestActivity"></activity>
+        <activity
+            android:name=".uidemo.darkmode.DarkModeTestActivity"
+            android:theme="@style/DarkModeActivityTheme"
+            />
+        <activity android:name=".uidemo.webview.AgentwebTestActivity" />
         <activity android:name=".androidapi.ScreenAdapterTestActivity" />
         <activity
             android:name=".uidemo.other.OtherAppActivity"
@@ -92,8 +96,7 @@
         <activity android:name=".books.jjzg.chapter2.Chapter2TestActivity" />
         <activity
             android:name=".books.BooksMainTestActivity"
-            android:launchMode="singleInstance"
-            />
+            android:launchMode="singleInstance" />
         <activity android:name=".books.jjzg.JjzgMainTestActivity" />
         <activity android:name=".uidemo.eventtrans.ViewEventTransTestActivity" />
         <activity android:name=".uidemo.mapsweeper.MapViewDemoActivity" />

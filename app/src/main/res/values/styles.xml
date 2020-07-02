@@ -49,4 +49,7 @@
     <style name="ActivityTheme" parent="android:Theme.Translucent.NoTitleBar">
     </style>
 
+    <style name="DarkModeActivityTheme" parent="Theme.AppCompat.DayNight">
+    </style>
+
 </resources>

@@ -173,6 +173,13 @@
             android:text="跳转到米家"
             android:textAllCaps="false"/>
 
+        <Button
+            android:id="@+id/btn_activity_dark_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="深色模式支持"
+            android:textAllCaps="false"/>
+
     </LinearLayout>
 </ScrollView>
 
