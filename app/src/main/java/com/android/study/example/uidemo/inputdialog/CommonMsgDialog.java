@@ -32,12 +32,19 @@ public class CommonMsgDialog extends DialogFragment {
             initView(view);
             builder.setView(view);
         }
-        setCancelable(true);
+        /**
+         * false： 点击屏幕 不消失, 按返回按钮也不会消失
+         */
+        setCancelable(false);
         AlertDialog dialog = builder.create();
         Window window = dialog.getWindow();
         if (null != window) {
             window.setBackgroundDrawableResource(R.color.transparent);
         }
+        /**
+         * false： 点击屏幕 不消失, 但是按返回按钮 会消失
+         */
+//        dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
 
@@ -57,6 +64,20 @@ public class CommonMsgDialog extends DialogFragment {
         this.tvShowInfo = rootView.findViewById(R.id.tv_show_info);
         this.btnLeft = rootView.findViewById(R.id.btn_dialog_left);
         this.btnRight = rootView.findViewById(R.id.btn_dialog_right);
+
+        this.btnLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        this.btnRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
     }
 
     public interface OnClickListener{
