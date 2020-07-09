@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                String url = "mihomeplugin://open?action=ACTIVATE_NFC_FOR_LOCK&uid=133165651";
+                String url = "git=133165651";
 //                String url = "https://g.home.mi.com/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=xxxx";
 //                String url = "mihome://plugin?pageName=feedBack&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
 //                String url = "https://com.jack.demo/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
