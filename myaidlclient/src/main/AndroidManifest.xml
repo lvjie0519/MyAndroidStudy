@@ -37,6 +37,10 @@
                     android:host="com.jack.demo"
                     android:pathPattern=".*"
                     android:scheme="https" />
+                <data
+                    android:host="open"
+                    android:pathPattern=".*"
+                    android:scheme="mihomeplugin" />
             </intent-filter>
         </activity>
     </application>

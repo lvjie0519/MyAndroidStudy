@@ -1,6 +1,7 @@
 package com.android.example.myaidlclient.outapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,10 @@ public class OutCenterTransferActivity extends AppCompatActivity {
 
 //        Intent intent = new Intent(this, MainActivity.class);
 //        startActivity(intent);
+        Uri uri = getIntent().getData();
+        if(uri != null){
+            Log.i("lvjie", "getScheme="+uri.getScheme()+"  getHost="+uri.getHost()+"  getPath="+uri.getPath());
+        }
         OutAppTestActivity.startActivity(this);
         finish();
     }

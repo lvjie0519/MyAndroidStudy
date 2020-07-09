@@ -3,6 +3,8 @@ package com.android.study.example;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.annotation.IntDef;
@@ -43,6 +45,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.List;
 
 import okhttp3.Cache;
 import okhttp3.Call;
@@ -266,14 +269,26 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_activity_goto_mijia).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "mihome://plugin?action=ACTIVATE_NFC_FOR_LOCK&uid=133165651";
+
+
+                String url = "mihomeplugin://open?action=ACTIVATE_NFC_FOR_LOCK&uid=133165651";
 //                String url = "https://g.home.mi.com/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=xxxx";
 //                String url = "mihome://plugin?pageName=feedBack&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
 //                String url = "https://com.jack.demo/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
                 Uri uri = Uri.parse(url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+
+                PackageManager packageManager = getPackageManager();
+                List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
+
+                if(activities.size()>0){
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }else{
+                    Log.i("lvjie", "cannot find this uri");
+                }
+
+
                 Log.i("lvjie", "app main activity task id is "+getTaskId());
             }
         });
