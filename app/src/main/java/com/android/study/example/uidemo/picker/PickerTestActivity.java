@@ -42,7 +42,7 @@ public class PickerTestActivity extends AppCompatActivity {
         mNumberPicker.setMinValue(0);
         mNumberPicker.setMaxValue(dispalyValues.length-1);
         mNumberPicker.setDisplayedValues(dispalyValues);
-        mNumberPicker.setWrapSelectorWheel(true);
+        mNumberPicker.setWrapSelectorWheel(false);      // 是否循环滚动
         mNumberPicker.setValue(2);
         mNumberPicker.setSelectTextColor(Color.BLUE);
         mNumberPicker.setUnSelectTextColor(Color.RED);
