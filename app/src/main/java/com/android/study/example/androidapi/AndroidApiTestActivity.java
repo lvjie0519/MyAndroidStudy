@@ -22,6 +22,8 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.system.ErrnoException;
+import android.system.Os;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -58,6 +60,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -132,8 +136,8 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String filePath = getExternalFilesDir("logs12").getAbsolutePath() + File.separator + "plugin.log";
                 int tag = new Random().nextInt();
-                FileUtils.writeLog(tag+"、  aaaaaaa", filePath);
-//                writeFile();
+//                FileUtils.writeLog(tag+"、  aaaaaaa", filePath);
+                writeFile();
             }
         });
 
@@ -141,6 +145,67 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 readFile();
+            }
+        });
+
+        findViewById(R.id.btn_file_softLink).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 软连接
+                String srcFilePath = getExternalFilesDir("logs12").getAbsolutePath() + File.separator + "linked";
+                String targetFilePath = getExternalFilesDir("logs12").getAbsolutePath() + File.separator + "linking";
+
+                if(new File(srcFilePath).exists()){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        try {
+                            Files.createSymbolicLink(FileSystems.getDefault().getPath(targetFilePath), FileSystems.getDefault().getPath(srcFilePath));
+                        } catch (IOException e) {
+                            Log.e("lvjie", Log.getStackTraceString(e));
+                        }
+                    }
+                }
+
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        try {
+                            Os.symlink(srcFilePath, targetFilePath);
+                        } catch (Exception e) {
+                            Log.e("lvjie", Log.getStackTraceString(e));
+                        }
+                    }else{
+                        // 反射来解决
+                        final Class<?> libcore = Class.forName("libcore.io.Libcore");
+                        final java.lang.reflect.Field fOs = libcore.getDeclaredField("os");
+                        fOs.setAccessible(true);
+                        final Object os = fOs.get(null);
+                        final java.lang.reflect.Method method = os.getClass().getMethod("symlink", String.class, String.class);
+                        method.invoke(os, srcFilePath, targetFilePath);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        findViewById(R.id.btn_file_link).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 硬连接
+
+                String srcFilePath = getExternalFilesDir("logs12").getAbsolutePath() + File.separator + "linked";
+                String targetFilePath = getExternalFilesDir("logs12").getAbsolutePath() + File.separator + "linking";
+
+                if(new File(srcFilePath).exists()){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        try {
+                            Files.createLink(FileSystems.getDefault().getPath(targetFilePath), FileSystems.getDefault().getPath(srcFilePath));
+                        } catch (IOException e) {
+                            Log.e("lvjie", Log.getStackTraceString(e));
+                        }
+                    }
+                }
+
+
             }
         });
 
@@ -366,8 +431,8 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
     private void readFile() {
 
-//        String filePath = getFilesDir().getPath() + File.separator + "debug_list.txt";
-        String filePath = this.getExternalFilesDir("logs12").getAbsolutePath() + File.separator + "plugin.log";
+        String filePath = getFilesDir().getPath() + File.separator + "debug_list.txt";
+//        String filePath = this.getExternalFilesDir("logs12").getAbsolutePath() + File.separator + "plugin.log";
         File file = new File(filePath);
         if (!file.exists()) {
             Log.i("lvjie", filePath + " file is not exit");

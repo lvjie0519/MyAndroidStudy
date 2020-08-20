@@ -13,4 +13,10 @@
         android:text="《进阶之光》"
         android:onClick="jjzgOnClick"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="打开自己"
+        android:onClick="onClickSelfBtn"/>
+
 </LinearLayout>
