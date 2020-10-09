@@ -67,7 +67,7 @@ dependencies {
     // 开源有进度webview
     implementation 'com.github.youlookwhat:WebProgress:1.1.0'
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6'
 
     // 开源webview
     implementation 'com.just.agentweb:agentweb:4.1.3' // (必选)

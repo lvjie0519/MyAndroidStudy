@@ -3,13 +3,26 @@ package com.android.study.example;
 import android.app.Application;
 import android.util.Log;
 
+import com.squareup.leakcanary.LeakCanary;
+
+
 public class MainApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        initGlobalCrash();
+//        initGlobalCrash();
+        initLeakCanary();
+    }
+
+    private void initLeakCanary(){
+        if(LeakCanary.isInAnalyzerProcess(this)){
+            Log.i("LeakCanary", "LeakCanary.isInAnalyzerProcess...");
+            return;
+        }
+        Log.i("LeakCanary", "LeakCanary.install...");
+        LeakCanary.install(this);
     }
 
     /**
