@@ -25,10 +25,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".thirdlib.ThirdLibTestActivity"></activity>
+        <activity android:name=".thirdlib.LeakCanaryTestActivity" />
         <activity
             android:name=".uidemo.darkmode.DarkModeTestActivity"
-            android:theme="@style/DarkModeActivityTheme"
-            />
+            android:theme="@style/DarkModeActivityTheme" />
         <activity android:name=".uidemo.webview.AgentwebTestActivity" />
         <activity android:name=".androidapi.ScreenAdapterTestActivity" />
         <activity

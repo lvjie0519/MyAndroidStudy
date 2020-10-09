@@ -26,6 +26,7 @@ import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
 import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
+import com.android.study.example.thirdlib.ThirdLibTestActivity;
 import com.android.study.example.uidemo.darkmode.DarkModeTestActivity;
 import com.android.study.example.uidemo.filedownload.FileDownLoadDemoActivity;
 import com.android.study.example.uidemo.inputdialog.InputDialogDemoActivity;
@@ -359,6 +360,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void onClickThirdLibTestActivity(View view) {
+        ThirdLibTestActivity.startActivity(this);
     }
 
 
