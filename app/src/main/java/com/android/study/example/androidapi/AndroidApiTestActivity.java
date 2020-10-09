@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
@@ -497,7 +498,12 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 + "\n  this.getCacheDir().getPath(): " + this.getCacheDir().getPath()      // /data/user/0/com.android.study.example/cache
                 + "\n  this.getCacheDir().getAbsolutePath(): " + this.getCacheDir().getAbsolutePath() // /data/user/0/com.android.study.example/cache
                 + "\n  this.getApplicationInfo().dataDir: " + this.getApplicationInfo().dataDir   // /data/user/0/com.android.study.example
-                + "\n  this.getExternalFilesDir(\"logs\").getAbsolutePath(): " + this.getExternalFilesDir("logs").getAbsolutePath();   // /storage/emulated/0/Android/data/com.android.study.example/files/logs
+                + "\n  this.getExternalFilesDir(\"logs\").getAbsolutePath(): " + this.getExternalFilesDir("logs").getAbsolutePath()   // /storage/emulated/0/Android/data/com.android.study.example/files/logs
+                + "\n  Environment.getExternalStorageDirectory(): "+ Environment.getExternalStorageDirectory()  // /storage/emulated/0
+                + "\n  this.getExternalCacheDir(): "+ this.getExternalCacheDir()  // /storage/emulated/0/Android/data/com.android.study.example/cache
+                + "\n  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES): "+ Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) // /storage/emulated/0/Pictures
+                + "\n  this.getExternalFilesDir(Environment.DIRECTORY_PICTURES): "+ this.getExternalFilesDir(Environment.DIRECTORY_PICTURES)  // /storage/emulated/0/Android/data/com.android.study.example/files/Pictures
+                + "\n  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM): "+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);  // /storage/emulated/0/DCIM
         Log.i("lvjie", fileInfo);
         tvShowInfo.setText(fileInfo);
 
