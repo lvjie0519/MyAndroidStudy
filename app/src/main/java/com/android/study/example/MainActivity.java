@@ -25,6 +25,7 @@ import com.android.study.example.books.BooksMainTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
+import com.android.study.example.performance_optimization.PerformOptMainTestActivity;
 import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
 import com.android.study.example.thirdlib.ThirdLibTestActivity;
 import com.android.study.example.uidemo.darkmode.DarkModeTestActivity;
@@ -364,6 +365,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickThirdLibTestActivity(View view) {
         ThirdLibTestActivity.startActivity(this);
+    }
+
+    public void openPerformOptActivity(View view) {
+        PerformOptMainTestActivity.startActivity(this);
     }
 
 
