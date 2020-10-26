@@ -13,7 +13,7 @@ public class MainApplication extends Application {
         super.onCreate();
 
 //        initGlobalCrash();
-        initLeakCanary();
+//        initLeakCanary();
     }
 
     private void initLeakCanary(){

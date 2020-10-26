@@ -10,7 +10,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="除以0"
+        android:text="初始化LeakCanary"
+        android:onClick="onClickInitLeakCanary"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试内存泄漏"
         android:onClick="onClickDivide"/>
 
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.study.example.R;
+import com.squareup.leakcanary.LeakCanary;
 
 public class LeakCanaryTestActivity extends AppCompatActivity {
 
@@ -37,6 +38,9 @@ public class LeakCanaryTestActivity extends AppCompatActivity {
         }).start();
     }
 
+    public void onClickInitLeakCanary(View view) {
+        LeakCanary.install(this.getApplication());
+    }
 
 
     private static class MyLeakCanaryInstance{
