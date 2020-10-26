@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".thirdlib.ThirdLibTestActivity"></activity>
+        <activity android:name=".androidapi.WuZhangAiTestActivity"></activity>
+        <activity android:name=".thirdlib.ThirdLibTestActivity" />
         <activity android:name=".thirdlib.LeakCanaryTestActivity" />
         <activity
             android:name=".uidemo.darkmode.DarkModeTestActivity"
