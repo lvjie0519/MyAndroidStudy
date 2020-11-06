@@ -194,6 +194,13 @@
             android:text="性能优化测试"
             android:textAllCaps="false"
             android:onClick="openPerformOptActivity"/>
+        <Button
+            android:id="@+id/btn_activity_wuzhangai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无障碍测试"
+            android:textAllCaps="false"
+            android:onClick="openWuZhangAiTestPage"/>
 
     </LinearLayout>
 </ScrollView>

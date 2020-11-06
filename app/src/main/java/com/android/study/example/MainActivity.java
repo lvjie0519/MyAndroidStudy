@@ -21,6 +21,7 @@ import com.android.study.example.androidapi.LifeCycleTestActivity;
 import com.android.study.example.androidapi.OrientationTestActivity;
 import com.android.study.example.androidapi.ScreenAdapterTestActivity;
 import com.android.study.example.androidapi.SurfaceViewDrawDemoActivity;
+import com.android.study.example.androidapi.WuZhangAiTestActivity;
 import com.android.study.example.books.BooksMainTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
@@ -369,6 +370,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openPerformOptActivity(View view) {
         PerformOptMainTestActivity.startActivity(this);
+    }
+
+    public void openWuZhangAiTestPage(View view) {
+        WuZhangAiTestActivity.startActivity(this);
     }
 
 
