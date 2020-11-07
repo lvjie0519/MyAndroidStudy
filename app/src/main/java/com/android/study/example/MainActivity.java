@@ -377,12 +377,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    class A implements Interceptor{
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("lvjie","MainActivity onStart...");
+    }
 
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            return null;
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("lvjie","MainActivity onResume...");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("lvjie","MainActivity onPause...");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("lvjie","MainActivity onStop...");
     }
 
     @Override
@@ -392,17 +408,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static class AA{
-        public static final int UI_PERF_LEVEL_0 = 0;
-        public static final int UI_PERF_LEVEL_1 = 2;
-
-        @IntDef({UI_PERF_LEVEL_0,UI_PERF_LEVEL_1})
-        @Retention(RetentionPolicy.SOURCE)
-        public @interface PERF_LEVEL {
-        }
-
-        public @PERF_LEVEL int getLevel(@PERF_LEVEL int level){
-            return UI_PERF_LEVEL_0;
-        }
-    }
 }

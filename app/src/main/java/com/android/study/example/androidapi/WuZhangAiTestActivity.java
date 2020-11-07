@@ -1,5 +1,6 @@
 package com.android.study.example.androidapi;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,7 @@ import android.widget.Button;
 
 import com.android.study.example.R;
 
-public class WuZhangAiTestActivity extends AppCompatActivity {
+public class WuZhangAiTestActivity extends Activity {
 
     private Button btnWuZhangAi1;
 

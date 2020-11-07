@@ -1,5 +1,6 @@
 package com.android.study.example.androidapi;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +31,7 @@ import com.android.study.example.R;
  *  -->onWindowFocusChanged   (这都是View执行的)
  *
  */
-public class LifeCycleTestActivity extends AppCompatActivity {
+public class LifeCycleTestActivity extends Activity {
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, LifeCycleTestActivity.class);
@@ -53,6 +54,7 @@ public class LifeCycleTestActivity extends AppCompatActivity {
         Log.i("lvjie","super.onCreate... timeCost="+(System.currentTimeMillis()-startTime));
         startTime = getIntent().getLongExtra("startTime", 0);
         Log.i("lvjie","onCreate... timeCost="+(System.currentTimeMillis()-startTime));
+        Log.i("lvjie","LifeCycleTestActivity onCreate...");
     }
 
     public void goNextActivity(View view){

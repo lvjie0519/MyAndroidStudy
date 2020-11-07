@@ -94,7 +94,7 @@
         <activity android:name=".androidapi.AudioDemoTestActivity" />
         <activity
             android:name=".androidapi.LifeCycleTestActivity"
-            android:launchMode="singleTask" />
+            />
         <activity android:name=".thirdlib.RenderScriptBlurDemoActivity" />
         <activity android:name=".androidapi.SurfaceViewDrawDemoActivity" />
         <activity android:name=".books.jjzg.chapter2.Chapter2TestActivity" />
