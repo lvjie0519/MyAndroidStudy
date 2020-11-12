@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.net.DhcpInfo;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
@@ -61,6 +62,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -590,6 +593,39 @@ public class AndroidApiTestActivity extends AppCompatActivity {
     }
 
     /**
+     * 获取广播地址
+     * @param view
+     */
+    public void onClickGetWifiBroadcast(View view) {
+        InetAddress address = getWifiBroadcastAddressInner(this);
+        Log.i("lvjie", address.getHostAddress());
+    }
+
+    public static InetAddress getWifiBroadcastAddressInner(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isWifi = (activeNetwork != null) && (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI);
+        if (isWifi) {
+            WifiManager wifi = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            DhcpInfo dhcp = wifi.getDhcpInfo();
+            if (dhcp != null) {
+                int broadcast = (dhcp.ipAddress & dhcp.netmask) | ~dhcp.netmask;
+                byte[] quads = new byte[4];
+                for (int k = 0; k < 4; k++) {
+                    quads[k] = (byte) ((broadcast >> k * 8) & 0xFF);
+                }
+                try {
+                    return InetAddress.getByAddress(quads);
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * 系统服务是否开启定位功能
      *
      * @return
@@ -704,6 +740,7 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
         unregisterReceiver(mNetworkChangeReceiver);
     }
+
 
     private static class NetworkChangeReceiver extends BroadcastReceiver {
         @Override

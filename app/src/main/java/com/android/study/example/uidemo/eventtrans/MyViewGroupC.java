@@ -4,20 +4,20 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-public class MyViewGroupB extends LinearLayout {
+public class MyViewGroupC extends ViewGroup {
 
-    public MyViewGroupB(Context context) {
+    public MyViewGroupC(Context context) {
         super(context);
     }
 
-    public MyViewGroupB(Context context, AttributeSet attrs) {
+    public MyViewGroupC(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyViewGroupB(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MyViewGroupC(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -29,8 +29,6 @@ public class MyViewGroupB extends LinearLayout {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-
-        super.onLayout(changed, left, top, right, bottom);
         Log.i("lvjie", "MyViewGroupB  onLayout...left="+left+"  right="+right);
     }
 
