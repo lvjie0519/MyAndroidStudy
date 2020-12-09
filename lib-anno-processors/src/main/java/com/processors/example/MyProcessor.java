@@ -66,6 +66,7 @@ public class MyProcessor extends AbstractProcessor {
         return annotataions;
     }
 
+    
     /**
      * 指定使用的Java版本，通常这里返回SourceVersion.latestSupported()，默认返回SourceVersion.RELEASE_6
      * @return  使用的Java版本
