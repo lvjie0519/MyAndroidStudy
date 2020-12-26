@@ -20,6 +20,7 @@ import com.android.study.example.androidapi.BlueMainTestActivity;
 import com.android.study.example.androidapi.LifeCycleTestActivity;
 import com.android.study.example.androidapi.OrientationTestActivity;
 import com.android.study.example.androidapi.ScreenAdapterTestActivity;
+import com.android.study.example.androidapi.SharedPreferencesTestActivity;
 import com.android.study.example.androidapi.SurfaceViewDrawDemoActivity;
 import com.android.study.example.androidapi.WuZhangAiTestActivity;
 import com.android.study.example.books.BooksMainTestActivity;
@@ -374,6 +375,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openWuZhangAiTestPage(View view) {
         WuZhangAiTestActivity.startActivity(this);
+    }
+
+    public void openSharedPreferencesTestPage(View view) {
+        SharedPreferencesTestActivity.startActivity(this);
     }
 
 

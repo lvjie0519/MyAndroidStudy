@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".performance_optimization.PerformOptMainTestActivity"></activity>
+        <activity android:name=".androidapi.SharedPreferencesTestActivity"></activity>
+        <activity android:name=".performance_optimization.PerformOptMainTestActivity" />
         <activity android:name=".performance_optimization.TraceViewUseTestActivity" />
         <activity android:name=".androidapi.WuZhangAiTestActivity" />
         <activity android:name=".thirdlib.ThirdLibTestActivity" />
@@ -92,9 +93,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".uidemo.picker.PickerTestActivity" />
         <activity android:name=".androidapi.AudioDemoTestActivity" />
-        <activity
-            android:name=".androidapi.LifeCycleTestActivity"
-            />
+        <activity android:name=".androidapi.LifeCycleTestActivity" />
         <activity android:name=".thirdlib.RenderScriptBlurDemoActivity" />
         <activity android:name=".androidapi.SurfaceViewDrawDemoActivity" />
         <activity android:name=".books.jjzg.chapter2.Chapter2TestActivity" />

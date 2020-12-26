@@ -201,6 +201,13 @@
             android:text="无障碍测试"
             android:textAllCaps="false"
             android:onClick="openWuZhangAiTestPage"/>
+        <Button
+            android:id="@+id/btn_activity_SharedPreferences"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SharedPreferencesTest"
+            android:textAllCaps="false"
+            android:onClick="openSharedPreferencesTestPage"/>
 
     </LinearLayout>
 </ScrollView>
