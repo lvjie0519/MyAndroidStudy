@@ -17,6 +17,12 @@
         android:layout_marginTop="20dp"
         android:onClick="onClickConnectService"
         android:text="连接服务"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:onClick="onClickUnConnectService"
+        android:text="断开连接"/>
     <EditText
         android:id="@+id/et_data_1"
         android:layout_width="match_parent"

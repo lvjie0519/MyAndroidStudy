@@ -16,6 +16,13 @@ import android.widget.TextView;
 import com.android.study.example.IMyAidlInterface;
 import com.android.study.example.StudentInfo;
 
+/**
+ * 当客户端发起 bindService， 服务端service的执行过程如下：
+ *   构造方法-->onCreate-->onBind
+ * 当 有第二个、第三个…… 再次bindService 时，服务端service 不会执行任何方法；
+ * 当 第二个、第三个…… 再次unbindService 时， 也不会触发服务端service 执行onUnbind等方法；
+ * 当 最后一个activity unbindService时，服务端service 执行onUnbind、onDestroy方法。
+ */
 public class AidlClientTestMainActivity extends AppCompatActivity {
 
     private EditText mEtData1;
@@ -59,6 +66,10 @@ public class AidlClientTestMainActivity extends AppCompatActivity {
         bindAidlService();
     }
 
+    public void onClickUnConnectService(View view){
+        unBindAidlService();
+    }
+
     public void onClickAidlTestBtn(View view){
 
         int num1 = 0;
@@ -89,6 +100,12 @@ public class AidlClientTestMainActivity extends AppCompatActivity {
         bindService(intent, conn, Context.BIND_AUTO_CREATE);
     }
 
+    private void unBindAidlService(){
+        if(conn!=null){
+            unbindService(conn);
+        }
+    }
+
     public void onClickShowStuInfo(View view){
         try {
             StudentInfo studentInfo = iMyAidlInterface.getStudentInfo();
@@ -106,8 +123,6 @@ public class AidlClientTestMainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(conn!=null){
-            unbindService(conn);
-        }
+        unBindAidlService();
     }
 }

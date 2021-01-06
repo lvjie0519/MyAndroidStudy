@@ -63,6 +63,10 @@ public class AidlClientSecondTestActivity extends AppCompatActivity {
         bindAidlService();
     }
 
+    public void onClickUnConnectService(View view){
+        unBindAidlService();
+    }
+
     public void onClickAidlTestBtn(View view){
 
         int num1 = 0;
@@ -93,13 +97,17 @@ public class AidlClientSecondTestActivity extends AppCompatActivity {
         bindService(intent, conn, Context.BIND_AUTO_CREATE);
     }
 
+    private void unBindAidlService(){
+        if(conn!=null){
+            unbindService(conn);
+        }
+    }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(conn!=null){
-            unbindService(conn);
-        }
+        unBindAidlService();
     }
 
 }
