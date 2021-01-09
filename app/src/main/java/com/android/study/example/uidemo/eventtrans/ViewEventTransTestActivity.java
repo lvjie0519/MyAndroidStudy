@@ -16,6 +16,21 @@ import com.android.study.example.utils.AndroidBug5497Workaround;
 import com.android.study.example.utils.TitleBarUtil;
 import com.android.study.example.utils.ToastUtil;
 
+import java.util.HashMap;
+
+/**
+ * invalidate 与 requestLayout 区别
+ * invalidate 只会执行自身View或ViewGroup 的onDraw 方法
+ * requestLayout  会从根View开始执行 onMeasure-->onLayout-->onDraw
+ *
+ * invalidate 为什么不会触发其他View执行onDraw方法？
+ * onDraw 方法的调用是父View的dispatchDraw方法调用drawChild-->draw-->onDraw
+ * view的updateDisplayListIfDirty会调用 dispatchDraw 或 draw 方法
+ * 什么时候会向下dispatch 不会绘制自身呢？
+ * updateDisplayListIfDirty 有对应的逻辑判断，PFLAG_SKIP_DRAW，
+ * 如果当前View不需要绘制（打上了PFLAG_SKIP_DRAW标志），那么会通过dispatchDraw方法直接绘制当前View的子View。
+ *
+ */
 public class ViewEventTransTestActivity extends AppCompatActivity {
 
     private MyViewC myView;
@@ -52,7 +67,8 @@ public class ViewEventTransTestActivity extends AppCompatActivity {
         findViewById(R.id.btn_test_invalidate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myView.invalidate();
+//                myView.invalidate();
+                myViewGroupB.invalidate();
             }
         });
 

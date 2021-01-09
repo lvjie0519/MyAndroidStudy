@@ -1,5 +1,6 @@
 package com.android.study.example.aidl;
 
+import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
