@@ -1,16 +1,18 @@
 package com.android.study.example.books;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.android.study.example.R;
 import com.android.study.example.books.jjzg.JjzgMainTestActivity;
 
-public class BooksMainTestActivity extends AppCompatActivity {
+public class BooksMainTestActivity extends Activity {
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, BooksMainTestActivity.class);
@@ -22,9 +24,20 @@ public class BooksMainTestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initWindowSize();
         setContentView(R.layout.activity_books_main_test);
 
         Log.i("lvjie", "onCreate...");
+    }
+
+    private void initWindowSize(){
+        //特殊设备，设置宽度
+        WindowManager m = getWindowManager();
+        Display d = m.getDefaultDisplay();  //为获取屏幕宽、高
+        android.view.WindowManager.LayoutParams p = getWindow().getAttributes();  //获取对话框当前的参数值
+        p.height = (int) (d.getHeight() * 0.7);   //高度设置为屏幕的0.6
+        p.width = (int) (d.getWidth() * 0.60);    //宽度设置为屏幕的0.95
+        getWindow().setAttributes(p);     //设置生效
     }
 
 
