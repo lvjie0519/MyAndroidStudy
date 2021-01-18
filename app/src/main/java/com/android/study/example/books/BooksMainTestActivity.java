@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -41,12 +43,19 @@ public class BooksMainTestActivity extends Activity {
     }
 
 
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            JjzgMainTestActivity.startActivity(BooksMainTestActivity.this);
+        }
+    };
+
     /**
      * 进阶之光
      * @param view
      */
     public void jjzgOnClick(View view){
-        JjzgMainTestActivity.startActivity(this);
+        mHandler.sendMessageDelayed(Message.obtain(), 1000*5);
     }
 
     public void onClickSelfBtn(View view) {
