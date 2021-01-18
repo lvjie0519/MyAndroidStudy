@@ -22,6 +22,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.system.ErrnoException;
@@ -43,6 +44,7 @@ import android.widget.Toast;
 import com.android.study.example.MainActivity;
 import com.android.study.example.R;
 import com.android.study.example.androidapi.utils.FileUtils;
+import com.android.study.example.androidapi.utils.MimeTypeUtils;
 import com.android.study.example.androidapi.views.MyFpsTestView;
 import com.android.study.example.uidemo.dragging.DraggingButton;
 import com.android.study.example.utils.ToastUtil;
@@ -739,6 +741,55 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         super.onDestroy();
 
         unregisterReceiver(mNetworkChangeReceiver);
+    }
+
+    public void onClickOpenSysFileDialog(View view) {
+//        String filePath = getFilesDir().getPath() + File.separator + "debug_list.txt";
+        String filePath = getFilesDir().getPath() + File.separator +"myfile"+File.separator+ "debug_list.txt";
+        File file = new File(filePath);
+        openFileWithSysDialog(this, file);
+    }
+
+    private void openFileWithSysDialog(Context context, File file){
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //设置intent的Action属性
+        intent.setAction(Intent.ACTION_VIEW);
+        //获取文件file的MIME类型
+        String type = getMIMEType(file);
+        //设置intent的data和Type属性。
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N){
+            intent.setDataAndType(/*uri*/Uri.fromFile(file), type);
+        }else{
+
+            final String packageName = context.getApplicationContext().getPackageName();
+            final String authority =  new StringBuilder(packageName).append(".provider").toString();
+            intent.setDataAndType(FileProvider.getUriForFile(this, authority, file), type);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        //跳转
+        context.startActivity(intent);
+    }
+
+
+    private static String getMIMEType(File file) {
+        String type = "*/*";
+        String fName = file.getName();
+
+        //获取后缀名前的分隔符"."在fName中的位置。
+        int dotIndex = fName.lastIndexOf(".");
+        if (dotIndex < 0) {
+            return type;
+        }
+
+        /* 获取文件的后缀名*/
+        String extension = fName.substring(dotIndex+1, fName.length()).toLowerCase();
+        if (TextUtils.isEmpty(extension)) {
+            return type;
+        }
+        type = MimeTypeUtils.getMimeType(extension);
+        return type;
     }
 
 
