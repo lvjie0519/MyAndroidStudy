@@ -764,7 +764,9 @@ public class AndroidApiTestActivity extends AppCompatActivity {
 
             final String packageName = context.getApplicationContext().getPackageName();
             final String authority =  new StringBuilder(packageName).append(".provider").toString();
-            intent.setDataAndType(FileProvider.getUriForFile(this, authority, file), type);
+//            intent.setDataAndType(FileProvider.getUriForFile(this, authority, file), type);
+            String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1586433650723&di=44f673bd1ccbde2af32e1f7565de4484&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw640h759%2F20180111%2F9ee0-fyqnick6733536.jpg";
+            intent.setDataAndType(Uri.parse(url), MimeTypeUtils.getMimeType("jpg"));
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
