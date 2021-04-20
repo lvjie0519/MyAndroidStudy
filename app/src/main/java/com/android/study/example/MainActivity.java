@@ -274,26 +274,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                String url = "git=133165651";
-//                String url = "https://g.home.mi.com/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=xxxx";
-//                String url = "mihome://plugin?pageName=feedBack&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
-//                String url = "https://com.jack.demo/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
-                Uri uri = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-
-                PackageManager packageManager = getPackageManager();
-                List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
-
-                if(activities.size()>0){
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }else{
-                    Log.i("lvjie", "cannot find this uri");
-                }
-
-
-                Log.i("lvjie", "app main activity task id is "+getTaskId());
+//                startActivityForscheme();
+                    startActivityForExported();
             }
         });
 
@@ -303,6 +285,40 @@ public class MainActivity extends AppCompatActivity {
                 DarkModeTestActivity.startActivity(MainActivity.this);
             }
         });
+    }
+
+    /**
+     * 跨app跳转方式一
+     */
+    private void startActivityForscheme(){
+        String url = "git=133165651";
+//                String url = "https://g.home.mi.com/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=xxxx";
+//                String url = "mihome://plugin?pageName=feedBack&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
+//                String url = "https://com.jack.demo/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+        PackageManager packageManager = getPackageManager();
+        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
+
+        if(activities.size()>0){
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }else{
+            Log.i("lvjie", "cannot find this uri");
+        }
+
+
+        Log.i("lvjie", "app main activity task id is "+getTaskId());
+    }
+
+    /**
+     * 跨app跳转方式二
+     */
+    private void startActivityForExported(){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setClassName("com.android.example.myaidlclient", "com.android.example.myaidlclient.outapp.ExportedActivity");
+        startActivity(intent);
     }
 
     private void initData(){

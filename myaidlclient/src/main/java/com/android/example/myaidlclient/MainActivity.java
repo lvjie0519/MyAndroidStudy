@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.android.example.myaidlclient.outapp.ExportedActivity;
 import com.android.example.myaidlclient.outapp.OutAppTestActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,5 +56,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.i("lvjie", "aidl app MainActivity onNewIntent task id is "+getTaskId());
+    }
+
+    public void btnTestOpenExportedActivity(View view) {
+        ExportedActivity.startActivity(this);
     }
 }

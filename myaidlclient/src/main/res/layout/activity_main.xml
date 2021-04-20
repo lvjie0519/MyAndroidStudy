@@ -19,4 +19,10 @@
         android:text="跨app跳转 测试"
         android:onClick="btnTestOutApp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转到ExportedActivity"
+        android:onClick="btnTestOpenExportedActivity"/>
+
 </LinearLayout>
