@@ -274,8 +274,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                startActivityForscheme();
-                    startActivityForExported();
+                startActivityForscheme();
+//                    startActivityForExported();
             }
         });
 
@@ -291,10 +291,11 @@ public class MainActivity extends AppCompatActivity {
      * 跨app跳转方式一
      */
     private void startActivityForscheme(){
-        String url = "git=133165651";
+//        String url = "git=133165651";
 //                String url = "https://g.home.mi.com/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=xxxx";
 //                String url = "mihome://plugin?pageName=feedBack&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
 //                String url = "https://com.jack.demo/otherPlatform?target=MiHomePlugin&action=ACTIVATE_NFC_FOR_LOCK&uid=8941581051";
+                String url = "sfapp.com.sangfor.testurlscheme://auth_helper";
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
@@ -319,6 +320,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setClassName("com.android.example.myaidlclient", "com.android.example.myaidlclient.outapp.ExportedActivity");
         startActivity(intent);
+    }
+
+    private void startActivityForAction(){
+        Intent intent = new Intent();
+        intent.setPackage("com.ang.chapter_2_service");
+        intent.setAction("com.ang.poolBinder");
+        startService(intent);
     }
 
     private void initData(){
