@@ -19,6 +19,12 @@
             android:textAllCaps="false"/>
 
         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跳转到其他应用测试"
+            android:onClick="onClickOpenOtherApp"/>
+
+        <Button
             android:id="@+id/btn_butterknife_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

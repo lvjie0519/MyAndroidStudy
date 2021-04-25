@@ -18,6 +18,7 @@ import com.android.study.example.androidapi.AndroidOOMActivity;
 import com.android.study.example.androidapi.AudioDemoTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
 import com.android.study.example.androidapi.LifeCycleTestActivity;
+import com.android.study.example.androidapi.OpenOtherAppActivity;
 import com.android.study.example.androidapi.OrientationTestActivity;
 import com.android.study.example.androidapi.ScreenAdapterTestActivity;
 import com.android.study.example.androidapi.SharedPreferencesTestActivity;
@@ -437,4 +438,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onClickOpenOtherApp(View view) {
+        OpenOtherAppActivity.startActivity(this);
+    }
 }
