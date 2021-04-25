@@ -794,6 +794,15 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         return type;
     }
 
+    public void onClickAssertFile(View view) {
+        try {
+            // 只能列出文件
+            String[] strings = this.getAssets().list("my_config3"+File.separator+"config1");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private static class NetworkChangeReceiver extends BroadcastReceiver {
         @Override

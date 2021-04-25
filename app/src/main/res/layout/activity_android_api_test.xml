@@ -40,6 +40,12 @@
                 android:layout_height="wrap_content"
                 android:text="go next page"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="判断assert目录"
+                android:onClick="onClickAssertFile"/>
+
         </LinearLayout>
 
         <LinearLayout
