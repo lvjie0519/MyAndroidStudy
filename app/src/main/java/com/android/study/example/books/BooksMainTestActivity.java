@@ -18,15 +18,15 @@ public class BooksMainTestActivity extends Activity {
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, BooksMainTestActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initWindowSize();
+//        initWindowSize();
         setContentView(R.layout.activity_books_main_test);
 
         Log.i("lvjie", "onCreate...");
@@ -60,6 +60,14 @@ public class BooksMainTestActivity extends Activity {
 
     public void onClickSelfBtn(View view) {
         startActivity(this);
+    }
+
+    /**
+     * 任务栈测试
+     * @param view
+     */
+    public void onClickTestTaskStack(View view) {
+        TaskStackTestActivity.startActivityForClearTask(this);
     }
 
     @Override
