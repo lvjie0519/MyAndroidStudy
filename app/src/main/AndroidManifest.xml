@@ -27,7 +27,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".androidapi.OpenOtherAppActivity"></activity>
+        <activity android:name=".androidapi.ViewTestActivity"></activity>
+        <activity android:name=".androidapi.OpenOtherAppActivity" />
 
         <provider
             android:name=".AppFileProvider"

@@ -36,6 +36,7 @@ import android.util.JsonWriter;
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ import com.android.study.example.MainActivity;
 import com.android.study.example.R;
 import com.android.study.example.androidapi.utils.FileUtils;
 import com.android.study.example.androidapi.utils.MimeTypeUtils;
+import com.android.study.example.androidapi.utils.ProcessUtils;
 import com.android.study.example.androidapi.views.MyFpsTestView;
 import com.android.study.example.uidemo.dragging.DraggingButton;
 import com.android.study.example.utils.ToastUtil;
@@ -803,6 +805,30 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         }
     }
 
+    public void onClickCheckAppRunning(View view) {
+        ProcessUtils.checkAppRunningWithPkg(this, "");
+    }
+
+    public void onClickBackSystemHome(View view) {
+        // 返回系统桌面
+        goBackSystemHome();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            goBackSystemHome();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void goBackSystemHome(){
+        Intent mIntent = new Intent(Intent.ACTION_MAIN);
+        mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        mIntent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(mIntent);
+    }
 
     private static class NetworkChangeReceiver extends BroadcastReceiver {
         @Override

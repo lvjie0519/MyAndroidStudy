@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -41,7 +44,7 @@ public class WebViewDemoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view_demo);
 
-        setWebViewCookie();
+//        setWebViewCookie();
         initData();
         initView();
     }
@@ -74,8 +77,8 @@ public class WebViewDemoActivity extends AppCompatActivity {
 
     private void initView(){
         initWebProgress();
-        initWebViewStyle1();
-//        initWebViewStyle2();
+//        initWebViewStyle1();
+        initWebViewStyle2();
     }
 
     /**
@@ -164,6 +167,52 @@ public class WebViewDemoActivity extends AppCompatActivity {
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         mWebView.loadUrl("https://www.baidu.com/");
+
+        this.mWebView.setWebViewClient(new WebViewClient(){
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                Log.i("lvjie", "onPageStarted ...");
+                mWebProgress.setWebProgress(0);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                Log.i("lvjie", "onPageFinished ...");
+                mWebProgress.hide();
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.i("lvjie", "shouldOverrideUrlLoading ..."+url);
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+                return true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                Log.i("lvjie", "onReceivedError ...WebResourceError: "+error.toString());
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                Log.i("lvjie", "onReceivedError ...failingUrl: "+failingUrl);
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                super.onReceivedSslError(view, handler, error);
+                Log.i("lvjie", "onReceivedError ...SslError: "+error.getUrl());
+            }
+        });
 
     }
 

@@ -23,6 +23,7 @@ import com.android.study.example.androidapi.OrientationTestActivity;
 import com.android.study.example.androidapi.ScreenAdapterTestActivity;
 import com.android.study.example.androidapi.SharedPreferencesTestActivity;
 import com.android.study.example.androidapi.SurfaceViewDrawDemoActivity;
+import com.android.study.example.androidapi.ViewTestActivity;
 import com.android.study.example.androidapi.WuZhangAiTestActivity;
 import com.android.study.example.books.BooksMainTestActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
@@ -180,7 +181,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_books_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BooksMainTestActivity.startActivity(MainActivity.this);
+//                BooksMainTestActivity.startActivity(MainActivity.this);
+                ViewTestActivity.startActivity(MainActivity.this);
             }
         });
 
@@ -215,8 +217,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_activity_webview_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                WebViewDemoActivity.startActivity(MainActivity.this);
-                AgentwebTestActivity.startActivity(MainActivity.this);
+                WebViewDemoActivity.startActivity(MainActivity.this);
+//                AgentwebTestActivity.startActivity(MainActivity.this);
             }
         });
 
