@@ -63,6 +63,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="读文件"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="监听应用卸载安装"
+                android:onClick="onClickListenerAppInstall"/>
 
         </LinearLayout>
         <LinearLayout

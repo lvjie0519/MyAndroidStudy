@@ -830,6 +830,40 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         startActivity(mIntent);
     }
 
+    // 监听应用卸载安装
+    public void onClickListenerAppInstall(View view) {
+        IntentFilter filter = new IntentFilter(Intent.ACTION_PACKAGE_ADDED);
+        filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addDataScheme("package");
+        registerReceiver(mPackageMonitor, filter);
+    }
+
+    private final BroadcastReceiver mPackageMonitor = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent != null ? intent.getAction() : null;
+
+            if (Intent.ACTION_PACKAGE_ADDED.equals(action)) {
+                // 应用安装，会走到这里
+                Uri data = intent.getData();
+                data.getSchemeSpecificPart();
+
+            } else if (Intent.ACTION_PACKAGE_REMOVED.equals(action)) {
+                Uri data = intent.getData();
+                data.getSchemeSpecificPart();
+
+                /**
+                 * 当覆盖安装的时候，先会发起卸载事件，但是intent.getBooleanExtra(Intent.EXTRA_REPLACING, false) 会返回true
+                 * 非覆盖安装的情况下，intent.getBooleanExtra(Intent.EXTRA_REPLACING, false) 返回false
+                 */
+                if (!intent.getBooleanExtra(Intent.EXTRA_REPLACING, false)) {
+
+                }
+            }
+        }
+    };
+
     private static class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
