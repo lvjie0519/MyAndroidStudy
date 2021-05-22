@@ -1,6 +1,13 @@
 package com.android.study.example.androidapi.views;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.print.PrinterId;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -49,7 +56,10 @@ public class NetworkErrorView extends LinearLayout {
         LayoutParams tvErrorTipParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         tvErrorTipParams.setMargins(0,DisplayUtil.dip2px(context, 20), 0,DisplayUtil.dip2px(context, 20));
         tvErrorTip.setLayoutParams(tvErrorTipParams);
-        tvErrorTip.setText("Values.strings.NETWORK_ERROR_TIPS");
+        tvErrorTip.setText("无法打开登录页\n请检查网络连接情况");
+        tvErrorTip.setTextColor(Color.parseColor("#666666"));
+        tvErrorTip.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        tvErrorTip.setGravity(Gravity.CENTER);
         addView(tvErrorTip);
 
         // 重新加载
@@ -57,10 +67,13 @@ public class NetworkErrorView extends LinearLayout {
         LayoutParams tvReloadParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         tvReloadParams.height = DisplayUtil.dip2px(context,44);
         mTvReload.setLayoutParams(tvReloadParams);
-        int padding = DisplayUtil.dip2px(context,10);
+        int padding = DisplayUtil.dip2px(context,30);
+        mTvReload.setBackground(createRectDrawable(context, Color.parseColor("#999999")));
         mTvReload.setPadding(padding, 0, padding, 0);
         mTvReload.setGravity(Gravity.CENTER);
-        mTvReload.setText("Values.strings.RELOAD");
+        mTvReload.setText("重新加载");
+        mTvReload.setTextColor(Color.parseColor("#999999"));
+        mTvReload.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         mTvReload.setOnClickListener(mOnClickListener);
         addView(mTvReload);
     }
@@ -80,5 +93,20 @@ public class NetworkErrorView extends LinearLayout {
 
     public interface NetworkErrorClickListener{
         void onClickReload(View view);
+    }
+
+    public Drawable createRectDrawable(Context context, int color) {
+
+        int strokeWidth = DisplayUtil.dip2px(context, 1);
+        int roundRadius = 0;
+        int strokeColor = color;//Color.parseColor("#BDC7D8");
+        int fillColor = Color.WHITE;
+
+        GradientDrawable gd = new GradientDrawable();
+        gd.setCornerRadius(roundRadius);
+        gd.setStroke(strokeWidth, strokeColor);
+        gd.setColor(fillColor);
+
+        return gd;
     }
 }

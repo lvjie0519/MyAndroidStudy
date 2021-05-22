@@ -48,6 +48,7 @@ import com.android.study.example.androidapi.utils.FileUtils;
 import com.android.study.example.androidapi.utils.MimeTypeUtils;
 import com.android.study.example.androidapi.utils.ProcessUtils;
 import com.android.study.example.androidapi.views.MyFpsTestView;
+import com.android.study.example.books.TaskStackTestActivity;
 import com.android.study.example.uidemo.dragging.DraggingButton;
 import com.android.study.example.utils.ToastUtil;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -860,6 +861,8 @@ public class AndroidApiTestActivity extends AppCompatActivity {
                 if (!intent.getBooleanExtra(Intent.EXTRA_REPLACING, false)) {
 
                 }
+
+                TaskStackTestActivity.startActivityForClearTask(AndroidApiTestActivity.this);
             }
         }
     };
