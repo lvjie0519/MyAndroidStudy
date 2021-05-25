@@ -1,6 +1,7 @@
 package com.android.example.myaidlclient;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,7 +59,17 @@ public class MainActivity extends AppCompatActivity {
         Log.i("lvjie", "aidl app MainActivity onNewIntent task id is "+getTaskId());
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("lvjie", "aidl app MainActivity onActivityResult task id is "+getTaskId());
+    }
+
     public void btnTestOpenExportedActivity(View view) {
         ExportedActivity.startActivity(this);
+    }
+
+    public void btnOpenMain2Activity(View view) {
+        Main2Activity.startActivity(this);
     }
 }

@@ -25,4 +25,10 @@
         android:text="跳转到ExportedActivity"
         android:onClick="btnTestOpenExportedActivity"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转到Main2Activity"
+        android:onClick="btnOpenMain2Activity"/>
+
 </LinearLayout>

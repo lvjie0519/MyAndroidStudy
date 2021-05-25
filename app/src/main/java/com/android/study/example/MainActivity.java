@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.i("lvjie","MainActivity onCreate...");
         initData();
         initView();
     }
@@ -418,7 +418,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("lvjie","MainActivity onResume...");
+        Log.i("lvjie","MainActivity onResume..."+this.getTaskId());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.i("lvjie","MainActivity onNewIntent...");
+        mCallbackIntent = intent.getParcelableExtra("EXTRA_HOSTAPP_GO_BACK_BASE_INTENT");
     }
 
     @Override
@@ -442,5 +449,29 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickOpenOtherApp(View view) {
         OpenOtherAppActivity.startActivity(this);
+    }
+
+    private Intent mCallbackIntent = null;
+    public void onClickPullSubApp(View view) {
+        if(mCallbackIntent == null){
+            mCallbackIntent = getIntent().getParcelableExtra("EXTRA_HOSTAPP_GO_BACK_BASE_INTENT");
+        }
+        if(mCallbackIntent != null){
+            mCallbackIntent.putExtra("host_key", "host_value");
+//            mCallbackIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(mCallbackIntent);
+
+
+//            Intent intent = getPackageManager().getLaunchIntentForPackage("com.android.example.myaidlclient");
+////            if (intent != null) {
+////                //去掉FLAG_ACTIVITY_MULTIPLE_TASK 标记
+////                intent.setFlags(intent.getFlags() & (~Intent.FLAG_ACTIVITY_MULTIPLE_TASK));
+////            }
+//            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            intent.putExtras(mCallbackIntent.getExtras());
+//            startActivity(intent);
+        }else{
+            Log.i("lvjie", "callbackIntent is null...");
+        }
     }
 }
