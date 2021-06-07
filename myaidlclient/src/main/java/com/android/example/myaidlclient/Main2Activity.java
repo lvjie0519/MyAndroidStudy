@@ -4,7 +4,10 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -73,13 +76,20 @@ public class Main2Activity extends AppCompatActivity {
             //去掉FLAG_ACTIVITY_MULTIPLE_TASK 标记
             subAppIntent.setFlags(subAppIntent.getFlags() & (~Intent.FLAG_ACTIVITY_MULTIPLE_TASK));
         }
+        subAppIntent.putExtra("EXTRA_HOSTAPP_GO_BACK_CLASS_NAME", this.getIntent().getComponent().getClassName());
+        subAppIntent.putExtra("EXTRA_HOSTAPP_GO_BACK_PACKAGE_NAME", this.getIntent().getComponent().getPackageName());
+
         hostAppIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         hostAppIntent.putExtra("EXTRA_HOSTAPP_GO_BACK_BASE_INTENT", subAppIntent);
+
         startActivity(hostAppIntent);
     }
 
     public void btnOpenMySelf(View view) {
-        Intent intent = getBaseIntent();
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("com.android.example.myaidlclient", "com.android.example.myaidlclient.Main2Activity"));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("host_key", "host_value");
         startActivity(intent);
     }
 
@@ -124,5 +134,22 @@ public class Main2Activity extends AppCompatActivity {
         }
 
         return intent;
+    }
+
+    public void btnCheckAppProcess(View view) {
+
+        ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));
+        List<ActivityManager.RunningAppProcessInfo> processInfos =
+                am.getRunningAppProcesses();
+        String mainProcessName = "com.android.study.example";
+        int myPid = android.os.Process.myPid();
+        for (ActivityManager.RunningAppProcessInfo info : processInfos) {
+            Log.i("lvjie", "processName: " + info.processName);
+            if (info.pid == myPid && mainProcessName.equals(info.processName)) {
+                Log.i("lvjie", "find process ");
+                break;
+            }
+        }
+
     }
 }

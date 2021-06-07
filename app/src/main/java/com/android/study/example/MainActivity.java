@@ -10,6 +10,7 @@ import android.provider.Settings;
 import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -453,25 +454,38 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent mCallbackIntent = null;
     public void onClickPullSubApp(View view) {
+        startActivity(getIntent2());
+    }
+
+    private Intent getIntent1(){
         if(mCallbackIntent == null){
             mCallbackIntent = getIntent().getParcelableExtra("EXTRA_HOSTAPP_GO_BACK_BASE_INTENT");
         }
-        if(mCallbackIntent != null){
-            mCallbackIntent.putExtra("host_key", "host_value");
-//            mCallbackIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(mCallbackIntent);
+        String subAppPackageName = mCallbackIntent.getStringExtra("EXTRA_HOSTAPP_GO_BACK_PACKAGE_NAME");
+        String subAppClassName = mCallbackIntent.getStringExtra("EXTRA_HOSTAPP_GO_BACK_CLASS_NAME");
 
+        Intent intent;
+        if(!TextUtils.isEmpty(subAppClassName) && !TextUtils.isEmpty(subAppPackageName)){
+            intent = new Intent();
+            intent.setComponent(new ComponentName(subAppPackageName, subAppClassName));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-//            Intent intent = getPackageManager().getLaunchIntentForPackage("com.android.example.myaidlclient");
-////            if (intent != null) {
-////                //去掉FLAG_ACTIVITY_MULTIPLE_TASK 标记
-////                intent.setFlags(intent.getFlags() & (~Intent.FLAG_ACTIVITY_MULTIPLE_TASK));
-////            }
-//            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            intent.putExtras(mCallbackIntent.getExtras());
-//            startActivity(intent);
         }else{
-            Log.i("lvjie", "callbackIntent is null...");
+            intent = mCallbackIntent;
         }
+        intent.putExtra("host_key", "host_value");
+
+        Log.i("lvjie", intent.toString());
+        return intent;
+    }
+
+    private Intent getIntent2() {
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("com.android.example.myaidlclient", "com.android.example.myaidlclient.Main2Activity"));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        return intent;
     }
 }

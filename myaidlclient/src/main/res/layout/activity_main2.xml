@@ -19,4 +19,10 @@
         android:text="启动自己"
         android:onClick="btnOpenMySelf"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="判断某个应用进程是否存在"
+        android:onClick="btnCheckAppProcess"/>
+
 </LinearLayout>
