@@ -10,6 +10,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="启动首页"
+        android:onClick="btnLauncherMainActivity"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="拉起主应用"
         android:onClick="btnOpenHostApp"/>
 

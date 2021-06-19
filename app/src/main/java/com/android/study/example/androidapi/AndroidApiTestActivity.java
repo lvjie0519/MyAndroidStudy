@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Point;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -20,6 +21,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
@@ -866,6 +868,16 @@ public class AndroidApiTestActivity extends AppCompatActivity {
             }
         }
     };
+
+    public void onClickChoicePic(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        List<ResolveInfo> datas = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY | PackageManager.GET_RESOLVED_FILTER);
+        Log.i("lvjie", "size: "+datas.size());   // 数据为2
+
+        intent.setData(Uri.parse("content://com.sangfor.emm.providers.media/external/images/media"));
+        datas = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        Log.i("lvjie", "size: "+datas.size());   // 数据为1
+    }
 
     private static class NetworkChangeReceiver extends BroadcastReceiver {
         @Override

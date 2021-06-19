@@ -10,6 +10,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="启动自己"
+        android:onClick="btnLauncherSelf"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="AIDL 测试"
         android:onClick="btnTestAidl"/>
 

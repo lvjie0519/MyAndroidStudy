@@ -1,5 +1,6 @@
 package com.android.example.myaidlclient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,11 @@ import com.android.example.myaidlclient.outapp.ExportedActivity;
 import com.android.example.myaidlclient.outapp.OutAppTestActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static void startActivity(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,5 +77,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnOpenMain2Activity(View view) {
         Main2Activity.startActivity(this);
+    }
+
+
+    public void btnLauncherSelf(View view) {
+        MainActivity.startActivity(this);
     }
 }

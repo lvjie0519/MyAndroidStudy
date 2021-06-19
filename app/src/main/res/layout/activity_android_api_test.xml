@@ -214,6 +214,11 @@
                 android:layout_height="wrap_content"
                 android:text="返回系统桌面"
                 android:onClick="onClickBackSystemHome"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择图片"
+                android:onClick="onClickChoicePic"/>
         </LinearLayout>
 
 

@@ -70,7 +70,14 @@ public class Main2Activity extends AppCompatActivity {
 
     // 打开主应用
     public void btnOpenHostApp(View view) {
+        openHostAppForIntentFlag();
+    }
+
+    private void openHostAppForIntentFlag(){
         Intent hostAppIntent = getPackageManager().getLaunchIntentForPackage("com.android.study.example");
+        hostAppIntent.getCategories().clear();
+        hostAppIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        hostAppIntent.setPackage("");
         Intent subAppIntent = getBaseIntent();
         if (subAppIntent != null) {
             //去掉FLAG_ACTIVITY_MULTIPLE_TASK 标记
@@ -79,10 +86,24 @@ public class Main2Activity extends AppCompatActivity {
         subAppIntent.putExtra("EXTRA_HOSTAPP_GO_BACK_CLASS_NAME", this.getIntent().getComponent().getClassName());
         subAppIntent.putExtra("EXTRA_HOSTAPP_GO_BACK_PACKAGE_NAME", this.getIntent().getComponent().getPackageName());
 
-        hostAppIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        // 0、hostAppIntent 默认是 Intent.FLAG_ACTIVITY_NEW_TASK
+
+        // 1、Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP  等价于singleTask
+//        hostAppIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        // 2、
+        hostAppIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+
         hostAppIntent.putExtra("EXTRA_HOSTAPP_GO_BACK_BASE_INTENT", subAppIntent);
 
-        startActivity(hostAppIntent);
+
+
+        Intent intent1 = new Intent();
+        intent1.setComponent(hostAppIntent.getComponent());
+        intent1.setAction(Intent.ACTION_MAIN);
+        intent1.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        startActivity(intent1);
     }
 
     public void btnOpenMySelf(View view) {
@@ -151,5 +172,9 @@ public class Main2Activity extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void btnLauncherMainActivity(View view) {
+        MainActivity.startActivity(this);
     }
 }
