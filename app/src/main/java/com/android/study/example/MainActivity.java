@@ -46,6 +46,7 @@ import com.android.study.example.uidemo.search.RvSearchAdapter;
 import com.android.study.example.uidemo.search.SearchEditTestActivity;
 import com.android.study.example.uidemo.webview.AgentwebTestActivity;
 import com.android.study.example.uidemo.webview.WebViewDemoActivity;
+import com.android.study.example.uidemo.webview.WebViewJsDemoActivity;
 import com.annotaions.example.MyAnnotation;
 
 import java.io.File;
@@ -218,8 +219,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_activity_webview_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WebViewDemoActivity.startActivity(MainActivity.this);
+//                WebViewDemoActivity.startActivity(MainActivity.this);
 //                AgentwebTestActivity.startActivity(MainActivity.this);
+                WebViewJsDemoActivity.startActivity(MainActivity.this);
             }
         });
 

@@ -27,7 +27,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".books.TaskStackTestActivity"></activity>
+        <activity android:name=".uidemo.webview.WebViewJsDemoActivity"></activity>
+        <activity android:name=".books.TaskStackTestActivity" />
         <activity android:name=".androidapi.ViewTestActivity" />
         <activity android:name=".androidapi.OpenOtherAppActivity" />
 
@@ -80,9 +81,7 @@
             android:name="design_height_in_dp"
             android:value="640" />
 
-        <activity
-            android:name=".MainActivity"
-            >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
