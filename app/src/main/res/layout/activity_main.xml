@@ -22,6 +22,11 @@
             android:layout_height="wrap_content"
             android:text="回拉子应用"
             android:onClick="onClickPullSubApp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="广播测试"
+            android:onClick="onClickOpenBroadcastTestPage"/>
 
         <Button
             android:layout_width="wrap_content"

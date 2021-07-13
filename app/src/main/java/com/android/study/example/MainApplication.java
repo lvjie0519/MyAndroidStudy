@@ -1,12 +1,17 @@
 package com.android.study.example;
 
 import android.app.Application;
+import android.content.IntentFilter;
 import android.util.Log;
 
+import com.android.study.example.broadcast.LocalBroadcastRegisterDemoActivity;
+import com.android.study.example.broadcast.SelfDefineBroadcast;
 import com.squareup.leakcanary.LeakCanary;
 
 
 public class MainApplication extends Application {
+
+    private SelfDefineBroadcast mSelfDefineBroadcast;
 
     @Override
     public void onCreate() {
@@ -14,6 +19,7 @@ public class MainApplication extends Application {
 
 //        initGlobalCrash();
 //        initLeakCanary();
+        registerBroadcast();
     }
 
     private void initLeakCanary(){
@@ -23,6 +29,17 @@ public class MainApplication extends Application {
         }
         Log.i("LeakCanary", "LeakCanary.install...");
         LeakCanary.install(this);
+    }
+
+    private void registerBroadcast(){
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("action.com.android.study.example.broadcast");
+        if(mSelfDefineBroadcast == null){
+            mSelfDefineBroadcast = new SelfDefineBroadcast();
+        }
+        //注册广播
+        Log.i("lvjie", "will registerReceiver...");
+        registerReceiver(mSelfDefineBroadcast,intentFilter);
     }
 
     /**

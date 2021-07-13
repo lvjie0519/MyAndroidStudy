@@ -27,6 +27,7 @@ import com.android.study.example.androidapi.SurfaceViewDrawDemoActivity;
 import com.android.study.example.androidapi.ViewTestActivity;
 import com.android.study.example.androidapi.WuZhangAiTestActivity;
 import com.android.study.example.books.BooksMainTestActivity;
+import com.android.study.example.broadcast.LocalBroadcastRegisterDemoActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
@@ -489,5 +490,9 @@ public class MainActivity extends AppCompatActivity {
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         return intent;
+    }
+
+    public void onClickOpenBroadcastTestPage(View view) {
+        LocalBroadcastRegisterDemoActivity.startActivity(this);
     }
 }
