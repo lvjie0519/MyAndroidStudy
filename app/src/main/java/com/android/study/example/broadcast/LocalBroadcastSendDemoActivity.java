@@ -25,6 +25,7 @@ public class LocalBroadcastSendDemoActivity extends Activity {
 
     public void onClickSendBroadcastMsg(View view) {
         Intent intent = new Intent("action.com.android.study.example.broadcast");
+        intent.setPackage(getPackageName());        // 添加包名，则只有相同包名的进程可以收到广播信息
         sendBroadcast(intent);
     }
 }
