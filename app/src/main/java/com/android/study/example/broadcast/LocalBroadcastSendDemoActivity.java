@@ -28,4 +28,17 @@ public class LocalBroadcastSendDemoActivity extends Activity {
         intent.setPackage(getPackageName());        // 添加包名，则只有相同包名的进程可以收到广播信息
         sendBroadcast(intent);
     }
+
+    public void onClickReStartApp(View view) {
+//        final Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+
+        Intent intent = new Intent("action.com.android.study.example.broadcast");
+        intent.setPackage(getPackageName());        // 添加包名，则只有相同包名的进程可以收到广播信息
+        sendBroadcast(intent);
+
+        //杀掉以前进程
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
 }

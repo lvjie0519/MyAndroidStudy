@@ -13,4 +13,10 @@
         android:text="发送广播信息"
         android:onClick="onClickSendBroadcastMsg"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重启应用"
+        android:onClick="onClickReStartApp"/>
+
 </LinearLayout>
