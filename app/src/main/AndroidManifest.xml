@@ -127,6 +127,14 @@
         <activity android:name=".uidemo.mapsweeper.MapViewDemoActivity" />
         <activity android:name=".uidemo.animation.AnimationDemoActivity" />
         <activity android:name=".uidemo.inputdialog.InputDialogDemoActivity" />
+
+        <activity android:name=".androidapi.ShareIsolationTestActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

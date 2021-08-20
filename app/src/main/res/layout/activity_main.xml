@@ -20,6 +20,11 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="分享测试"
+            android:onClick="onClickShareTest"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="回拉子应用"
             android:onClick="onClickPullSubApp"/>
         <Button

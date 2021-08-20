@@ -22,6 +22,7 @@ import com.android.study.example.androidapi.LifeCycleTestActivity;
 import com.android.study.example.androidapi.OpenOtherAppActivity;
 import com.android.study.example.androidapi.OrientationTestActivity;
 import com.android.study.example.androidapi.ScreenAdapterTestActivity;
+import com.android.study.example.androidapi.ShareIsolationTestActivity;
 import com.android.study.example.androidapi.SharedPreferencesTestActivity;
 import com.android.study.example.androidapi.SurfaceViewDrawDemoActivity;
 import com.android.study.example.androidapi.ViewTestActivity;
@@ -185,7 +186,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                BooksMainTestActivity.startActivity(MainActivity.this);
-                ViewTestActivity.startActivity(MainActivity.this);
+//                ViewTestActivity.startActivity(MainActivity.this);
+                Intent textIntent = new Intent(Intent.ACTION_SEND);
+                textIntent.setType("text/plain");
+                textIntent.putExtra(Intent.EXTRA_TEXT, "shareContent");
+                startActivity(Intent.createChooser(textIntent, "分享"));
             }
         });
 
@@ -494,5 +499,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickOpenBroadcastTestPage(View view) {
         LocalBroadcastRegisterDemoActivity.startActivity(this);
+    }
+
+    public void onClickShareTest(View view) {
+        ShareIsolationTestActivity.startActivity(this);
     }
 }
