@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.study.example.R;
+import com.android.study.example.utils.ClipboardUtil;
+import com.android.study.example.utils.ShareUtil;
 
 
 public class ShareIsolationTestActivity extends Activity {
@@ -35,10 +38,8 @@ public class ShareIsolationTestActivity extends Activity {
         this.mEtInputInfo = findViewById(R.id.et_input_text);
         this.mTvShowInfo = findViewById(R.id.tv_show_info);
 
-        if(getIntent() != null && getIntent().getExtras() != null){
-            String shareInfo = getIntent().getExtras().getString(Intent.EXTRA_TEXT);
-            this.mTvShowInfo.setText("接收到分享内容："+shareInfo);
-        }
+        this.mEtInputInfo.setText(ShareUtil.getShareContent(getIntent()));
+        this.mTvShowInfo.setText("接收到分享内容："+ ShareUtil.getShareContent(getIntent()));
     }
 
     public void onClickTestShare1(View view) {
@@ -47,10 +48,9 @@ public class ShareIsolationTestActivity extends Activity {
             showToast("内容不能为空");
             return;
         }
-        Intent textIntent = new Intent(Intent.ACTION_SEND);
-        textIntent.setType("text/plain");
-        textIntent.putExtra(Intent.EXTRA_TEXT, shareContent);
-        startActivity(Intent.createChooser(textIntent, "分享"));
+        Log.i("lvjie", "length="+shareContent.length());
+        showToast("信息："+ClipboardUtil.readDataFromClipboard(this));
+//        ShareUtil.shareContentToApp(this, "", shareContent);
     }
 
     public void showToast(String msg){

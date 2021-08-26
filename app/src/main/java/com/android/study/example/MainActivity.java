@@ -49,6 +49,8 @@ import com.android.study.example.uidemo.search.SearchEditTestActivity;
 import com.android.study.example.uidemo.webview.AgentwebTestActivity;
 import com.android.study.example.uidemo.webview.WebViewDemoActivity;
 import com.android.study.example.uidemo.webview.WebViewJsDemoActivity;
+import com.android.study.example.utils.ClipboardUtil;
+import com.android.study.example.utils.FileUtil;
 import com.annotaions.example.MyAnnotation;
 
 import java.io.File;
@@ -81,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView(){
+        findViewById(R.id.btn_books_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                BooksMainTestActivity.startActivity(MainActivity.this);
+//                ViewTestActivity.startActivity(MainActivity.this);
+                FileUtil.requestSDCardPermissions(MainActivity.this, 101);
+                ClipboardUtil.writeDataToClipboard(MainActivity.this, "lvjie-clipboard");
+            }
+        });
+
+
         findViewById(R.id.btn_butterknife_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,18 +192,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SurfaceViewDrawDemoActivity.startActivity(MainActivity.this);
-            }
-        });
-
-        findViewById(R.id.btn_books_test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                BooksMainTestActivity.startActivity(MainActivity.this);
-//                ViewTestActivity.startActivity(MainActivity.this);
-                Intent textIntent = new Intent(Intent.ACTION_SEND);
-                textIntent.setType("text/plain");
-                textIntent.putExtra(Intent.EXTRA_TEXT, "shareContent");
-                startActivity(Intent.createChooser(textIntent, "分享"));
             }
         });
 
@@ -297,6 +298,15 @@ public class MainActivity extends AppCompatActivity {
                 DarkModeTestActivity.startActivity(MainActivity.this);
             }
         });
+    }
+
+
+    public void onClickShareTest(View view) {
+        ShareIsolationTestActivity.startActivity(this);
+//        String filePath = "/sdcard/lvjie/test/lvjie_test.txt";
+//        FileUtil.writeContentToFile(filePath, "aaa");
+//        String content = FileUtil.readContentFromFile(filePath);
+//        Log.i("lvjie", content);
     }
 
     /**
@@ -501,7 +511,4 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastRegisterDemoActivity.startActivity(this);
     }
 
-    public void onClickShareTest(View view) {
-        ShareIsolationTestActivity.startActivity(this);
-    }
 }
