@@ -1,16 +1,22 @@
 package com.android.study.example.uidemo.webview;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.GeolocationPermissions;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -20,6 +26,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.android.study.example.R;
+import com.android.study.example.androidapi.utils.SystemSettingUtil;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,8 +35,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import me.jingbin.progress.WebProgress;
+import rx.functions.Action1;
 
-public class WebViewDemoActivity extends AppCompatActivity {
+public class WebViewDemoActivity extends Activity {
 
     private String mContent;
     private WebView mWebView;
@@ -45,8 +54,31 @@ public class WebViewDemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_view_demo);
 
 //        setWebViewCookie();
+        requestPermmission();
         initData();
         initView();
+    }
+
+    private void requestPermmission(){
+
+        if(Build.VERSION.SDK_INT < 23){
+            // android 6.0以上才需要动态权限获取
+            return;
+        }
+        String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+        for(String permission:permissions){
+            if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this, permissions, 1001);
+                break;
+            }
+        }
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void setWebViewCookie(){
@@ -166,7 +198,16 @@ public class WebViewDemoActivity extends AppCompatActivity {
         mWebView.requestFocus();
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        mWebView.loadUrl("https://www.baidu.com/");
+        mWebView.loadUrl("https://map.baidu.com/mobile/webapp/index/index/third_party=wisesquare");
+
+        mWebView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+                Log.i("lvjie", "origin: "+origin);
+                callback.invoke(origin, true, false);
+                super.onGeolocationPermissionsShowPrompt(origin, callback);
+            }
+        });
 
         this.mWebView.setWebViewClient(new WebViewClient(){
 
