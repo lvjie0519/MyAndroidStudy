@@ -19,6 +19,7 @@ import com.android.study.example.androidapi.AndroidOOMActivity;
 import com.android.study.example.androidapi.AudioDemoTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
 import com.android.study.example.androidapi.LifeCycleTestActivity;
+import com.android.study.example.androidapi.NetworkTestActivity;
 import com.android.study.example.androidapi.OpenOtherAppActivity;
 import com.android.study.example.androidapi.OrientationTestActivity;
 import com.android.study.example.androidapi.ScreenAdapterTestActivity;
@@ -511,4 +512,7 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastRegisterDemoActivity.startActivity(this);
     }
 
+    public void onClickNetworkTest(View view) {
+        NetworkTestActivity.startActivity(this);
+    }
 }
