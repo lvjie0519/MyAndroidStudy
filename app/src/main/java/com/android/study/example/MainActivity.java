@@ -33,6 +33,7 @@ import com.android.study.example.broadcast.LocalBroadcastRegisterDemoActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
+import com.android.study.example.mainapp.MainAppTestActivity;
 import com.android.study.example.performance_optimization.PerformOptMainTestActivity;
 import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
 import com.android.study.example.thirdlib.ThirdLibTestActivity;
@@ -514,5 +515,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickNetworkTest(View view) {
         NetworkTestActivity.startActivity(this);
+    }
+
+    public void btnOnClickMainSub(View view) {
+        MainAppTestActivity.startActivity(this);
     }
 }

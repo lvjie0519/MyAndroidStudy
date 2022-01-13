@@ -11,8 +11,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Main2Activity"
-            android:launchMode="singleTop"
-            android:exported="true"></activity>
+            android:exported="true"
+            android:launchMode="singleTop" />
         <activity
             android:name=".outapp.ExportedActivity"
             android:exported="true">
@@ -51,6 +51,18 @@
                     android:host="open"
                     android:pathPattern=".*"
                     android:scheme="mihomeplugin" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".outapp.SubAppTestActivity">
+            <intent-filter>
+
+                <!--下面这几行也必须得设置-->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!--协议部分，随便设置-->
+                <data android:scheme="scheme" android:host="subapp" android:path="/test_activity" />
             </intent-filter>
         </activity>
     </application>

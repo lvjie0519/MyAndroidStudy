@@ -18,6 +18,13 @@
             android:text="读书笔记"
             android:textAllCaps="false"/>
         <Button
+            android:id="@+id/btn_main_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="主从跳转"
+            android:textAllCaps="false"
+            android:onClick="btnOnClickMainSub"/>
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="网络文件下载测试"
