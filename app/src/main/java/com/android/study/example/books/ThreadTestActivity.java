@@ -48,12 +48,14 @@ public class ThreadTestActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.i(TAG, "threadName: "+Thread.currentThread().getName()+"  sCount: " + (sCount++));
-//                    try {
-////                        Thread.sleep(2000);
-////                        Thread.sleep(200);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        // 会等三秒才执行一次
+                        Thread.sleep(2000);
+                        // 会等1.2秒 才执行一次
+//                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }, 0, 1000, TimeUnit.MILLISECONDS);  //  MILLISECONDS  毫秒
         }
