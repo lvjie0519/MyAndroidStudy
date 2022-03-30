@@ -105,4 +105,8 @@ public class BooksMainTestActivity extends Activity {
         super.onDestroy();
         Log.i("lvjie", "onDestroy...");
     }
+
+    public void onClickTestThreadActivity(View view) {
+        ThreadTestActivity.startActivity(this);
+    }
 }

@@ -25,4 +25,10 @@
         android:text="任务栈测试"
         android:onClick="onClickTestTaskStack"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="多线程测试"
+        android:onClick="onClickTestThreadActivity"/>
+
 </LinearLayout>

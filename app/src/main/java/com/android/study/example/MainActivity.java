@@ -88,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_books_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                BooksMainTestActivity.startActivity(MainActivity.this);
+                BooksMainTestActivity.startActivity(MainActivity.this);
 //                ViewTestActivity.startActivity(MainActivity.this);
-                FileUtil.requestSDCardPermissions(MainActivity.this, 101);
-                ClipboardUtil.writeDataToClipboard(MainActivity.this, "lvjie-clipboard");
+//                FileUtil.requestSDCardPermissions(MainActivity.this, 101);
+//                ClipboardUtil.writeDataToClipboard(MainActivity.this, "lvjie-clipboard");
             }
         });
 
