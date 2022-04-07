@@ -35,6 +35,7 @@ import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
 import com.android.study.example.mainapp.MainAppTestActivity;
 import com.android.study.example.performance_optimization.PerformOptMainTestActivity;
+import com.android.study.example.picpro.PicProcessTestActivity;
 import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
 import com.android.study.example.thirdlib.ThirdLibTestActivity;
 import com.android.study.example.uidemo.darkmode.DarkModeTestActivity;
@@ -519,5 +520,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnOnClickMainSub(View view) {
         MainAppTestActivity.startActivity(this);
+    }
+
+    public void btnOnClickPicProcessTest(View view) {
+        PicProcessTestActivity.startActivity(this);
     }
 }

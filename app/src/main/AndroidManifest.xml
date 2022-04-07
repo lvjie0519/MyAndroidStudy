@@ -29,7 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".books.ThreadTestActivity"></activity>
+        <activity android:name=".picpro.PicProcessTestActivity"></activity>
+        <activity android:name=".books.ThreadTestActivity" />
         <activity android:name=".mainapp.MainAppTestActivity" />
         <activity android:name=".androidapi.NetworkTestActivity" />
         <activity

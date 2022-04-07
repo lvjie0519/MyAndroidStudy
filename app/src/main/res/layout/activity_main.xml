@@ -18,6 +18,13 @@
             android:text="读书笔记"
             android:textAllCaps="false"/>
         <Button
+            android:id="@+id/btn_pic_process_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="图片处理测试"
+            android:textAllCaps="false"
+            android:onClick="btnOnClickPicProcessTest"/>
+        <Button
             android:id="@+id/btn_main_sub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
