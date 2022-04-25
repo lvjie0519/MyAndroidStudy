@@ -77,3 +77,36 @@ dependencies {
     // test ff
     // test ee e e
 }
+
+task generateSvnInfo() {
+    doLast {
+        def hash = ""
+        new ByteArrayOutputStream().withStream { os ->
+            def result = exec {
+                commandLine = ['git', 'log', '--pretty=format:%H%n%ci', '-1']
+                standardOutput = os
+            }
+            hash = os.toString()
+        }
+        println ">>> git info:" + hash
+        def info = hash.split("\n")
+
+        def branch = ""
+        new ByteArrayOutputStream().withStream { os ->
+            exec {
+                commandLine = ['git', 'status', '-b', '-s', '-u', 'no']
+                standardOutput = os
+            }
+            branch = os.toString().replace("\n", "")
+        }
+        println ">>> git branch:" + branch
+        new File(project.projectDir.absolutePath + '/src/main/assets/version.txt').text = "" +
+                "git-branch: " + branch +
+                "\ncommit-hash: " + info[0] +
+                "\ndate: " + info[1]
+    }
+}
+
+afterEvaluate {
+    tasks.preBuild.dependsOn generateSvnInfo
+}
