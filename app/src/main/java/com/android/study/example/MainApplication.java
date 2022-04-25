@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.android.study.example.broadcast.LocalBroadcastRegisterDemoActivity;
 import com.android.study.example.broadcast.SelfDefineBroadcast;
+import com.android.study.example.install.InstallReceiver;
 import com.squareup.leakcanary.LeakCanary;
 
 
@@ -20,6 +21,8 @@ public class MainApplication extends Application {
 //        initGlobalCrash();
 //        initLeakCanary();
         registerBroadcast();
+
+        InstallReceiver.registerReceiver(this);
     }
 
     private void initLeakCanary(){
