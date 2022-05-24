@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.study.example.androidapi.AndroidApiTestActivity;
 import com.android.study.example.androidapi.AndroidOOMActivity;
@@ -85,7 +86,22 @@ public class MainActivity extends AppCompatActivity {
         initView();
     }
 
+    private static String getAppNameByPackageName(Context context, String packageName) {
+        PackageManager pm = context.getPackageManager();
+        String Name;
+        try {
+            Name = pm.getApplicationLabel(pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA)).toString();
+        } catch (PackageManager.NameNotFoundException e) {
+            Name = "";
+        }
+        return Name;
+    }
+
     private void initView(){
+
+//        TextView textView = findViewById(R.id.tv_test_info);
+//        textView.setTextIsSelectable(true);
+
         findViewById(R.id.btn_books_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
 //                ViewTestActivity.startActivity(MainActivity.this);
 //                FileUtil.requestSDCardPermissions(MainActivity.this, 101);
 //                ClipboardUtil.writeDataToClipboard(MainActivity.this, "lvjie-clipboard");
+                String name = getAppNameByPackageName(MainActivity.this, "com.example.selfchildappdemo");
+                Log.i("lvjie", name);
             }
         });
 

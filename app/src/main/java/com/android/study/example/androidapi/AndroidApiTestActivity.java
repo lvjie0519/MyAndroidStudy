@@ -485,10 +485,25 @@ public class AndroidApiTestActivity extends AppCompatActivity {
     }
 
     public void testPackageInfo() {
+//        PackageInfo info = null;
+//        try {
+//            info = AndroidApiTestActivity.this.getPackageManager().getPackageInfo(AndroidApiTestActivity.this.getPackageName(),
+//                    0);
+//
+//            String packageInfo = "this.getPackageName(): " + AndroidApiTestActivity.this.getPackageName()
+//                    + "\n   info.packageName: " + info.packageName             // 应用程序包名
+//                    + "\n  info.versionName: " + info.versionName              // 版本名称， 对应build.gradle versionName
+//                    + "\n  info.versionCode: " + info.versionCode + "";          // 版本号， 对应build.gradle  versionCode
+//            tvShowInfo.setText(packageInfo);
+//
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
         PackageInfo info = null;
         try {
-            info = AndroidApiTestActivity.this.getPackageManager().getPackageInfo(AndroidApiTestActivity.this.getPackageName(),
-                    0);
+            info = AndroidApiTestActivity.this.getPackageManager().getPackageInfo("com.example.selfchildappdemo",
+                    PackageManager.GET_META_DATA | PackageManager.GET_UNINSTALLED_PACKAGES);
 
             String packageInfo = "this.getPackageName(): " + AndroidApiTestActivity.this.getPackageName()
                     + "\n   info.packageName: " + info.packageName             // 应用程序包名
