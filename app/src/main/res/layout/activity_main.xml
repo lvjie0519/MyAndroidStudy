@@ -25,6 +25,12 @@
             />
 
         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="应用弹窗"
+            android:textAllCaps="false"
+            android:onClick="onClickApplicationDialogTest"/>
+        <Button
             android:id="@+id/btn_books_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

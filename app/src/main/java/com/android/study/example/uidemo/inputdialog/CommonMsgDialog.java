@@ -69,6 +69,7 @@ public class CommonMsgDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 dismiss();
+                InputDialogDemoActivity.startActivity(v.getContext());
             }
         });
 

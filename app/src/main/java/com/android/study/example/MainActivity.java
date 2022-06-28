@@ -1,18 +1,31 @@
 package com.android.study.example;
 
+import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.android.study.example.androidapi.AndroidApiTestActivity;
@@ -41,6 +54,7 @@ import com.android.study.example.thirdlib.RenderScriptBlurDemoActivity;
 import com.android.study.example.thirdlib.ThirdLibTestActivity;
 import com.android.study.example.uidemo.darkmode.DarkModeTestActivity;
 import com.android.study.example.uidemo.filedownload.FileDownLoadDemoActivity;
+import com.android.study.example.uidemo.inputdialog.CommonMsgDialog;
 import com.android.study.example.uidemo.inputdialog.InputDialogDemoActivity;
 import com.android.study.example.uidemo.mapsweeper.MapViewDemoActivity;
 import com.android.study.example.uidemo.animation.AnimationDemoActivity;
@@ -61,6 +75,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Cache;
@@ -542,5 +557,81 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnOnClickPicProcessTest(View view) {
         PicProcessTestActivity.startActivity(this);
+    }
+
+    public void onClickApplicationDialogTest(View view) {
+
+//        if(checkRequestPermissions()){
+//            showWaiting();
+//        }
+
+        addView();
+    }
+
+    private void addView() {
+        Button button = new Button(this);
+        button.setText("Floating Window");
+        button.setBackgroundColor(Color.BLUE);
+        button.setTextColor(Color.parseColor("#ffffff"));
+
+        FrameLayout.LayoutParams layoutParams1 = new FrameLayout.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        layoutParams1.gravity = Gravity.CENTER;
+
+        this.addContentView(button, layoutParams1);
+    }
+
+    private final void showWaiting() {
+        try {
+            // 获取WindowManager服务
+            WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
+            // 新建悬浮窗控件
+            Button button = new Button(getApplicationContext());
+            button.setText("Floating Window");
+            button.setBackgroundColor(Color.BLUE);
+
+            // 设置LayoutParam
+            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+            layoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+            layoutParams.format = PixelFormat.RGBA_8888;
+            layoutParams.width = 500;
+            layoutParams.height = 100;
+
+            // 将悬浮窗控件添加到WindowManager
+            windowManager.addView(button, layoutParams);
+
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private boolean checkRequestPermissions(){
+        List<String> permissionsList = new ArrayList<String>();
+        if (ContextCompat.checkSelfPermission(this.getBaseContext(), Manifest.permission.SYSTEM_ALERT_WINDOW)
+                != PackageManager.PERMISSION_GRANTED) {
+            Log.i("lvjielvjie", "No SYSTEM_ALERT_WINDOW permission");
+            permissionsList.add(Manifest.permission.SYSTEM_ALERT_WINDOW);
+        }
+
+        if (permissionsList.isEmpty()) {
+            return true;
+        }
+        String[] permissions = permissionsList.toArray(new String[permissionsList.size()]);
+        ActivityCompat.requestPermissions(this, permissions, 1001);
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private CommonMsgDialog commonMsgDialog;
+    private void showCommonMsgDialog(){
+        if(commonMsgDialog == null){
+            commonMsgDialog = new CommonMsgDialog();
+        }
+        commonMsgDialog.show(this.getSupportFragmentManager(), "commonMsgDialog");
     }
 }
