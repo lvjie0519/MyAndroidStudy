@@ -29,7 +29,30 @@ public class LocalBroadcastRegisterDemoActivity extends Activity {
         setContentView(R.layout.activity_local_broadcast_register_demo);
 
         registerBroadcast();
+
+        // 测试多次注册相同的reviever， action不一样， 会不会被覆盖
+        initBrodcast();
     }
+
+    private void initBrodcast(){
+        IntentFilter intentFilter1 = new IntentFilter();
+        intentFilter1.addAction("action.demo01");
+        CommonGlobalReceiverManager.getInstance().registerCommonGlobalReceiver(intentFilter1, listener);
+
+        IntentFilter intentFilter2 = new IntentFilter();
+        intentFilter2.addAction("action.demo02");
+        CommonGlobalReceiverManager.getInstance().registerCommonGlobalReceiver(intentFilter2, listener);
+
+        IntentFilter intentFilter3 = new IntentFilter();
+        intentFilter3.addAction("action.demo03");
+        CommonGlobalReceiverManager.getInstance().registerCommonGlobalReceiver(intentFilter3, listener);
+    }
+    private CommonGlobalReceiverManager.GlobalReceiverListener listener = new CommonGlobalReceiverManager.GlobalReceiverListener() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i("lvjie", "GlobalReceiverListener onReceive call, action: "+intent.getAction());
+        }
+    };
 
     private void registerBroadcast(){
         IntentFilter intentFilter = new IntentFilter();

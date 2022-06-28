@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import com.android.study.example.broadcast.CommonGlobalReceiverManager;
 import com.android.study.example.broadcast.LocalBroadcastRegisterDemoActivity;
 import com.android.study.example.broadcast.SelfDefineBroadcast;
 import com.android.study.example.install.InstallReceiver;
@@ -23,6 +24,7 @@ public class MainApplication extends Application {
         registerBroadcast();
 
         InstallReceiver.registerReceiver(this);
+        CommonGlobalReceiverManager.getInstance().init(this);
     }
 
     private void initLeakCanary(){

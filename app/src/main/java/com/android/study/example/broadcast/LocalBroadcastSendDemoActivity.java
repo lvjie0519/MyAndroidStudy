@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.android.study.example.R;
@@ -40,5 +41,23 @@ public class LocalBroadcastSendDemoActivity extends Activity {
 
         //杀掉以前进程
         android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+    private static int count = 0;
+    public void onClickSendBroadcastMsg01(View view) {
+        String action = "action.demo01";
+        int dif = count % 3;
+        if(dif == 0){
+            action = "action.demo01";
+        }else if(dif == 1){
+            action = "action.demo02";
+        }else if(dif == 2){
+            action = "action.demo03";
+        }
+        count++;
+        Log.i("lvjie", "sendBroadcast, action: "+action);
+        Intent intent = new Intent(action);
+        intent.setPackage(getPackageName());        // 添加包名，则只有相同包名的进程可以收到广播信息
+        sendBroadcast(intent);
     }
 }
