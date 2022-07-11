@@ -32,6 +32,7 @@ import com.android.study.example.androidapi.AndroidApiTestActivity;
 import com.android.study.example.androidapi.AndroidOOMActivity;
 import com.android.study.example.androidapi.AudioDemoTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
+import com.android.study.example.androidapi.HandlerTestActivity;
 import com.android.study.example.androidapi.LifeCycleTestActivity;
 import com.android.study.example.androidapi.NetworkTestActivity;
 import com.android.study.example.androidapi.OpenOtherAppActivity;
@@ -633,5 +634,9 @@ public class MainActivity extends AppCompatActivity {
             commonMsgDialog = new CommonMsgDialog();
         }
         commonMsgDialog.show(this.getSupportFragmentManager(), "commonMsgDialog");
+    }
+
+    public void onClickTestHandler(View view) {
+        HandlerTestActivity.startActivity(this);
     }
 }

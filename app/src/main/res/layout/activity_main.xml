@@ -27,6 +27,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Handler测试"
+            android:textAllCaps="false"
+            android:onClick="onClickTestHandler"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="应用弹窗"
             android:textAllCaps="false"
             android:onClick="onClickApplicationDialogTest"/>
