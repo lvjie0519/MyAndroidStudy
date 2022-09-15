@@ -17,7 +17,6 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".MainApplication"
@@ -33,18 +32,37 @@
         <activity
             android:name=".androidapi.HandlerTestActivity"
             android:exported="true" />
-        <activity android:name=".picpro.PicProcessTestActivity" />
-        <activity android:name=".books.ThreadTestActivity" />
-        <activity android:name=".mainapp.MainAppTestActivity" />
-        <activity android:name=".androidapi.NetworkTestActivity" />
+        <activity
+            android:name=".picpro.PicProcessTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".books.ThreadTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".mainapp.MainAppTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".androidapi.NetworkTestActivity"
+            android:exported="false"/>
         <activity
             android:name=".broadcast.LocalBroadcastSendDemoActivity"
-            android:process=":sendbroadcast" />
-        <activity android:name=".broadcast.LocalBroadcastRegisterDemoActivity" />
-        <activity android:name=".uidemo.webview.WebViewJsDemoActivity" />
-        <activity android:name=".books.TaskStackTestActivity" />
-        <activity android:name=".androidapi.ViewTestActivity" />
-        <activity android:name=".androidapi.OpenOtherAppActivity" />
+            android:process=":sendbroadcast"
+            android:exported="true"/>
+        <activity
+            android:name=".broadcast.LocalBroadcastRegisterDemoActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".uidemo.webview.WebViewJsDemoActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".books.TaskStackTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".androidapi.ViewTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".androidapi.OpenOtherAppActivity"
+            android:exported="false"/>
 
         <provider
             android:name=".AppFileProvider"
@@ -56,17 +74,34 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".androidapi.SharedPreferencesTestActivity" />
-        <activity android:name=".performance_optimization.PerformOptMainTestActivity" />
-        <activity android:name=".performance_optimization.TraceViewUseTestActivity" />
-        <activity android:name=".androidapi.WuZhangAiTestActivity" />
-        <activity android:name=".thirdlib.ThirdLibTestActivity" />
-        <activity android:name=".thirdlib.LeakCanaryTestActivity" />
+        <activity
+            android:name=".androidapi.SharedPreferencesTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".performance_optimization.PerformOptMainTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".performance_optimization.TraceViewUseTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".androidapi.WuZhangAiTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".thirdlib.ThirdLibTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".thirdlib.LeakCanaryTestActivity"
+            android:exported="false"/>
         <activity
             android:name=".uidemo.darkmode.DarkModeTestActivity"
-            android:theme="@style/DarkModeActivityTheme" />
-        <activity android:name=".uidemo.webview.AgentwebTestActivity" />
-        <activity android:name=".androidapi.ScreenAdapterTestActivity" />
+            android:theme="@style/DarkModeActivityTheme"
+            android:exported="false"/>
+        <activity
+            android:name=".uidemo.webview.AgentwebTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".androidapi.ScreenAdapterTestActivity"
+            android:exported="false"/>
         <activity
             android:name=".uidemo.other.OtherAppActivity"
             android:exported="true">
@@ -80,13 +115,27 @@
                     android:scheme="mihome" />
             </intent-filter>
         </activity>
-        <activity android:name=".uidemo.search.SearchEditTestActivity" />
-        <activity android:name=".uidemo.filedownload.FileDownLoadDemoActivity" />
-        <activity android:name=".uidemo.screenshot.ScreenshotTestActivity" />
-        <activity android:name=".androidapi.OrientationTestActivity" />
-        <activity android:name=".androidapi.AndroidOOMActivity" />
-        <activity android:name=".uidemo.webview.WebViewDemoActivity" />
-        <activity android:name=".thirdlib.FrescoDemoActivity" />
+        <activity
+            android:name=".uidemo.search.SearchEditTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".uidemo.filedownload.FileDownLoadDemoActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".uidemo.screenshot.ScreenshotTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".androidapi.OrientationTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".androidapi.AndroidOOMActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".uidemo.webview.WebViewDemoActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".thirdlib.FrescoDemoActivity"
+            android:exported="false"/>
 
         <meta-data
             android:name="design_width_in_dp"
@@ -95,18 +144,24 @@
             android:name="design_height_in_dp"
             android:value="640" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".butterknife.ButterKnifeTestActivity" />
-        <activity android:name=".butterknife.MyButterKnifeTestActivity" />
+        <activity
+            android:name=".butterknife.ButterKnifeTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".butterknife.MyButterKnifeTestActivity"
+            android:exported="false"/>
         <activity
             android:name=".androidapi.AndroidApiTestActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:exported="false"/>
 
         <service
             android:name=".aidl.MyAidlService"
@@ -114,29 +169,64 @@
             android:exported="true"
             android:process=":aidl_service" />
 
-        <activity android:name=".androidapi.BlueMainTestActivity" />
-        <activity android:name=".uidemo.RnPluginDebugListActivity" />
-        <activity android:name=".uidemo.RnPluginDebugAddActivity" />
-        <activity android:name=".leak.LeakTest1Activity" />
-        <activity android:name=".leak.LeakTest2Activity" />
+        <activity
+            android:name=".androidapi.BlueMainTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".uidemo.RnPluginDebugListActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".uidemo.RnPluginDebugAddActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".leak.LeakTest1Activity"
+            android:exported="false"/>
+        <activity
+            android:name=".leak.LeakTest2Activity"
+            android:exported="false"/>
         <activity
             android:name=".uidemo.dragging.FloatingActionBtnTestActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".uidemo.picker.PickerTestActivity" />
-        <activity android:name=".androidapi.AudioDemoTestActivity" />
-        <activity android:name=".androidapi.LifeCycleTestActivity" />
-        <activity android:name=".thirdlib.RenderScriptBlurDemoActivity" />
-        <activity android:name=".androidapi.SurfaceViewDrawDemoActivity" />
-        <activity android:name=".books.jjzg.chapter2.Chapter2TestActivity" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:exported="false"/>
+        <activity
+            android:name=".uidemo.picker.PickerTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".androidapi.AudioDemoTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".androidapi.LifeCycleTestActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".thirdlib.RenderScriptBlurDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".androidapi.SurfaceViewDrawDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".books.jjzg.chapter2.Chapter2TestActivity"
+            android:exported="false" />
         <activity
             android:name=".books.BooksMainTestActivity"
-            android:theme="@style/TranslucentActivityTheme" />
-        <activity android:name=".books.jjzg.JjzgMainTestActivity" />
-        <activity android:name=".uidemo.eventtrans.ViewEventTransTestActivity" />
-        <activity android:name=".uidemo.mapsweeper.MapViewDemoActivity" />
-        <activity android:name=".uidemo.animation.AnimationDemoActivity" />
-        <activity android:name=".uidemo.inputdialog.InputDialogDemoActivity" />
-        <activity android:name=".androidapi.ShareIsolationTestActivity">
+            android:theme="@style/TranslucentActivityTheme"
+            android:exported="false"/>
+        <activity
+            android:name=".books.jjzg.JjzgMainTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uidemo.eventtrans.ViewEventTransTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uidemo.mapsweeper.MapViewDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uidemo.animation.AnimationDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".uidemo.inputdialog.InputDialogDemoActivity"
+            android:exported="false" />
+        <activity android:name=".androidapi.ShareIsolationTestActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
