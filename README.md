@@ -17,3 +17,7 @@ Android 学习记录
 
 [AIDL DEMO 解答](https://blog.csdn.net/u010349644/article/details/86583816)
 
+
+## 好文章
+https://weishu.me/
+

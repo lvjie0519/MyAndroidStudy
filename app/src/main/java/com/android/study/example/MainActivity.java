@@ -10,11 +10,14 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -68,6 +71,7 @@ import com.android.study.example.uidemo.search.SearchEditTestActivity;
 import com.android.study.example.uidemo.webview.AgentwebTestActivity;
 import com.android.study.example.uidemo.webview.WebViewDemoActivity;
 import com.android.study.example.uidemo.webview.WebViewJsDemoActivity;
+import com.android.study.example.uidemo.webview.WebViewUploadFileActivity;
 import com.android.study.example.utils.ClipboardUtil;
 import com.android.study.example.utils.FileUtil;
 import com.annotaions.example.MyAnnotation;
@@ -609,13 +613,14 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean checkRequestPermissions(){
         List<String> permissionsList = new ArrayList<String>();
-        if (ContextCompat.checkSelfPermission(this.getBaseContext(), Manifest.permission.SYSTEM_ALERT_WINDOW)
+        if (ContextCompat.checkSelfPermission(this.getBaseContext(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            Log.i("lvjielvjie", "No SYSTEM_ALERT_WINDOW permission");
-            permissionsList.add(Manifest.permission.SYSTEM_ALERT_WINDOW);
+            Log.i("lvjielvjie", "No READ_EXTERNAL_STORAGE permission");
+            permissionsList.add(Manifest.permission.CAMERA);
         }
 
         if (permissionsList.isEmpty()) {
+            Log.i("lvjielvjie", "has permission");
             return true;
         }
         String[] permissions = permissionsList.toArray(new String[permissionsList.size()]);
@@ -636,7 +641,49 @@ public class MainActivity extends AppCompatActivity {
         commonMsgDialog.show(this.getSupportFragmentManager(), "commonMsgDialog");
     }
 
+
+
     public void onClickTestHandler(View view) {
-        HandlerTestActivity.startActivity(this);
+//        HandlerTestActivity.startActivity(this);
+        checkRequestPermissions();
+    }
+
+    public void onClickTestWebViewUploadFile(View view) {
+//        WebViewUploadFileActivity.startActivity(this);
+
+
+
+    }
+
+    private void openPicSelectPage(){
+        Intent intentToPickPic = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // 如果限制上传到服务器的图片类型时可以直接写如："image/jpeg 、 image/png等的类型" 所有类型则写 "image/*"
+        intentToPickPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(intentToPickPic, 200);
+    }
+
+    private void openFileSelectPage(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "完成操作需要使用"),300);
+    }
+
+    private void openCamera(){
+        Intent intent =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        String imagePaths = Environment.getExternalStorageDirectory().getPath() +"/pbccrc/Images/" + (System.currentTimeMillis() +".jpg");
+        File vFile =new File(imagePaths);
+        if (!vFile.exists()) {
+            File vDirPath = vFile.getParentFile();
+            vDirPath.mkdirs();
+        }else {
+            if (vFile.exists()) {
+                vFile.delete();
+            }
+        }
+
+        Uri cameraUri = FileProvider.getUriForFile(this,getPackageName() +".fileprovider",vFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
+        startActivityForResult(intent, 400);
     }
 }
