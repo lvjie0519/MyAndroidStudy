@@ -649,10 +649,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickTestWebViewUploadFile(View view) {
-//        WebViewUploadFileActivity.startActivity(this);
-
-
-
+        WebViewUploadFileActivity.startActivity(this);
     }
 
     private void openPicSelectPage(){

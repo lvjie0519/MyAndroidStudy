@@ -1,14 +1,20 @@
 package com.android.study.example.uidemo.webview;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
@@ -22,6 +28,8 @@ import android.webkit.WebViewClient;
 import com.android.study.example.R;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import me.jingbin.progress.WebProgress;
 
@@ -92,7 +100,8 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
         mWebView.requestFocus();
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        mWebView.loadUrl("https://mail.qq.com/");
+        mWebView.loadUrl("file:///android_asset/upload_image.html");
+//        mWebView.loadUrl("https://mail.qq.com/");
 
         mWebViewUploadFileClient = new WebViewUploadFileClient(this);
         mWebView.setWebChromeClient(mWebViewUploadFileClient);
@@ -141,6 +150,33 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.i("lvjie", "requestCode: "+requestCode+"  permissions: "+permissions.toString()+"  grantResults: "+grantResults.toString());
+    }
+
+    private boolean checkRequestPermissions(){
+        List<String> permissionsList = new ArrayList<String>();
+        if (ContextCompat.checkSelfPermission(this.getBaseContext(), Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            Log.i("lvjielvjie", "No READ_EXTERNAL_STORAGE permission");
+            permissionsList.add(Manifest.permission.CAMERA);
+        }
+
+        if (permissionsList.isEmpty()) {
+            Log.i("lvjielvjie", "has permission");
+            return true;
+        }
+        String[] permissions = permissionsList.toArray(new String[permissionsList.size()]);
+        ActivityCompat.requestPermissions(this, permissions, 1001);
+        return false;
+    }
+
+    public void onClickCheckRequestPermissions(View view) {
+        checkRequestPermissions();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("lvjie", "requestCode: "+requestCode+"  resultCode: "+resultCode);
@@ -159,9 +195,14 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
                     Uri result = data == null ? null : data.getData();
                     Log.i("lvjie", "" + result);
                     mUploadMessage2.onReceiveValue(new Uri[]{result});
-                }else{
+                }else {
                     Log.i("lvjie", "mUploadMessage2.onReceiveValue(null)");
-                    mUploadMessage2.onReceiveValue(null);
+                    Uri cameraUri = mWebViewUploadFileClient.getCameraUri();
+                    if(cameraUri != null){
+                        mUploadMessage2.onReceiveValue(new Uri[]{cameraUri});
+                    }else{
+                        mUploadMessage2.onReceiveValue(null);
+                    }
                 }
                 return;
             }
@@ -191,6 +232,7 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
         mWebViewUploadFileClient.setUploadMsg(null);
         mWebViewUploadFileClient.setUploadMsg2(null);
     }
+
 
 
 }
