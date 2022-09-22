@@ -56,60 +56,92 @@ public class WebViewUploadFileClient extends WebChromeClient {
                                      ValueCallback<Uri[]> filePathCallback,
                                      FileChooserParams fileChooserParams) {
 
-        Log.i("lvjie", "1. onShowFileChooser.");
+        Log.i("lvjie", "1. onShowFileChooser.  fileChooserParams: "+fileChooserParamsToStr(fileChooserParams));
         UploadMsg2 = filePathCallback;
-
-        Intent intent;
-        if (fileChooserParams.isCaptureEnabled()) {
-            // 使用相机
-            intent = createCameraIntent();
-        }else if(fileChooserParams.getAcceptTypes().length == 1 && "image/*".equals(fileChooserParams.getAcceptTypes()[0])){
-            // 图片选择
-            intent = createPicIntent();
-        } else {
-            // 文件选择
-            intent = fileChooserParams.createIntent();
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, fileChooserParams.getAcceptTypes());
-        }
-
-        boolean isMulti = fileChooserParams.getMode() == FileChooserParams.MODE_OPEN_MULTIPLE;
-        if (isMulti) {
-            // 支持多个文件选择
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        }
+        Intent intent = createIntentByFileChooser(activity, fileChooserParams);
         activity.startActivityForResult(intent, FILECHOOSER_RESULTCODE);
-
         return true;
     }
 
-    @SuppressWarnings("static-access")
-    public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType, String capture) {
-        Log.i("lvjie", "2. onShowFileChooser.");
-        UploadMsg = uploadFile;
-
-        Intent intent = null;
-        if(TextUtils.isEmpty(capture)){
-            intent = createOpenFileIntent();
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, acceptType);
-        }else{
-            intent = createCameraIntent();
+    private String fileChooserParamsToStr(FileChooserParams fileChooserParams) {
+        if (fileChooserParams == null) {
+            return "";
         }
 
-        activity.startActivityForResult(intent, FILECHOOSER_RESULTCODE);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{ getMode(1表示多文件选择): ").append(fileChooserParams.getMode())
+                .append("; isCaptureEnabled(是否打开相机): ").append(fileChooserParams.isCaptureEnabled());
+
+        stringBuilder.append("; getAcceptTypes(文件类型): ");
+        for (String s : fileChooserParams.getAcceptTypes()) {
+            stringBuilder.append(s).append("; ");
+        }
+        stringBuilder.append("}");
+        return stringBuilder.toString();
     }
 
-    private Intent createPicIntent(){
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        // 如果限制上传到服务器的图片类型时可以直接写如："image/jpeg 、 image/png等的类型" 所有类型则写 "image/*"
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+    /**
+     * 文件选择：            <input type="file" />
+     * 多文件选择：           <input type="file" multiple="multiple" />
+     * 多种类型文件选择：      <input type="file" accept="image/*,audio/mp4,video/mp4" />
+     * 相册选择：            <input type="file" accept="image/*" />
+     * 打开相机：            <input type="file" accept="image/*" capture="user" />
+     * @param activity
+     * @param fileChooserParams
+     * @return
+     */
+    public Intent createIntentByFileChooser(Activity activity, FileChooserParams fileChooserParams) {
+
+        if (fileChooserParams == null) {
+            Log.i("lvjie", "can not createIntentByFileChooser, fileChooserParams  is null");
+            return null;
+        }
+
+        if (activity == null) {
+            Log.i("lvjie","can not createIntentByFileChooser, activity is null");
+            return null;
+        }
+
+        if (fileChooserParams.isCaptureEnabled()) {
+            // 打开相机
+            Log.i("lvjie","createCameraIntent.");
+            return createCameraIntent();
+        }
+
+        Intent intent;
+
+        String acceptType = (fileChooserParams.getAcceptTypes().length == 1) ? fileChooserParams.getAcceptTypes()[0] : "";
+        if (!TextUtils.isEmpty(acceptType) && acceptType.startsWith("image")) {
+            // 图片选择，跳转到相册
+            Log.i("lvjie","createPhotoChooseIntent.");
+            intent = createPhotoChooseIntent();
+        } else {
+            // 文件选择，跳转到文件管理器
+            Log.i("lvjie","createFileChooseIntent.");
+            intent = createFileChooseIntent(fileChooserParams);
+        }
+
+        if (fileChooserParams.getMode() == WebChromeClient.FileChooserParams.MODE_OPEN_MULTIPLE) {
+            // 支持多个文件选择
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        }
+
         return intent;
     }
 
-    private Intent createOpenFileIntent(){
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*");
+    private Intent createFileChooseIntent(FileChooserParams fileChooserParams) {
+        Intent intent = fileChooserParams.createIntent();
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, fileChooserParams.getAcceptTypes());
+        if (TextUtils.isEmpty(intent.getType())) {
+            intent.setType("*/*");
+        }
+        return intent;
+    }
 
+    private Intent createPhotoChooseIntent() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // 如果限制上传到服务器的图片类型时可以直接写如："image/jpeg 、 image/png等的类型" 所有类型则写 "image/*"
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         return intent;
     }
 

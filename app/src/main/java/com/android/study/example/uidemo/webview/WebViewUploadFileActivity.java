@@ -152,15 +152,21 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.i("lvjie", "requestCode: "+requestCode+"  permissions: "+permissions.toString()+"  grantResults: "+grantResults.toString());
+        Log.i("lvjie", "requestCode: "+requestCode+"  permissions: "+permissions.length+"  grantResults: "+grantResults.length);
     }
 
     private boolean checkRequestPermissions(){
         List<String> permissionsList = new ArrayList<String>();
         if (ContextCompat.checkSelfPermission(this.getBaseContext(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            Log.i("lvjielvjie", "No READ_EXTERNAL_STORAGE permission");
+            Log.i("lvjielvjie", "No CAMERA permission");
             permissionsList.add(Manifest.permission.CAMERA);
+        }
+
+        if (ContextCompat.checkSelfPermission(this.getBaseContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Log.i("lvjielvjie", "No READ_EXTERNAL_STORAGE permission");
+            permissionsList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
 
         if (permissionsList.isEmpty()) {
