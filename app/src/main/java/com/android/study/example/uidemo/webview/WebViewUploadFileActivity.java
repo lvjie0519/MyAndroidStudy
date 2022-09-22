@@ -1,6 +1,7 @@
 package com.android.study.example.uidemo.webview;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -186,6 +187,18 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("lvjie", "requestCode: "+requestCode+"  resultCode: "+resultCode);
+
+        if (resultCode != Activity.RESULT_OK) {
+            if (requestCode == WebViewUploadFileClient.FILECHOOSER_RESULTCODE) {
+                ValueCallback<Uri[]>  mUploadMessage2 = mWebViewUploadFileClient.getUploadMsg2();
+                if(mUploadMessage2 != null){
+                    mUploadMessage2.onReceiveValue(null);
+                }
+            }
+            return;
+        }
+
+
         if (requestCode == WebViewUploadFileClient.FILECHOOSER_RESULTCODE) {
             ValueCallback<Uri> mUploadMessage = mWebViewUploadFileClient.getUploadMsg();
             if (null != mUploadMessage){
