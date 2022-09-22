@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.UUID;
 
 public class WebViewUploadFileClient extends WebChromeClient {
     public ValueCallback<Uri> UploadMsg;
@@ -105,7 +107,7 @@ public class WebViewUploadFileClient extends WebChromeClient {
         if (fileChooserParams.isCaptureEnabled()) {
             // 打开相机
             Log.i("lvjie","createCameraIntent.");
-            return createCameraIntent();
+            return createCameraIntent2();
         }
 
         Intent intent;
@@ -178,12 +180,54 @@ public class WebViewUploadFileClient extends WebChromeClient {
             cameraUri = photoUri;
             if (photoUri != null) {
                 captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                captureIntent.putExtra("CameraUri", photoUri);
-                captureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                captureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             }
         }
 
         return captureIntent;
+    }
+
+    private Intent createCameraIntent2(){
+        boolean isCameraAvailable = activity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)
+                || activity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+
+        if(!isCameraAvailable){
+            return null;
+        }
+
+        Intent cameraIntent;
+//        cameraIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);  // 录像
+        cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);    // 拍照
+
+        File file = createFile(activity, "jpg");
+        cameraUri = createUri(file, activity);
+
+        Uri fileUri = Uri.fromFile(file);           // 用来删除
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
+        cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        return cameraIntent;
+    }
+
+    public File createFile(Activity activity, String fileType) {
+        try {
+            String filename = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date())+"."+fileType;
+
+            // getCacheDir will auto-clean according to android docs
+            File fileDir = activity.getCacheDir();
+            File file = new File(fileDir, filename);
+            file.createNewFile();
+            return file;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Uri createUri(File file, Activity activity) {
+        String authority = activity.getApplicationContext().getPackageName() + ".provider";
+        return FileProvider.getUriForFile(activity, authority, file);
     }
 
     /**

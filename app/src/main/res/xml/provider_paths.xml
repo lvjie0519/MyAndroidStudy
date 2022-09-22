@@ -17,4 +17,5 @@ https://www.jianshu.com/p/9117fe4fcf75
     <external-cache-path
         name="app_cache_images"
         path="."/>
+    <cache-path name="cacheDir" path="." />
 </paths>
