@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -39,6 +40,9 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
     private WebView mWebView;
     private WebProgress mWebProgress;
     private WebViewUploadFileClient mWebViewUploadFileClient;
+
+    public static final String INTENT_CAMERA_PHOTO_URI = "cameraPhotoUri";
+    public static final String INTENT_VIDEO_PHOTO_URI = "videoPhotoUri";
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, WebViewUploadFileActivity.class);
@@ -103,6 +107,9 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         mWebView.loadUrl("file:///android_asset/upload_image.html");
 //        mWebView.loadUrl("https://mail.qq.com/");
+//        mWebView.loadUrl("https://m.sogou.com/web/searchList.jsp?s_from=pcsearch&keyword=百度");
+//        mWebView.loadUrl("http://www.imagetotxt.com");
+//        mWebView.loadUrl("http://192.168.99.25:8090/");
 
         mWebViewUploadFileClient = new WebViewUploadFileClient(this);
         mWebView.setWebChromeClient(mWebViewUploadFileClient);
@@ -190,66 +197,44 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
 
         if (resultCode != Activity.RESULT_OK) {
             if (requestCode == WebViewUploadFileClient.FILECHOOSER_RESULTCODE) {
-                ValueCallback<Uri[]>  mUploadMessage2 = mWebViewUploadFileClient.getUploadMsg2();
-                if(mUploadMessage2 != null){
-                    mUploadMessage2.onReceiveValue(null);
-                }
+                Log.i("lvjie", "doWebViewFileChooseResultCancel.");
+                doWebViewFileChooseResultCancel();
             }
             return;
         }
 
-
         if (requestCode == WebViewUploadFileClient.FILECHOOSER_RESULTCODE) {
-            ValueCallback<Uri> mUploadMessage = mWebViewUploadFileClient.getUploadMsg();
-            if (null != mUploadMessage){
-                if(data != null){
-                    mUploadMessage.onReceiveValue(data.getData());
-                }
-                return;
-            }
-
-            ValueCallback<Uri[]>  mUploadMessage2 = mWebViewUploadFileClient.getUploadMsg2();
-            if(mUploadMessage2 != null){
-                if(data != null){
-                    Uri result = data == null ? null : data.getData();
-                    Log.i("lvjie", "" + result);
-                    mUploadMessage2.onReceiveValue(new Uri[]{result});
-                }else {
-                    Log.i("lvjie", "mUploadMessage2.onReceiveValue(null)");
-                    Uri cameraUri = mWebViewUploadFileClient.getCameraUri();
-                    if(cameraUri != null){
-                        mUploadMessage2.onReceiveValue(new Uri[]{cameraUri});
-                    }else{
-                        mUploadMessage2.onReceiveValue(null);
-                    }
-                }
-                return;
-            }
-
-//            if(mUploadMessage2 != null){
-//                if(data != null && data.getClipData() != null) {
-//                    //有选择多个文件
-//                    int count = data.getClipData().getItemCount();
-//                    Log.i("lvjie", "url count ：  " + count);
-//                    Uri[] uris = new Uri[count];
-//                    int currentItem = 0;
-//                    while(currentItem < count) {
-//                        Uri fileUri = data.getClipData().getItemAt(currentItem).getUri();
-//                        uris[currentItem] = fileUri;
-//                        currentItem = currentItem + 1;
-//                    }
-//                    mUploadMessage2.onReceiveValue(uris);
-//                } else {
-//                    Uri result = data == null ? null : data.getData();
-//                    Log.e("lvjie", "" + result);
-//                    mUploadMessage2.onReceiveValue(new Uri[]{result});
-//                }
-//                mUploadMessage2 = null;
-//            }
-
+            doWebViewFileChooseResultOk(data);
         }
-        mWebViewUploadFileClient.setUploadMsg(null);
-        mWebViewUploadFileClient.setUploadMsg2(null);
+    }
+
+    private void doWebViewFileChooseResultCancel() {
+        mWebViewUploadFileClient.clearUri();
+        mWebViewUploadFileClient.invokeChromValueCallback(null);
+    }
+
+    private void doWebViewFileChooseResultOk(Intent data) {
+
+        if (data != null && data.getClipData() != null) {
+            // 有选择多个文件
+            Log.i("lvjie", "doWebViewFileChooseResultOk, multi file choose.");
+            int count = data.getClipData().getItemCount();
+            Uri[] uris = new Uri[count];
+            for (int i = 0; i < count; i++) {
+                Uri fileUri = data.getClipData().getItemAt(i).getUri();
+                uris[i] = fileUri;
+            }
+            mWebViewUploadFileClient.invokeChromValueCallback(uris);
+        } else {
+            Log.i("lvjie", "doWebViewFileChooseResultOk, single file choose.");
+            Uri uri = (data == null) ? null : data.getData();
+            if (uri == null) {
+                Log.i("lvjie", "doWebViewFileChooseResultOk, will use camera photo uri.");
+                uri = mWebViewUploadFileClient.getCameraUri();
+            }
+            Uri[] uris = (uri == null) ? null : new Uri[]{uri};
+            mWebViewUploadFileClient.invokeChromValueCallback(uris);
+        }
     }
 
 

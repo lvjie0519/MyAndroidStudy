@@ -31,39 +31,42 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".uidemo.zoomimageview.ZoomImageViewTestActivity"
+            android:exported="true" />
+        <activity
             android:name=".androidapi.HandlerTestActivity"
             android:exported="true" />
         <activity
             android:name=".picpro.PicProcessTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".books.ThreadTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".mainapp.MainAppTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".androidapi.NetworkTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".broadcast.LocalBroadcastSendDemoActivity"
-            android:process=":sendbroadcast"
-            android:exported="true"/>
+            android:exported="true"
+            android:process=":sendbroadcast" />
         <activity
             android:name=".broadcast.LocalBroadcastRegisterDemoActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".uidemo.webview.WebViewJsDemoActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".books.TaskStackTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".androidapi.ViewTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".androidapi.OpenOtherAppActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
         <provider
             android:name=".AppFileProvider"
@@ -77,32 +80,32 @@
 
         <activity
             android:name=".androidapi.SharedPreferencesTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".performance_optimization.PerformOptMainTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".performance_optimization.TraceViewUseTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".androidapi.WuZhangAiTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".thirdlib.ThirdLibTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".thirdlib.LeakCanaryTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".uidemo.darkmode.DarkModeTestActivity"
-            android:theme="@style/DarkModeActivityTheme"
-            android:exported="false"/>
+            android:exported="false"
+            android:theme="@style/DarkModeActivityTheme" />
         <activity
             android:name=".uidemo.webview.AgentwebTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".androidapi.ScreenAdapterTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".uidemo.other.OtherAppActivity"
             android:exported="true">
@@ -118,25 +121,25 @@
         </activity>
         <activity
             android:name=".uidemo.search.SearchEditTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".uidemo.filedownload.FileDownLoadDemoActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".uidemo.screenshot.ScreenshotTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".androidapi.OrientationTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".androidapi.AndroidOOMActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".uidemo.webview.WebViewDemoActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".thirdlib.FrescoDemoActivity"
-            android:exported="false"/>
+            android:exported="false" />
 
         <meta-data
             android:name="design_width_in_dp"
@@ -145,7 +148,8 @@
             android:name="design_height_in_dp"
             android:value="640" />
 
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -155,14 +159,14 @@
         </activity>
         <activity
             android:name=".butterknife.ButterKnifeTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".butterknife.MyButterKnifeTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".androidapi.AndroidApiTestActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:exported="false"/>
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <service
             android:name=".aidl.MyAidlService"
@@ -172,32 +176,32 @@
 
         <activity
             android:name=".androidapi.BlueMainTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".uidemo.RnPluginDebugListActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".uidemo.RnPluginDebugAddActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".leak.LeakTest1Activity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".leak.LeakTest2Activity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".uidemo.dragging.FloatingActionBtnTestActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:exported="false"/>
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".uidemo.picker.PickerTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".androidapi.AudioDemoTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".androidapi.LifeCycleTestActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".thirdlib.RenderScriptBlurDemoActivity"
             android:exported="false" />
@@ -209,8 +213,8 @@
             android:exported="false" />
         <activity
             android:name=".books.BooksMainTestActivity"
-            android:theme="@style/TranslucentActivityTheme"
-            android:exported="false"/>
+            android:exported="false"
+            android:theme="@style/TranslucentActivityTheme" />
         <activity
             android:name=".books.jjzg.JjzgMainTestActivity"
             android:exported="false" />
@@ -226,7 +230,8 @@
         <activity
             android:name=".uidemo.inputdialog.InputDialogDemoActivity"
             android:exported="false" />
-        <activity android:name=".androidapi.ShareIsolationTestActivity"
+        <activity
+            android:name=".androidapi.ShareIsolationTestActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
