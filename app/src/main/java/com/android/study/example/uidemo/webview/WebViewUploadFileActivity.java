@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +32,7 @@ import android.webkit.WebViewClient;
 import com.android.study.example.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -219,12 +222,16 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
             // 有选择多个文件
             Log.i("lvjie", "doWebViewFileChooseResultOk, multi file choose.");
             int count = data.getClipData().getItemCount();
-            Uri[] uris = new Uri[count];
+            List<Uri> uris = new ArrayList<>();
             for (int i = 0; i < count; i++) {
                 Uri fileUri = data.getClipData().getItemAt(i).getUri();
-                uris[i] = fileUri;
+                if(WebChromUtils.hasReadUriPermission(this, fileUri)){
+                    uris.add(fileUri);
+                }else{
+                    Log.e("lvjielvjie", fileUri.toString()+"has no read permission.");
+                }
             }
-            mWebViewUploadFileClient.invokeChromValueCallback(uris);
+            mWebViewUploadFileClient.invokeChromValueCallback(uris.toArray(new Uri[uris.size()]));
         } else {
             Log.i("lvjie", "doWebViewFileChooseResultOk, single file choose.");
             Uri uri = (data == null) ? null : data.getData();
@@ -232,6 +239,16 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
                 Log.i("lvjie", "doWebViewFileChooseResultOk, will use camera photo uri.");
                 uri = mWebViewUploadFileClient.getCameraUri();
             }
+
+            if(uri != null){
+                Log.i("lvjielvjie", "getPath: "+uri.getPath()+"  getAuthority: "+uri.getAuthority()+"  toString: "+uri.toString());
+            }
+
+            if (!WebChromUtils.hasReadUriPermission(this, uri)) {
+                Log.e("lvjielvjie", uri+" has no read permission.");
+                uri = null;
+            }
+
             Uri[] uris = (uri == null) ? null : new Uri[]{uri};
             mWebViewUploadFileClient.invokeChromValueCallback(uris);
         }

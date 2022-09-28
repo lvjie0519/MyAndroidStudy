@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
+import android.os.Process;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
@@ -252,5 +254,32 @@ public class WebChromUtils {
         }
     }
 
+    public static boolean hasReadUriPermission(Activity activity, Uri uri){
+        if(uri == null){
+            return false;
+        }
+
+        if(activity == null){
+            return false;
+        }
+
+        boolean result = true;
+        try {
+            int permission = activity.checkUriPermission(uri, Process.myPid(), Process.myUid(), Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Log.i("lvjielvjie", "getScheme: "+uri.getScheme()+"  permission: "+permission);
+
+
+
+            ParcelFileDescriptor parcelFileDescriptor = activity.getContentResolver().openFileDescriptor(uri, "r");
+            parcelFileDescriptor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("lvjielvjie", e.toString());
+            result = false;
+        }
+        Log.i("lvjielvjie", "getScheme: "+uri.getScheme()+"  getPath: "+uri.getPath()+"  getAuthority: "+uri.getAuthority()+"  toString: "+uri.toString());
+
+        return result;
+    }
 
 }
