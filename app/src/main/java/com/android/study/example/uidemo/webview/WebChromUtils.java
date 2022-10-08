@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 import android.webkit.WebChromeClient;
 
 import java.io.File;
@@ -22,6 +23,8 @@ import java.util.Locale;
 public class WebChromUtils {
 
     private static final String TAG = "lvjie";
+
+    private final static String DEFAULT_MIME_TYPES = "*/*";
 
     /**
      * 文件选择：            <input type="file" />
@@ -153,11 +156,11 @@ public class WebChromUtils {
     }
 
     private static Intent createFileChooseIntent(WebChromeClient.FileChooserParams fileChooserParams) {
-        Intent intent = fileChooserParams.createIntent();
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+//        intent.putExtra(Intent.EXTRA_MIME_TYPES, getAcceptedMimeType(fileChooserParams.getAcceptTypes()));
         intent.putExtra(Intent.EXTRA_MIME_TYPES, fileChooserParams.getAcceptTypes());
-        if (TextUtils.isEmpty(intent.getType())) {
-            intent.setType("*/*");
-        }
 
         if (fileChooserParams.getMode() == WebChromeClient.FileChooserParams.MODE_OPEN_MULTIPLE) {
             // 支持多个文件选择
@@ -165,6 +168,39 @@ public class WebChromUtils {
         }
 
         return intent;
+    }
+
+    private static String[] getAcceptedMimeType(String[] types) {
+        if (isArrayEmpty(types)) {
+            return new String[]{DEFAULT_MIME_TYPES};
+        }
+        String[] mimeTypes = new String[types.length];
+        for (int i = 0; i < types.length; i++) {
+            String t = types[i];
+            // convert file extensions to mime types
+            if (t.matches("\\.\\w+")) {
+                String mimeType = getMimeTypeFromExtension(t.replace(".", ""));
+                mimeTypes[i] = mimeType;
+            } else {
+                mimeTypes[i] = t;
+            }
+        }
+        return mimeTypes;
+    }
+
+    private static Boolean isArrayEmpty(String[] arr) {
+        // when our array returned from getAcceptTypes() has no values set from the webview
+        // i.e. <input type="file" />, without any "accept" attr
+        // will be an array with one empty string element, afaik
+        return arr.length == 0 || (arr.length == 1 && arr[0].length() == 0);
+    }
+
+    private static String getMimeTypeFromExtension(String extension) {
+        String type = null;
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
     }
 
     private static Intent createPhotoChooseIntent(WebChromeClient.FileChooserParams fileChooserParams) {
