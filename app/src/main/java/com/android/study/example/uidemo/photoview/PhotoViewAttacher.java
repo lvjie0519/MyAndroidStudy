@@ -40,8 +40,8 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     View.OnLayoutChangeListener {
 
     // 默认缩放比例
-    private static float DEFAULT_MAX_SCALE = 3.0f;
-    private static float DEFAULT_MID_SCALE = 1.75f;
+    private static float DEFAULT_MAX_SCALE = 2.6f;
+    private static float DEFAULT_MID_SCALE = 1.45f;
     private static float DEFAULT_MIN_SCALE = 1.0f;
     private static int DEFAULT_ZOOM_DURATION = 200;
 
@@ -235,13 +235,13 @@ public class PhotoViewAttacher implements View.OnTouchListener,
                     float scale = getScale();
                     float x = ev.getX();
                     float y = ev.getY();
-                    if (scale < getMediumScale()) {
-                        setScale(getMediumScale(), x, y, true);
-                    } else if (scale >= getMediumScale() && scale < getMaximumScale()) {
+
+                    if (scale < getMaximumScale()) {
                         setScale(getMaximumScale(), x, y, true);
                     } else {
                         setScale(getMinimumScale(), x, y, true);
                     }
+
                 } catch (ArrayIndexOutOfBoundsException e) {
                     // Can sometimes happen when getX() and getY() is called
                 }
