@@ -55,6 +55,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     private static final int VERTICAL_EDGE_BOTH = 2;
     private static int SINGLE_TOUCH = 1;
 
+    // 加速插值器-起始速度是零，速度越来越快，加速运动
     private Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
     private int mZoomDuration = DEFAULT_ZOOM_DURATION;
     private float mMinScale = DEFAULT_MIN_SCALE;
@@ -78,14 +79,14 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     private final float[] mMatrixValues = new float[9];
 
     // Listeners
-    private OnMatrixChangedListener mMatrixChangeListener;
-    private OnPhotoTapListener mPhotoTapListener;
-    private OnOutsidePhotoTapListener mOutsidePhotoTapListener;
-    private OnViewTapListener mViewTapListener;
+    private OnMatrixChangedListener mMatrixChangeListener;          //
+    private OnPhotoTapListener mPhotoTapListener;                   // 单击事件， 点击在显示区域
+    private OnOutsidePhotoTapListener mOutsidePhotoTapListener;     // 单击事件， 点击不在显示区域
+    private OnViewTapListener mViewTapListener;                     // 单击事件
     private View.OnClickListener mOnClickListener;
     private OnLongClickListener mLongClickListener;
-    private OnScaleChangedListener mScaleChangeListener;
-    private OnSingleFlingListener mSingleFlingListener;
+    private OnScaleChangedListener mScaleChangeListener;            // 缩放事件
+    private OnSingleFlingListener mSingleFlingListener;             // 快速滑动
     private OnViewDragListener mOnViewDragListener;
 
     private FlingRunnable mCurrentFlingRunnable;
