@@ -64,6 +64,7 @@ import com.android.study.example.uidemo.mapsweeper.MapViewDemoActivity;
 import com.android.study.example.uidemo.animation.AnimationDemoActivity;
 import com.android.study.example.uidemo.dragging.FloatingActionBtnTestActivity;
 import com.android.study.example.uidemo.eventtrans.ViewEventTransTestActivity;
+import com.android.study.example.uidemo.photoview.demo.PhotoViewTestActivity;
 import com.android.study.example.uidemo.picker.PickerTestActivity;
 import com.android.study.example.uidemo.screenshot.ScreenshotTestActivity;
 import com.android.study.example.uidemo.search.RvSearchAdapter;
@@ -682,5 +683,9 @@ public class MainActivity extends AppCompatActivity {
         Uri cameraUri = FileProvider.getUriForFile(this,getPackageName() +".fileprovider",vFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
         startActivityForResult(intent, 400);
+    }
+
+    public void onClickTestPhotoView(View view) {
+        PhotoViewTestActivity.startActivity(this);
     }
 }

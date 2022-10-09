@@ -27,6 +27,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="PhotoView 图片显示"
+            android:textAllCaps="false"
+            android:onClick="onClickTestPhotoView"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="WebView文件上传测试"
             android:textAllCaps="false"
             android:onClick="onClickTestWebViewUploadFile"/>

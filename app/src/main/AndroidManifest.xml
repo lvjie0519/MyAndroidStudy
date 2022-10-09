@@ -19,7 +19,6 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -35,6 +34,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".uidemo.photoview.demo.PhotoViewTestActivity"
+            android:exported="true" />
         <activity
             android:name=".uidemo.zoomimageview.ZoomImageViewTestActivity"
             android:exported="true" />
