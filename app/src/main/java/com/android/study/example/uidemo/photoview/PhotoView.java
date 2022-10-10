@@ -16,6 +16,7 @@
 package com.android.study.example.uidemo.photoview;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -119,6 +120,15 @@ public class PhotoView extends AppCompatImageView {
     @Override
     public void setImageURI(Uri uri) {
         super.setImageURI(uri);
+        if (attacher != null) {
+            attacher.update();
+        }
+    }
+
+    @Override
+    public void setImageBitmap(Bitmap bm) {
+        super.setImageBitmap(bm);
+
         if (attacher != null) {
             attacher.update();
         }

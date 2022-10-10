@@ -2,6 +2,9 @@ package com.android.study.example.uidemo.photoview.demo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +20,9 @@ import com.android.study.example.uidemo.photoview.OnScaleChangedListener;
 import com.android.study.example.uidemo.photoview.OnSingleFlingListener;
 import com.android.study.example.uidemo.photoview.OnViewTapListener;
 import com.android.study.example.uidemo.photoview.PhotoView;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class PhotoViewTestActivity extends AppCompatActivity {
 
@@ -37,10 +43,13 @@ public class PhotoViewTestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_photo_view_test);
 
         photoView = findViewById(R.id.photo_view);
-        photoView.setImageResource(R.drawable.person1);
-        photoView.setScaleType(ImageView.ScaleType.CENTER);
+//        photoView.setImageResource(R.drawable.person1);
+        photoView.setImageBitmap(getAssertImageFile());
+//        photoView.setScaleType(ImageView.ScaleType.CENTER);
 
         addListener();
+
+        isImage();
     }
 
     private void addListener(){
@@ -88,5 +97,52 @@ public class PhotoViewTestActivity extends AppCompatActivity {
         int len = imgIds.length;
         currentSelect = currentSelect % len;
         photoView.setImageResource(imgIds[currentSelect]);
+    }
+
+    /**
+     * 从本地获取图片资源
+     * @return
+     */
+    private Bitmap getAssertImageFile(){
+        InputStream inputStream = null;
+        try {
+            inputStream = this.getAssets().open("AIDL原理.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+        return bitmap;
+    }
+
+    private boolean isImage(){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
+        InputStream inputStream = null;
+        InputStream inputStream2 = null;
+        try {
+            inputStream = this.getAssets().open("AIDL原理.png");
+            inputStream2 = this.getAssets().open("version.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Rect rect = new Rect();
+        BitmapFactory.decodeStream(inputStream, rect, options);
+        Log.i("lvjielvjie", "outWidth: "+options.outWidth+"  outHeight: "+options.outHeight);
+
+        BitmapFactory.decodeStream(inputStream2, rect, options);
+        Log.i("lvjielvjie", "outWidth: "+options.outWidth+"  outHeight: "+options.outHeight);
+
+
+
+        if (options.outWidth == -1) {
+
+            return false;
+
+        }
+
+        return true;
     }
 }

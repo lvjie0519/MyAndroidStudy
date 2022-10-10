@@ -185,6 +185,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2,
                 float velocityX, float velocityY) {
+                // 拖动屏幕\快速滑动
                 if (mSingleFlingListener != null) {
                     if (getScale() > DEFAULT_MIN_SCALE) {
                         return false;
@@ -231,6 +232,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
 
             @Override
             public boolean onDoubleTap(MotionEvent ev) {
+                // 连续双击回调
                 try {
                     float scale = getScale();
                     float x = ev.getX();
