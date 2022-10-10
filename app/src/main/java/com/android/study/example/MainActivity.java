@@ -76,6 +76,7 @@ import com.android.study.example.uidemo.webview.WebViewUploadFileActivity;
 import com.android.study.example.utils.ClipboardUtil;
 import com.android.study.example.utils.FileUtil;
 import com.annotaions.example.MyAnnotation;
+import com.jaeger.library.StatusBarUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,9 +103,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Log.i("lvjie","MainActivity onCreate...");
         initData();
         initView();
+    }
+
+    protected void setStatusBar(boolean isTransparent) {
+        if (isTransparent) {
+            StatusBarUtil.setTransparent(this);
+        } else {
+            StatusBarUtil.setTranslucent(this, StatusBarUtil.DEFAULT_STATUS_BAR_ALPHA);
+        }
     }
 
     private static String getAppNameByPackageName(Context context, String packageName) {

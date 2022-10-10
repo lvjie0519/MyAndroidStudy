@@ -36,7 +36,6 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".uidemo.photoview.demo.PhotoViewTestActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".uidemo.zoomimageview.ZoomImageViewTestActivity"
