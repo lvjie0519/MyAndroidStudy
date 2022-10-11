@@ -1,5 +1,6 @@
 package com.android.study.example.uidemo.photoview.demo;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.WindowCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -27,6 +29,7 @@ import com.android.study.example.uidemo.photoview.OnScaleChangedListener;
 import com.android.study.example.uidemo.photoview.OnSingleFlingListener;
 import com.android.study.example.uidemo.photoview.OnViewTapListener;
 import com.android.study.example.uidemo.photoview.PhotoView;
+import com.android.study.example.uidemo.photoview.PhotoViewUtil;
 import com.jaeger.library.StatusBarUtil;
 
 import java.io.IOException;
@@ -49,44 +52,19 @@ public class PhotoViewTestActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStatusBar(true);
+        PhotoViewUtil.setStatusBarTranslucent(this);
         setContentView(R.layout.activity_photo_view_test);
 
         photoView = findViewById(R.id.photo_view);
 //        photoView.setImageResource(R.drawable.person1);
-        photoView.setImageBitmap(getAssertImageFile());
+
 //        photoView.setScaleType(ImageView.ScaleType.CENTER);
+//        photoView.setImageResource(R.drawable.icon_sweeper);
+
+        photoView.setImageBitmap(getAssertImageFile());
+        photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         addListener();
-
-        isImage();
-    }
-
-    protected void setStatusBar(boolean isTransparent) {
-        transparentStatusBar(this);
-//        setRootView(this);
-    }
-
-    private static void transparentStatusBar(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-        } else {
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-    }
-
-    private static void setRootView(Activity activity) {
-        ViewGroup parent = (ViewGroup) activity.findViewById(android.R.id.content);
-        for (int i = 0, count = parent.getChildCount(); i < count; i++) {
-            View childView = parent.getChildAt(i);
-            if (childView instanceof ViewGroup) {
-                childView.setFitsSystemWindows(true);
-                ((ViewGroup) childView).setClipToPadding(true);
-            }
-        }
     }
 
     private void addListener(){
@@ -152,36 +130,5 @@ public class PhotoViewTestActivity extends Activity {
 
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
         return bitmap;
-    }
-
-    private boolean isImage(){
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-
-        InputStream inputStream = null;
-        InputStream inputStream2 = null;
-        try {
-            inputStream = this.getAssets().open("AIDL原理.png");
-            inputStream2 = this.getAssets().open("version.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Rect rect = new Rect();
-        BitmapFactory.decodeStream(inputStream, rect, options);
-        Log.i("lvjielvjie", "outWidth: "+options.outWidth+"  outHeight: "+options.outHeight);
-
-        BitmapFactory.decodeStream(inputStream2, rect, options);
-        Log.i("lvjielvjie", "outWidth: "+options.outWidth+"  outHeight: "+options.outHeight);
-
-
-
-        if (options.outWidth == -1) {
-
-            return false;
-
-        }
-
-        return true;
     }
 }
