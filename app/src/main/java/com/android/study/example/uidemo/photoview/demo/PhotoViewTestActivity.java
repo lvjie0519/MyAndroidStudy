@@ -53,6 +53,7 @@ public class PhotoViewTestActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PhotoViewUtil.setStatusBarTranslucent(this);
+
         setContentView(R.layout.activity_photo_view_test);
 
         photoView = findViewById(R.id.photo_view);
@@ -130,5 +131,20 @@ public class PhotoViewTestActivity extends Activity {
 
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
         return bitmap;
+    }
+
+    public void onClickBack(View view) {
+        finish();
+    }
+
+    public void onClickStatusBarTest(View view) {
+//        hideSystemBars(getWindow().getDecorView(), true, false);
+//        PhotoViewUtil.setStatusBarTranslucent(this);
+//        setStatusBarTranslucent(this);
+
+        PhotoViewUtil.setStatusBarTranslucentStyle2(this);
+
+//        FullScreenDialog dialog = new FullScreenDialog(this);
+//        dialog.show();
     }
 }

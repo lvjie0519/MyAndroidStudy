@@ -26,14 +26,23 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/layout_btn_cicle"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:onClick="onClickBack"
+        >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_left"
-            android:onClick="onClickChangePic"/>
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ic_btn_back"
+            />
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="测试状态栏"
+        android:layout_marginTop="60dp"
+        android:onClick="onClickStatusBarTest"/>
 
 </FrameLayout>

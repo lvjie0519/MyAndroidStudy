@@ -5,11 +5,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -70,20 +73,62 @@ public class PhotoViewUtil {
         return true;
     }
 
+    /**
+     * 状态栏和导航栏隐藏, 且界面直接延伸到状态栏和导航栏
+     * https://www.jianshu.com/p/9f67aa9fa853
+     * @param activity
+     */
     public static void setStatusBarTranslucent(Activity activity) {
-        int FULLSCREEN_SYSTEM_UI_VISIBILITY = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-//                View.SYSTEM_UI_FLAG_FULLSCREEN |
-                View.SYSTEM_UI_FLAG_IMMERSIVE |
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        int FULLSCREEN_SYSTEM_UI_VISIBILITY = View.SYSTEM_UI_FLAG_FULLSCREEN        // 状态栏隐藏
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION                               // 导航栏隐藏
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE                                     // 避免某些用户交互造成系统自动清除全屏状态
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;                             // 状态栏和导航栏显示只显示一小段时间
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                // 刘海屏、水滴屏适配
+                WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+                lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                activity.getWindow().setAttributes(lp);
+            }
+
             View decorView = activity.getWindow().getDecorView();
             decorView.setSystemUiVisibility(FULLSCREEN_SYSTEM_UI_VISIBILITY);
             activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
             activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+    }
+
+    /**
+     * 导航栏隐藏，状态栏不隐藏 且界面直接延伸到状态栏和导航栏
+     * @param activity
+     */
+    public static void setStatusBarTranslucentStyle2(Activity activity) {
+        int FULLSCREEN_SYSTEM_UI_VISIBILITY = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN        // 不会隐藏状态栏，但是页面布局会延伸到状态栏下面
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION                               // 导航栏隐藏
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE                                     // 避免某些用户交互造成系统自动清除全屏状态
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;                             // 状态栏和导航栏显示只显示一小段时间
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+                lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                activity.getWindow().setAttributes(lp);
+            }
+
+            View decorView = activity.getWindow().getDecorView();
+            decorView.setSystemUiVisibility(FULLSCREEN_SYSTEM_UI_VISIBILITY);
+            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+            activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
