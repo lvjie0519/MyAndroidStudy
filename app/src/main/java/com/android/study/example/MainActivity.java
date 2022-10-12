@@ -99,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
     private OkHttpClient mClient;
     private Request mRequest;
 
+    public static void startActivity(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
