@@ -108,6 +108,13 @@ public class PhotoViewTestActivity extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("lvjielvjie", "onResume...");
+        PhotoViewUtil.setStatusBarTranslucent(this);
+    }
+
     public void onClickChangePic(View view) {
 //        currentSelect ++;
 //        int len = imgIds.length;

@@ -36,6 +36,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".uidemo.photoview.demo.PhotoViewTestActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
             android:exported="true" />
         <activity
             android:name=".uidemo.zoomimageview.ZoomImageViewTestActivity"
