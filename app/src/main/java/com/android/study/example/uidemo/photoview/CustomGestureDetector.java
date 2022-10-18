@@ -23,6 +23,8 @@ import android.view.ViewConfiguration;
 
 /**
  * Does a whole lot of gesture detecting.
+ * 处理 处理 双指缩放、拖曳、惯性滑动
+ * 双指缩放 使用ScaleGestureDetector 完成检测
  */
 class CustomGestureDetector {
 
@@ -44,6 +46,7 @@ class CustomGestureDetector {
         final ViewConfiguration configuration = ViewConfiguration
                 .get(context);
         mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
+        // 按根据设备密度（density）来获取的最小滑动距离
         mTouchSlop = configuration.getScaledTouchSlop();
 
         mListener = listener;
@@ -52,6 +55,10 @@ class CustomGestureDetector {
 
             @Override
             public boolean onScale(ScaleGestureDetector detector) {
+                /**
+                 * 定义了两个成员变量分别记录x轴和y轴的中心点，两次回调的中心点差值就是中心点移动的距离。
+                 * scaleFactor 是缩放因子，相对于当前大小的缩放比例
+                 */
                 float scaleFactor = detector.getScaleFactor();
 
                 if (Float.isNaN(scaleFactor) || Float.isInfinite(scaleFactor))
@@ -82,6 +89,7 @@ class CustomGestureDetector {
                 // NO-OP
             }
         };
+        // 处理缩放, 缩放的检测使用了原生的 ScaleGestureDetector 来处理
         mDetector = new ScaleGestureDetector(context, mScaleListener);
     }
 
@@ -123,13 +131,16 @@ class CustomGestureDetector {
         final int action = ev.getAction();
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
+                // 获取第一个手指的索引
                 mActivePointerId = ev.getPointerId(0);
 
+                // 初始化 VelocityTracker ，VelocityTracker 是一个速度检测类
                 mVelocityTracker = VelocityTracker.obtain();
                 if (null != mVelocityTracker) {
                     mVelocityTracker.addMovement(ev);
                 }
 
+                // 保存第一个手指触摸的位置
                 mLastTouchX = getActiveX(ev);
                 mLastTouchY = getActiveY(ev);
                 mIsDragging = false;
@@ -142,10 +153,12 @@ class CustomGestureDetector {
                 if (!mIsDragging) {
                     // Use Pythagoras to see if drag length is larger than
                     // touch slop
+                    // 移动距离超过mTouchSlop， 表示是拖动
                     mIsDragging = Math.sqrt((dx * dx) + (dy * dy)) >= mTouchSlop;
                 }
 
                 if (mIsDragging) {
+                    // 如果当前可以拖动，则会触发拖动回调，并且记录当前x、y坐标，给 VelocityTracker 添加事件
                     mListener.onDrag(dx, dy);
                     mLastTouchX = x;
                     mLastTouchY = y;
@@ -164,6 +177,13 @@ class CustomGestureDetector {
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                /**
+                 * 处理松开手后的惯性滑动以及释放 VelocityTracker ，判断是否要惯性滑动，要看 x 轴和 y 轴的速度，
+                 * VelocityTracker 在获取速度前要先调用 computeCurrentVelocity(int units) 计算速度，
+                 * computeCurrentVelocity(int units) 方法的参数是单位，1表示1ms，1000表示1s，
+                 * 这个值决定了下面 getXVelocity() 和 getYVelocity() 的单位，如果传入的是1000，那速度单位就是 px/s ，
+                 * 只要 x 轴或者 y 轴有任何一个大于最小速度的，就会触发惯性滑动。这个最小速度跟上面的 TouchSlop 类似，也是从 ViewConfiguration 中获取的.
+                 */
                 mActivePointerId = INVALID_POINTER_ID;
                 if (mIsDragging) {
                     if (null != mVelocityTracker) {
@@ -180,6 +200,7 @@ class CustomGestureDetector {
                         // If the velocity is greater than minVelocity, call
                         // listener
                         if (Math.max(Math.abs(vX), Math.abs(vY)) >= mMinimumVelocity) {
+                            // 惯性滑动回调
                             mListener.onFling(mLastTouchX, mLastTouchY, -vX,
                                     -vY);
                         }
@@ -187,14 +208,17 @@ class CustomGestureDetector {
                 }
 
                 // Recycle Velocity Tracker
+                // 一次触摸流程接受，回收mVelocityTracker
                 if (null != mVelocityTracker) {
                     mVelocityTracker.recycle();
                     mVelocityTracker = null;
                 }
                 break;
             case MotionEvent.ACTION_POINTER_UP:
+                // 多个手指长按时抬起其中一个手指，注意松开后还有手指在屏幕上
                 final int pointerIndex = PhotoViewUtil.getPointerIndex(ev.getAction());
                 final int pointerId = ev.getPointerId(pointerIndex);
+                // 抬起的手指是第一个手指
                 if (pointerId == mActivePointerId) {
                     // This was our active pointer going up. Choose a new
                     // active pointer and adjust accordingly.

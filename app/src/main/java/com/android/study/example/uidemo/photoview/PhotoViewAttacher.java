@@ -68,10 +68,21 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     private ImageView mImageView;
 
     // Gesture Detectors
+    /**
+     * GestureDetector 处理 单击、双击、长按、fling
+     */
     private GestureDetector mGestureDetector;
+    /**
+     * CustomGestureDetector 处理 双指缩放、拖曳、惯性滑动
+     */
     private CustomGestureDetector mScaleDragDetector;
 
     // These are set so we don't keep allocating them on the heap
+    /**
+     * mBaseMatrix 基础矩阵，记录的是图片根据 ScaleType 缩放移动到适应 ImageView 的变化，不记录手势操作
+     * mSuppMatrix 额外矩阵，记录的是手势操作
+     * mDrawMatrix 实际设置给 ImageView 的矩阵，由 mBaseMatrix 和 mSuppMatrix 相乘得到
+     */
     private final Matrix mBaseMatrix = new Matrix();
     private final Matrix mDrawMatrix = new Matrix();
     private final Matrix mSuppMatrix = new Matrix();
@@ -100,6 +111,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     private OnGestureListener onGestureListener = new OnGestureListener() {
         @Override
         public void onDrag(float dx, float dy) {
+            // 处理拖动操作
             if (mScaleDragDetector.isScaling()) {
                 return; // Do not drag if we are already scaling
             }
@@ -138,6 +150,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
 
         @Override
         public void onFling(float startX, float startY, float velocityX, float velocityY) {
+            // 处理拖着惯性滑动
             mCurrentFlingRunnable = new FlingRunnable(mImageView.getContext());
             mCurrentFlingRunnable.fling(getImageViewWidth(mImageView),
                 getImageViewHeight(mImageView), (int) velocityX, (int) velocityY);
@@ -151,6 +164,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
 
         @Override
         public void onScale(float scaleFactor, float focusX, float focusY, float dx, float dy) {
+            // 处理缩放操作
             if (getScale() < mMaxScale || scaleFactor < 1f) {
                 if (mScaleChangeListener != null) {
                     mScaleChangeListener.onScaleChange(scaleFactor, focusX, focusY);
@@ -330,6 +344,18 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         return mScaleType;
     }
 
+    /**
+     * 布局发生变化事件
+     * @param v
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     * @param oldLeft
+     * @param oldTop
+     * @param oldRight
+     * @param oldBottom
+     */
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int
         oldRight, int oldBottom) {
@@ -339,9 +365,16 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         }
     }
 
+    /**
+     * 触摸事件
+     * @param v
+     * @param ev
+     * @return
+     */
     @Override
     public boolean onTouch(View v, MotionEvent ev) {
         boolean handled = false;
+        // 只有设置了缩放且imageview有drawable 的情况下才会处理手势操作
         if (mZoomEnabled && PhotoViewUtil.hasDrawable((ImageView) v)) {
             switch (ev.getAction()) {
                 case MotionEvent.ACTION_DOWN:

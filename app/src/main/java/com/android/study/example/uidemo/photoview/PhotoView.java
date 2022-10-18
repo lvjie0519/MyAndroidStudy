@@ -15,14 +15,18 @@
  */
 package com.android.study.example.uidemo.photoview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 
 /**
@@ -50,8 +54,10 @@ public class PhotoView extends AppCompatImageView {
 
     private void init() {
         attacher = new PhotoViewAttacher(this);
-        //We always pose as a Matrix scale type, though we can change to another scale type
-        //via the attacher
+        /**
+         * 对图片的放缩策略和显示方式采用matrix方式，即矩阵变换
+         * 必须设置为该值，才能使用Matrix 对图片进行缩放
+         */
         super.setScaleType(ScaleType.MATRIX);
         //apply the previously applied scale type
         if (pendingScaleType != null) {
@@ -167,7 +173,8 @@ public class PhotoView extends AppCompatImageView {
         attacher.getDisplayMatrix(matrix);
     }
 
-    @SuppressWarnings("UnusedReturnValue") public boolean setDisplayMatrix(Matrix finalRectangle) {
+    @SuppressWarnings("UnusedReturnValue")
+    public boolean setDisplayMatrix(Matrix finalRectangle) {
         return attacher.setDisplayMatrix(finalRectangle);
     }
 
@@ -261,5 +268,38 @@ public class PhotoView extends AppCompatImageView {
 
     public void setOnSingleFlingListener(OnSingleFlingListener onSingleFlingListener) {
         attacher.setOnSingleFlingListener(onSingleFlingListener);
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Log.i("lvjielvjie", "onAttachedToWindow");
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        Log.i("lvjielvjie", "onWindowFocusChanged  hasWindowFocus: " + hasWindowFocus);
+        if(hasWindowFocus){
+            PhotoViewUtil.setStatusBarTranslucent((Activity) getContext());
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Log.i("lvjielvjie", "onDetachedFromWindow");
+    }
+
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
+        Log.i("lvjielvjie", "onWindowVisibilityChanged   visibility: " + visibility);
+    }
+
+    @Nullable
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        return super.onSaveInstanceState();
     }
 }
