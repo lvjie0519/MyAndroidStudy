@@ -43,6 +43,9 @@ public class WebViewDemoActivity extends Activity {
     private WebView mWebView;
     private WebProgress mWebProgress;
 
+    GeolocationPermissions.Callback mCallback;
+    String mOrigin;
+
     public static void startActivity(Context context){
         Intent intent = new Intent(context, WebViewDemoActivity.class);
         context.startActivity(intent);
@@ -54,31 +57,51 @@ public class WebViewDemoActivity extends Activity {
         setContentView(R.layout.activity_web_view_demo);
 
 //        setWebViewCookie();
-        requestPermmission();
         initData();
         initView();
     }
 
-    private void requestPermmission(){
+    /**
+     * 检查是否需要申请权限
+     * @return  true: 需要申请   false: 不需要申请
+     */
+    private boolean checkToRequestPermmission(){
 
         if(Build.VERSION.SDK_INT < 23){
             // android 6.0以上才需要动态权限获取
-            return;
+            return false;
         }
+
+        boolean result = false;
         String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
         for(String permission:permissions){
             if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
                 ActivityCompat.requestPermissions(this, permissions, 1001);
+                result = true;
                 break;
             }
         }
 
-
+        return result;
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        boolean allGrant = true;
+        for (int result: grantResults) {
+            if(result != PackageManager.PERMISSION_GRANTED){
+                allGrant = false;
+                break;
+            }
+        }
+
+        Log.i("lvjie", "allGrant: "+allGrant);
+        if(mCallback != null){
+            Log.i("lvjie", "callback.invoke on request.");
+//            mCallback.invoke(mOrigin, allGrant, false);
+        }
     }
 
     private void setWebViewCookie(){
@@ -176,6 +199,8 @@ public class WebViewDemoActivity extends Activity {
         //支持javascript
         mWebView.getSettings().setJavaScriptEnabled(true);
 
+        mWebView.getSettings().setGeolocationEnabled(true);     // 允许地理位置可用
+
         //缩放操作
         mWebView.getSettings().setSupportZoom(true);  // 支持缩放，默认为true。是下面那个的前提。
         mWebView.getSettings().setBuiltInZoomControls(true);  // 设置内置的缩放控件。若为false，则该WebView不可缩放
@@ -198,14 +223,22 @@ public class WebViewDemoActivity extends Activity {
         mWebView.requestFocus();
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        mWebView.loadUrl("https://map.baidu.com/mobile/webapp/index/index/third_party=wisesquare");
+//        mWebView.loadUrl("https://map.baidu.com/mobile/webapp/index/index/third_party=wisesquare");
+        mWebView.loadUrl("https://m.amap.com/");
 
         mWebView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
-                Log.i("lvjie", "origin: "+origin);
-                callback.invoke(origin, true, false);
-                super.onGeolocationPermissionsShowPrompt(origin, callback);
+                Log.i("lvjie", "onGeolocationPermissionsShowPrompt call. origin: "+origin);
+//                mCallback = callback;
+//                mOrigin = origin;
+
+                callback.invoke(origin, false, false);
+
+//                if(!checkToRequestPermmission()){
+//                    Log.i("lvjie", "callback.invoke on not request.");
+//                    callback.invoke(origin, true, false);
+//                }
             }
         });
 

@@ -46,6 +46,7 @@ import com.android.study.example.androidapi.SharedPreferencesTestActivity;
 import com.android.study.example.androidapi.SurfaceViewDrawDemoActivity;
 import com.android.study.example.androidapi.ViewTestActivity;
 import com.android.study.example.androidapi.WuZhangAiTestActivity;
+import com.android.study.example.androidapi.utils.SystemSettingUtil;
 import com.android.study.example.books.BooksMainTestActivity;
 import com.android.study.example.broadcast.LocalBroadcastRegisterDemoActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
@@ -283,9 +284,12 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_activity_webview_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                WebViewDemoActivity.startActivity(MainActivity.this);
+//                SystemSettingUtil.openHuawei(MainActivity.this);
+//                SystemSettingUtil.openAppSetting(MainActivity.this);
+//                SystemSettingUtil.openGpsPage(MainActivity.this);
+                WebViewDemoActivity.startActivity(MainActivity.this);
 //                AgentwebTestActivity.startActivity(MainActivity.this);
-                WebViewJsDemoActivity.startActivity(MainActivity.this);
+//                WebViewJsDemoActivity.startActivity(MainActivity.this);
             }
         });
 
