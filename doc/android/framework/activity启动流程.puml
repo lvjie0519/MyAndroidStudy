@@ -1,0 +1,77 @@
+@startuml Activity 启动
+== Android API 30, android 11==
+== App 进程 ==
+Activity.java --> Activity.java:startActivity(Intent intent)
+activate Activity.java #dddddd
+Activity.java --> Activity.java:startActivity(intent, null)
+activate Activity.java #dddddd
+note right: startActivity(Intent intent, Bundle options)
+Activity.java --> Activity.java:startActivityForResult(intent, requestCode, null)
+activate Activity.java #dddddd
+Activity.java --> Instrumentation.java:sendActivityResult(... ...)
+activate Instrumentation.java #dddddd
+Instrumentation.java --> Instrumentation.java:execStartActivity(... ...)
+activate Instrumentation.java #dddddd
+note right: 
+Instrumentation.java --> ActivityManagerService.java:startActivity(... ...)
+activate ActivityManagerService.java #dddddd
+note right: 1. 通过binder 夸进程通信; \n2. app进程获取binder 代理对象；\n3. app进程会把自己的ApplicationThread对象传递给系统进程；
+== 系统 进程 ==
+ActivityManagerService.java --> ActivityTaskManagerService.java:startActivity(... ...)
+activate ActivityTaskManagerService.java #dddddd
+note right: 1. ActivityManagerService 持有ActivityTaskManagerService对象 \n2. android 10以上Activity的管理和调度移到了ATMS中，ASM负责Service、Broadcast、Provicer的管理和调度。
+ActivityTaskManagerService.java --> ActivityTaskManagerService.java:startActivityAsUser(... ...)
+activate ActivityTaskManagerService.java #dddddd
+ActivityTaskManagerService.java --> ActivityStarter.java:execute()
+activate ActivityStarter.java #dddddd
+ActivityStarter.java --> ActivityStarter.java:executeRequest(Request request)
+activate ActivityStarter.java #dddddd
+
+== App 进程 ==
+ActivityThread.java --> ActivityThread.java:main(String[] args)
+activate ActivityThread.java #dddddd
+note right: 1. Looper.prepareMainLooper(); \n2. new 一个ActivityThread对象，构造方法没有做什么事，并调用attach方法；\n3. Looper.loop()
+
+ActivityThread.java --> ActivityThread.java:attach(false, startSeq)
+activate ActivityThread.java #dddddd
+ActivityThread.java --> ActivityManagerService.java:attachApplication(mAppThread, startSeq)
+note right: 最终又会调用 ApplicationThread 的bindApplication 方法
+
+ActivityManagerService.java --> ApplicationThread.java:bindApplication(... ...)
+activate ApplicationThread.java #dddddd
+ApplicationThread.java --> ActivityThread.java:handleBindApplication(AppBindData data)
+activate ActivityThread.java #dddddd
+note right: 1. ApplicationThread 是ActivityThread 内部类，继承Stub， 属于binder的服务类 \n2. ApplicationThread 内部通过handler 向ActivityThread发送消息执行ActivityThread中的方法\n3. handleBindApplication 做了很多事：\n 1)调用LoadApk 的makeApplication 创建Application对象，实际上是调用Instrumentation的newApplication \n 2) 调用Instrumentation的callApplicationOnCreate 执行Application的onCreate()  
+
+== App 进程  Application 执行attachBaseContext 和 onCreate方法 ==
+ActivityThread.java --> LoadApk.java:makeApplication(data.restrictedBackupMode, null)
+activate LoadApk.java #dddddd
+note right: 1. 调用ContextImpl.createAppContext 创建appContext
+LoadApk.java --> Instrumentation.java:newApplication(cl, appClass, appContext)
+activate Instrumentation.java #dddddd
+note right: 1. 构造Application对象；\n2.调用Application的attach方法即执行attachBaseContext方法
+return 返回Application 对象
+return 返回Application 对象
+
+ActivityThread.java --> Instrumentation.java:callApplicationOnCreate(Application app)
+activate Instrumentation.java #dddddd
+note right: 调用Application onCreate方法
+
+== App 进程  Activity 启动流程 ==
+ActivityManagerService.java --> ActivityTaskManagerInternal.java:attachApplication(WindowProcessController wpc)
+activate ActivityTaskManagerInternal.java #dddddd
+
+ActivityTaskManagerInternal.java --> RootWindowContainer.java:attachApplication(wpc)
+activate RootWindowContainer.java #dddddd
+RootWindowContainer.java --> RootWindowContainer.java:startActivityForAttachedApplicationIfNeeded(... ...)
+activate RootWindowContainer.java #dddddd
+RootWindowContainer.java --> RootWindowContainer.java:realStartActivityLocked(... ...)
+activate RootWindowContainer.java #dddddd
+
+RootWindowContainer.java --> ApplicationThread.java:scheduleTransaction(... ...)
+activate ApplicationThread.java #dddddd
+note right: 1. 最终调用ActivityThread 父类ClientTransactionHandler 的scheduleTransaction方法； \n2. 父类发送EXECUTE_TRANSACTION 消息，执行TransactionExecutor类的execute(transaction)方法 \n3. 最终会执行到 ActivityThread的handleLaunchActivity
+
+
+
+@enduml
