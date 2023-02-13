@@ -529,6 +529,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickOpenOtherApp(View view) {
         OpenOtherAppActivity.startActivity(this);
+        startActivity(new Intent());
     }
 
     private Intent mCallbackIntent = null;
