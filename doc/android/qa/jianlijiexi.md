@@ -24,6 +24,9 @@
     1）LeakCanary 并不能绝对判断出内存泄漏；
     2）LeakCanary 实现思想，
 
+#### 1.3 其他内存泄露排查方法
+    1）AndroidStudio Profiler，
+
 ### 2. Android-OkHttp原理解析
     1) 发起异步 和 同步网络请求；异步网络请求会添加到任务队列中，线程池去执行；同步网络请求直接到拦截器；
 
@@ -32,3 +35,34 @@
         1) AMS 就是 aidl 的stub, 相当于是一个服务，客户端通过ActivityManager 来调用到AMS
 #### 3.2 ActivityStack、TaskRecord、ActivityRecord 关系
         1）一个ActivityStack中会有多个TaskRecord，一个TaskRecord会有多个ActivityRecord，一个ActivityRecord其实就是对应了一个Activity，保存了一个Activity的所有信息；
+
+### 4. 组件化-Arouter 源码分析
+#### 4.1 基本使用
+    1）依赖
+
+```
+implementation 'com.alibaba:arouter-api:1.5.1'
+annotationProcessor 'com.alibaba:arouter-compiler:1.2.1'
+```
+    2) 代码
+```
+// Application初始化
+ARouter.init(this)
+
+// 这里的路径需要注意的是至少需要有两级，/xx/xx
+//注解
+@Route(path = "/arouter/ArouterActivity")
+class ArouterActivity:AppCompatActivity() {}
+
+// 跳转
+ARouter.getInstance().build("/arouter/ArouterActivity")
+            .withLong("key1", 1l)
+            .withString("key2", "888")
+            .withObject("key3", new UserInfo("Jack", "Rose"))
+            .navigation();
+```
+
+#### 4.2 原理
+
+
+
