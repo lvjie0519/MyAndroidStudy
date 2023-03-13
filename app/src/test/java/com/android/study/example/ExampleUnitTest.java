@@ -48,6 +48,20 @@ public class ExampleUnitTest {
 //        System.out.println((true&&true||false&&true));
     }
 
+    private String[] readHostLoadPriClsPrefix(String priClsPrefixStr) {
+
+        if(TextUtils.isEmpty(priClsPrefixStr)) {
+            return null;
+        }
+
+        String[] temp = priClsPrefixStr.split(CLS_PREFIX_SPLIT_SYM);
+        for (int i = 0; i < temp.length; i++) {
+            // 兼容首尾空格异常，防止配置时不小心引入空格导致异常
+            temp[i] = temp[i].trim();
+        }
+        return temp;
+    }
+
     private String getFileNameFromContentDisposition(String contentDisposition){
         String[] array = contentDisposition.split(";");
         String resultFileName = "";
