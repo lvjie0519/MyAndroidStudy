@@ -1,0 +1,5 @@
+
+netx:
+164.3.168.192.in-addr.arpa: type PTR, class IN, "QM" question
+
+174.3.168.192.in-addr.arpa: type PTR, class IN, cache flush, NAS-BF.local

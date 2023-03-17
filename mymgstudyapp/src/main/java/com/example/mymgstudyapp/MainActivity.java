@@ -1,7 +1,11 @@
 package com.example.mymgstudyapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mymgstudyapp.localnet.LocalNetScanActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -9,5 +13,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    public void onClickOpenLocalNetScanPage(View view) {
+        LocalNetScanActivity.startActivity(this);
     }
 }
