@@ -11,6 +11,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -68,7 +69,8 @@ public class ScanDeviceTool {
         if (mFlag) {
             mIpList.clear();
             mFlag = false;
-            mDevAddress = getLocAddress();// 获取本机IP地址
+//            mDevAddress = getLocAddress();// 获取本机IP地址
+            mDevAddress = "192.168.3.93";
             mLocAddress = getLocAddrIndex(mDevAddress);// 获取本地ip前缀
             Log.d(TAG, "开始扫描设备,本机Ip为：" + mDevAddress);
 
@@ -78,14 +80,47 @@ public class ScanDeviceTool {
             }
 
             /**
+             * corePoolSize: 核心线程数，能够同时执行的任务数量
+             *     maximumPoolSize：除去缓冲队列中等待的任务，最大能容纳的任务数(其实是包括了核心线程池数量)
+             *     keepAliveTime：超出workQueue的等待任务的存活时间，就是指maximumPoolSize里面的等待任务的存活时间
+             *     unit：时间单位
+             *     workQueue:阻塞等待线程的队列，一般使用new LinkedBlockingQueue<Runnable>()这个，如果不指定容量，
+             *               会一直往里边添加，没有限制,workQueue永远不会满,一般选择没有容量上限的队列；
+             *     threadFactory：创建线程的工厂，使用系统默认的类
+             *     handler：当任务数超过maximumPoolSize时，对任务的处理策略，默认策略是拒绝添加
+             *     执行流程：当线程数小于corePoolSize时，每添加一个任务，则立即开启线程执行
+             *               当corePoolSize满的时候，后面添加的任务将放入缓冲队列workQueue等待；
+             *               当workQueue也满的时候，看是否超过maximumPoolSize线程数，如果超过，默认拒绝执行,如果没有超过，则创建线程立即执行。
+             *     举例说明：
+             *     假如：corePoolSize=2，maximumPoolSize=3，workQueue容量为8;
+             *           最开始，执行的任务A，B，此时corePoolSize已用完，再次执行任务C，则
+             *           C将被放入缓冲队列workQueue中等待着，如果后来又添加了7个任务，此时workQueue已满，
+             *           则后面再来的任务将会和maximumPoolSize比较，由于maximumPoolSize为3
+             *           因为有2个在corePoolSize中运行了，所以只能容纳1个了，那么会立即创建线程执行。那么后面来的任务默认都会被拒绝--通常都会报异常。
+             *
+             *     executor = new ThreadPoolExecutor(
+             *             corePoolSize, //3
+             *             maximumPoolSize,//5,当缓冲队列满，但是未达到最大线程数，创建线程立即执行，否则报异常。
+             *             keepAliveTime,  //最大线程数中的线程执行完后，会继续等待一段时间。
+             *             unit,   //等待时间的单位
+             *             new LinkedBlockingQueue<Runnable>(),//缓冲队列,超出核心线程池的任务会被放入缓存队列中等待
+             *             Executors.defaultThreadFactory(),//创建线程的工厂类
+             *             new ThreadPoolExecutor.AbortPolicy()//当最大线程池也超出的时候，则拒绝执行
+             *             );
+             *
+             *  核心线程数corePoolSize的取值策略：
+             * //核心线程池数量的计算规则：当前设备的可用处理器核心数*2 + 1,能够让CPU得到最大效率的发挥；
+             * corePoolSize = Runtime.getRuntime().availableProcessors()*2+1;
+             * maximumPoolSize = corePoolSize;//虽然用不到，但是不能是0，否则报错
+             *
              * 1.核心池大小 2.线程池最大线程数 3.表示线程没有任务执行时最多保持多久时间会终止
              * 4.参数keepAliveTime的时间单位，有7种取值,当前为毫秒
              * 5.一个阻塞队列，用来存储等待执行的任务，这个参数的选择也很重要，会对线程池的运行过程产生重大影响
              * ，一般来说，这里的阻塞队列有以下几种选择：
              */
-            mExecutor = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_IMUM_POOL_SIZE,
+            mExecutor = new ThreadPoolExecutor(10, 55,
                     2000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(
-                    CORE_POOL_SIZE));
+                    200));
 
             // 新建线程池
             for (int i = 1; i < 255; i++) {// 创建256个线程分别去ping
@@ -99,20 +134,33 @@ public class ScanDeviceTool {
                         String ping = ScanDeviceTool.this.mPing + mLocAddress
                                 + lastAddress;
                         String currnetIp = mLocAddress + lastAddress;
-                        /*if (mDevAddress.equals(currnetIp)) // 如果与本机IP地址相同,跳过
-                            return;*/
+
+                        try {
+//                            Log.d(TAG, Thread.currentThread().getName()+"  正在扫描的IP地址为：" + currnetIp + "返回值为：" + result);
+
+                            InetAddress address = InetAddress.getByName(currnetIp);
+                            if (address.isReachable(2000)) {
+                                Log.i(TAG, "host: " + currnetIp + " isReachable...");
+                            }else{
+
+                            }
+                        } catch (UnknownHostException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
                         try {
                             mProcess = mRun.exec(ping);
 
                             int result = mProcess.waitFor();
-                            Log.d(TAG, "正在扫描的IP地址为：" + currnetIp + "返回值为：" + result);
+                            Log.d(TAG, Thread.currentThread().getName()+"  正在扫描的IP地址为：" + currnetIp + "返回值为：" + result);
                             if (result == 0) {
 
                                 mIpList.add(currnetIp);
 
                                 Log.d(TAG, "扫描成功,Ip地址为：" + mIpList.size() + "个设备:" + currnetIp + ":" + getHardwareAddress(currnetIp));
-                                textView.setText("发现" + mIpList.size() + "个设备");
+//                                textView.setText("发现" + mIpList.size() + "个设备");
 
                             } else {
                                 // 扫描失败
@@ -140,7 +188,7 @@ public class ScanDeviceTool {
                 try {
                     if (mExecutor.isTerminated()) {// 扫描结束,开始验证
                         Log.d(TAG, "扫描结束,总共成功扫描到" + mIpList.size() + "个设备.");
-                        textView.setText("发现" + mIpList.size() + "个设备");
+//                        textView.setText("发现" + mIpList.size() + "个设备");
                         break;
                     }
                 } catch (Exception e) {
