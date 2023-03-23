@@ -8,9 +8,9 @@ public class WifiInfo {
     public WifiInfo() {
     }
 
-    public WifiInfo(int ip, String mac, int netmask) {
-        this.ip = ip;
+    public WifiInfo(String mac, int ip, int netmask) {
         this.mac = mac;
+        this.ip = ip;
         this.netmask = netmask;
     }
 

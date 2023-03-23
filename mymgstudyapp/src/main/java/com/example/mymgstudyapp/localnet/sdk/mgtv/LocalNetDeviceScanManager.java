@@ -3,7 +3,7 @@ package com.example.mymgstudyapp.localnet.sdk.mgtv;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.mymgstudyapp.localnet.sdk.mgtv.utils.IPUtil;
+import com.example.mymgstudyapp.localnet.sdk.mgtv.utils.NetworkUtil;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -62,11 +62,11 @@ public class LocalNetDeviceScanManager {
 
     private void pingAllLocalNetIp() {
         Log.i(TAG, "pingAllLocalNetIp...");
-        int[] ipRange = IPUtil.getLocalNetworkRange(mContext);
+        int[] ipRange = NetworkUtil.getLocalNetworkRange(mContext);
 
         int start = ipRange[0];
         while (start < ipRange[1]) {
-            String host = IPUtil.ipIntToString(start);
+            String host = NetworkUtil.ipIntToString(start);
             try {
                 InetAddress address = InetAddress.getByName(host);
                 if (address.isReachable(1000)) {
