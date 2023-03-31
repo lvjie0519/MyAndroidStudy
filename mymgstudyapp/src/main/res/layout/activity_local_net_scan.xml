@@ -55,5 +55,20 @@
             android:text="打印信息"
             android:onClick="onClickPrintInfo"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="直接读取arp文件"
+            android:onClick="onClickReadArpFile"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="命令读取arp文件"
+            android:onClick="onClickCmdReadArpFile"/>
+    </LinearLayout>
 
 </LinearLayout>

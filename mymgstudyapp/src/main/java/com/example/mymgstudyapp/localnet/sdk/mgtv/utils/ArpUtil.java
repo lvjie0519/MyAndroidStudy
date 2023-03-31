@@ -1,5 +1,6 @@
 package com.example.mymgstudyapp.localnet.sdk.mgtv.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.mymgstudyapp.localnet.sdk.mgtv.DeviceInfo;
@@ -25,6 +26,57 @@ public class ArpUtil {
         }
 
         return deviceInfos;
+    }
+
+    public static String getArpInfoFromCmd(){
+        StringBuffer stringBuffer = new StringBuffer();
+
+        try {
+            Process exec = Runtime.getRuntime().exec("ip neigh show");
+            exec.waitFor();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(exec.getInputStream()));
+
+            while (true) {
+                String readLine = bufferedReader.readLine();
+                if (TextUtils.isEmpty(readLine)) {
+                    break;
+                }
+                stringBuffer.append(readLine).append("\n");
+            }
+
+            bufferedReader = new BufferedReader(new InputStreamReader(exec.getErrorStream()));
+            while (true) {
+                String readLine = bufferedReader.readLine();
+                if (TextUtils.isEmpty(readLine)) {
+                    break;
+                }
+                stringBuffer.append(readLine).append("\n");
+            }
+
+            bufferedReader.close();
+        }catch (Exception e){
+            stringBuffer.append(e.toString());
+        }
+
+        return stringBuffer.toString();
+    }
+
+    public static String getArpInfoFromReadFile(){
+        StringBuffer stringBuffer = new StringBuffer();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("/proc/net/arp"));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                stringBuffer.append(line).append("\n");
+            }
+
+            br.close();
+        }catch (Exception e){
+            stringBuffer.append(e.toString());
+        }
+
+        return stringBuffer.toString();
     }
 
     private static List<DeviceInfo> getLocalNetDeviceFromIpCmd() {
@@ -80,13 +132,19 @@ public class ArpUtil {
             while ((line = br.readLine()) != null) {
                 try {
                     line = line.trim();
-                    if (line.length() < 63) continue;
-                    if (line.toUpperCase(Locale.US).contains("IP")) continue;
+                    if (line.length() < 63) {
+                        continue;
+                    }
+                    if (line.toUpperCase(Locale.US).contains("IP")) {
+                        continue;
+                    }
 
                     ip = line.substring(0, 17).trim();
                     flag = line.substring(29, 32).trim();
                     mac = line.substring(41, 63).trim();
-                    if (mac.contains("00:00:00:00:00:00")) continue;
+                    if (mac.contains("00:00:00:00:00:00")) {
+                        continue;
+                    }
 
                     if (!ipSets.contains(ip)) {
                         ipSets.add(ip);

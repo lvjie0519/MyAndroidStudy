@@ -1,6 +1,7 @@
 package com.example.mymgstudyapp.localnet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -131,20 +132,20 @@ public class LocalNetScanActivity extends Activity {
 
 //        Log.i("lvjielvjie", PingUtil.pingIp("192.168.3.80"));
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-//                JmDnsManager.getInstance().init(LocalNetScanActivity.this);
-                WukongTvJmDnsManager.getInstance().init(LocalNetScanActivity.this);
-                WukongTvJmDnsManager.getInstance().rescan();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+////                JmDnsManager.getInstance().init(LocalNetScanActivity.this);
+//                WukongTvJmDnsManager.getInstance().init(LocalNetScanActivity.this);
+//                WukongTvJmDnsManager.getInstance().rescan();
+//
+////                LocalNetDeviceScanManager.getInstance().init(LocalNetScanActivity.this);
+////                LocalNetDeviceScanManager.getInstance().scanLocalNetDevice();
+//            }
+//        }).start();
 
-//                LocalNetDeviceScanManager.getInstance().init(LocalNetScanActivity.this);
-//                LocalNetDeviceScanManager.getInstance().scanLocalNetDevice();
-            }
-        }).start();
-
-//        ScanDeviceTool scanDeviceTool = new ScanDeviceTool();
-//        scanDeviceTool.scan(null);
+        ScanDeviceTool scanDeviceTool = new ScanDeviceTool();
+        scanDeviceTool.scan(null);
 
 //        try {
 //            InetAddress address = InetAddress.getByName("192.168.3.164");//[-64, -88, 3, 93]
@@ -181,6 +182,15 @@ public class LocalNetScanActivity extends Activity {
 
     public void onClickStopRecieveInfo(View view) {
         MulticastScanDeviceManager.getInstance().stopRecieveMessage();
-        Executors.newFixedThreadPool(20);
+//        Executors.newFixedThreadPool(20);
+    }
+
+    public void onClickReadArpFile(View view) {
+    }
+
+    public void onClickCmdReadArpFile(View view) {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle("title");
+        builder.create().show();
     }
 }

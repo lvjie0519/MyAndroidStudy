@@ -1,10 +1,13 @@
 package com.example.mymgstudyapp.localnet.sdk.mgtv.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.nfc.NfcAdapter;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.mymgstudyapp.localnet.sdk.mgtv.WifiInfo;
 
@@ -25,6 +28,12 @@ public class NetworkUtil {
             // 设备wifi没有开启， 返回null
             return null;
         }
+
+        String wifiName = wifiManager.getConnectionInfo().getSSID();
+        if(!TextUtils.isEmpty(wifiName)){
+            wifiName = wifiName.replace("\"", "");
+        }
+        Log.i("lvjie", "wifiName: "+wifiName);
 
         DhcpInfo dhcpInfo = wifiManager.getDhcpInfo();
 
@@ -68,11 +77,11 @@ public class NetworkUtil {
     }
 
     public static int[] convertIpToIntArray(String ip) {
-        if(TextUtils.isEmpty(ip)){
-            return null;
-        }
+//        if(TextUtils.isEmpty(ip)){
+//            return null;
+//        }
 
-        String[] array = ip.split(".");
+        String[] array = ip.split("\\.");
         if(array.length != 4){
             return null;
         }
