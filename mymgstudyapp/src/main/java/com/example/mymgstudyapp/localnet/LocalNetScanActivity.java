@@ -27,7 +27,6 @@ import com.example.mymgstudyapp.localnet.sdk.mgtv.DeviceInfo;
 import com.example.mymgstudyapp.localnet.sdk.mgtv.LocalNetDeviceScanManager;
 import com.example.mymgstudyapp.localnet.sdk.mgtv.utils.ArpUtil;
 import com.example.mymgstudyapp.localnet.sdk.netx.MulticastScanDeviceManager;
-import com.example.mymgstudyapp.localnet.sdk.netx.NativeArpRread;
 import com.example.mymgstudyapp.localnet.sdk.wukongtv.WukongTvJmDnsManager;
 import com.tools.netgel.netx.MainActivity;
 

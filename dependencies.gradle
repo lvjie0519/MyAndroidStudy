@@ -1,0 +1,12 @@
+
+static def allModuleDependencies(DependencyHandler dependencyHandler) {
+    //room
+    dependencyHandler.implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+    dependencyHandler.implementation 'androidx.appcompat:appcompat:1.1.0'
+    dependencyHandler.implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    dependencyHandler.testImplementation 'junit:junit:4.+'
+    dependencyHandler.androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    dependencyHandler.androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+ext.allModuleDependencies = this.&allModuleDependencies
