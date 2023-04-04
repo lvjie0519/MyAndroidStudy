@@ -54,6 +54,11 @@
             android:layout_height="wrap_content"
             android:text="打印信息"
             android:onClick="onClickPrintInfo"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="c++读取arp文件"
+            android:onClick="onClickNativeReadArpFile"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

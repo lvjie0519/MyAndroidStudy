@@ -9,6 +9,7 @@ import android.net.DhcpInfo;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -26,7 +27,9 @@ import com.example.mymgstudyapp.localnet.sdk.mgtv.DeviceInfo;
 import com.example.mymgstudyapp.localnet.sdk.mgtv.LocalNetDeviceScanManager;
 import com.example.mymgstudyapp.localnet.sdk.mgtv.utils.ArpUtil;
 import com.example.mymgstudyapp.localnet.sdk.netx.MulticastScanDeviceManager;
+import com.example.mymgstudyapp.localnet.sdk.netx.NativeArpRread;
 import com.example.mymgstudyapp.localnet.sdk.wukongtv.WukongTvJmDnsManager;
+import com.tools.netgel.netx.MainActivity;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -192,5 +195,12 @@ public class LocalNetScanActivity extends Activity {
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setTitle("title");
         builder.create().show();
+    }
+
+    public void onClickNativeReadArpFile(View view) {
+        MainActivity.DiscoveryDevicesAsyncTask discoveryDevicesAsyncTask = new MainActivity.DiscoveryDevicesAsyncTask();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            discoveryDevicesAsyncTask.readIpNeigh();
+        }
     }
 }
