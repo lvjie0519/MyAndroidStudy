@@ -35,6 +35,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".websocket.WebSocketServerActivity"></activity>
+        <activity android:name=".websocket.client.WebSocketClientActivity"></activity>
         <activity
             android:name=".uidemo.photoview.demo.PhotoViewTestActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"

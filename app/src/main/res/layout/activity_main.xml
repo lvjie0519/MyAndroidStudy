@@ -33,6 +33,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="WebSocket client测试"
+            android:textAllCaps="false"
+            android:onClick="onClickTestWebSocketClient"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="PhotoView 图片显示"
             android:textAllCaps="false"
             android:onClick="onClickTestPhotoView"/>

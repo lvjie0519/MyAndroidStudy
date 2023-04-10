@@ -1,4 +1,4 @@
-package com.android.study.example.websocket;
+package com.android.study.example.websocket.client;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,36 +12,30 @@ import android.widget.Toast;
 
 import com.android.study.example.R;
 
-import org.java_websocket.WebSocket;
-import org.java_websocket.client.WebSocketClient;
-
-public class WebSocketServerActivity extends Activity {
+public class WebSocketClientActivity extends Activity {
 
     private TextView mTvShowInfo;
     private EditText mEtMessage;
+
     private MessageEventListener messageEventListener = new MessageEventListener() {
         @Override
-        public void onMessageEvent(WebSocket conn, String message) {
-            if (conn != null) {
-                showInfo(conn.toString() + ": " + message);
-            } else {
-                showInfo(message);
-            }
+        public void onMessageEvent(String message) {
+            showInfo(message);
         }
     };
 
     public static void startActivity(Context context) {
-        Intent intent = new Intent(context, WebSocketServerActivity.class);
+        Intent intent = new Intent(context, WebSocketClientActivity.class);
         context.startActivity(intent);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web_socket_server);
+        setContentView(R.layout.activity_web_socket_client);
 
         initView();
-        WebSocketServerManager.getInstance().init(this.getApplicationContext(), messageEventListener);
+        WebSocketClientManager.getInstance().init(this.getApplicationContext(), messageEventListener);
     }
 
     private void initView() {
@@ -49,12 +43,12 @@ public class WebSocketServerActivity extends Activity {
         mEtMessage = findViewById(R.id.et_message);
     }
 
-    public void onClickStartServer(View view) {
-        WebSocketServerManager.getInstance().startServer();
+    public void onClickConnectServer(View view) {
+        WebSocketClientManager.getInstance().connectServer("192.168.3.93", 8887);
     }
 
-    public void onClickStopServer(View view) {
-        WebSocketServerManager.getInstance().stopServer();
+    public void onClickStopConnect(View view) {
+        WebSocketClientManager.getInstance().disConnectServer();
     }
 
     public void onClickSendMsg(View view) {
@@ -64,7 +58,7 @@ public class WebSocketServerActivity extends Activity {
             return;
         }
 
-        WebSocketServerManager.getInstance().sendMessage(message);
+        WebSocketClientManager.getInstance().sendMessage(message);
     }
 
     private void showInfo(final String message) {
@@ -82,12 +76,8 @@ public class WebSocketServerActivity extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(WebSocketServerActivity.this, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(WebSocketClientActivity.this, message, Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    public void onClickGetPort(View view) {
-        showToast("port: "+NetUtils.getAvailablePort());
     }
 }

@@ -77,6 +77,7 @@ import com.android.study.example.uidemo.webview.WebViewUploadFileActivity;
 import com.android.study.example.utils.ClipboardUtil;
 import com.android.study.example.utils.FileUtil;
 import com.android.study.example.websocket.WebSocketServerActivity;
+import com.android.study.example.websocket.client.WebSocketClientActivity;
 import com.annotaions.example.MyAnnotation;
 import com.jaeger.library.StatusBarUtil;
 
@@ -712,5 +713,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickTestWebSocket(View view) {
         WebSocketServerActivity.startActivity(this);
+    }
+
+    public void onClickTestWebSocketClient(View view) {
+        WebSocketClientActivity.startActivity(this);
     }
 }
