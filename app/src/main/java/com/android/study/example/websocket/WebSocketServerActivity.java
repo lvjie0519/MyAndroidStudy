@@ -85,4 +85,8 @@ public class WebSocketServerActivity extends Activity {
             }
         });
     }
+
+    public void onClickGetPort(View view) {
+        showToast("port: "+NetUtils.getAvailablePort());
+    }
 }

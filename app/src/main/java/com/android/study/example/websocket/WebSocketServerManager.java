@@ -1,6 +1,8 @@
 package com.android.study.example.websocket;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -14,6 +16,9 @@ public class WebSocketServerManager {
     private boolean mInit = false;
 
     private MessageEventListener mMessageEventListener;
+
+    private HandlerThread mHandlerThread;
+    private Handler mHandler;
 
     private WebSocketServerManager() {
 
@@ -30,13 +35,32 @@ public class WebSocketServerManager {
         mInit = true;
         mContext = context;
         mMessageEventListener = listener;
+
+        initHandler();
+    }
+
+    private void initHandler() {
+        mHandlerThread = new HandlerThread("wbsocket_server_Thread");
+        mHandlerThread.start();
+
+        mHandler = new Handler(mHandlerThread.getLooper());
     }
 
     public void startServer() {
-        stopServer();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                doStartServer();
+            }
+        });
+    }
+
+    private void doStartServer(){
+        doStopServer();
 
         int port = NetUtils.getAvailablePort();
         InetSocketAddress address = new InetSocketAddress(port);
+//        InetSocketAddress address = new InetSocketAddress("192.168.3.93", port);
         mMessageEventListener.onMessageEvent(null, "startServer, ip: " + address.getHostName() + ", port: " + port);
         mMyWebSocketServer = new MyWebSocketServer(address, mMessageEventListener);
 
@@ -44,6 +68,15 @@ public class WebSocketServerManager {
     }
 
     public void stopServer() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                doStopServer();
+            }
+        });
+    }
+
+    private void doStopServer(){
         if (mMyWebSocketServer == null) {
             return;
         }

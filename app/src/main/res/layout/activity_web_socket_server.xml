@@ -22,6 +22,11 @@
             android:layout_height="wrap_content"
             android:text="关闭服务"
             android:onClick="onClickStopServer"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取端口"
+            android:onClick="onClickGetPort"/>
     </LinearLayout>
 
     <LinearLayout
@@ -53,7 +58,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textColor="#333333"
-            android:textSize="16sp"/>
+            android:textSize="14sp"/>
     </ScrollView>
 
 </LinearLayout>
