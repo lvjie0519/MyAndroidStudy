@@ -6,6 +6,8 @@ import android.os.HandlerThread;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.java_websocket.enums.ReadyState;
+
 import java.net.URI;
 
 public class WebSocketClientManager {
@@ -56,7 +58,7 @@ public class WebSocketClientManager {
 
     private void doConnectServer(String ip, int port) {
         if (mMyWebSocketClient != null) {
-            doDisConnectServer();
+            syncDisConnectServer();
         }
 
         if (TextUtils.isEmpty(ip)) {
@@ -66,6 +68,8 @@ public class WebSocketClientManager {
         URI uri = URI.create("ws://" + ip + ":" + port);
         mMyWebSocketClient = new MyWebSocketClient(uri, mMessageEventListener);
         Log.i("lvjie", "doConnectServer call, connect start...");
+        // 设置心跳检测， 10秒
+        mMyWebSocketClient.setConnectionLostTimeout(10);
         mMyWebSocketClient.connect();
         Log.i("lvjie", "doConnectServer call, connect end...");
 
@@ -80,12 +84,12 @@ public class WebSocketClientManager {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                doDisConnectServer();
+                syncDisConnectServer();
             }
         });
     }
 
-    private void doDisConnectServer() {
+    private void syncDisConnectServer() {
         if (mMyWebSocketClient == null) {
             return;
         }
@@ -94,6 +98,16 @@ public class WebSocketClientManager {
             mMyWebSocketClient.closeBlocking();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void releaseConnect(){
+        if (mMyWebSocketClient == null) {
+            return;
+        }
+
+        if(mMyWebSocketClient.getReadyState() != ReadyState.CLOSED){
+            syncDisConnectServer();
         }
 
         mMyWebSocketClient = null;

@@ -11,9 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.study.example.R;
+import com.android.study.example.websocket.utils.NetUtils;
 
 import org.java_websocket.WebSocket;
-import org.java_websocket.client.WebSocketClient;
 
 public class WebSocketServerActivity extends Activity {
 
@@ -88,6 +88,6 @@ public class WebSocketServerActivity extends Activity {
     }
 
     public void onClickGetPort(View view) {
-        showToast("port: "+NetUtils.getAvailablePort());
+        showToast("port: "+ NetUtils.getAvailablePort());
     }
 }

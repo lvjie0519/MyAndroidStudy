@@ -1,4 +1,4 @@
-package com.android.study.example.websocket;
+package com.android.study.example.websocket.utils;
 
 import android.util.Log;
 

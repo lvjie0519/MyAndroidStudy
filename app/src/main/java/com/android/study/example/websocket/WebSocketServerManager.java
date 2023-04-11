@@ -4,7 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.text.TextUtils;
-import android.util.Log;
+
+import com.android.study.example.websocket.utils.NetUtils;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
