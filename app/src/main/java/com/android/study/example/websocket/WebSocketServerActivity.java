@@ -23,7 +23,7 @@ public class WebSocketServerActivity extends Activity {
         @Override
         public void onMessageEvent(WebSocket conn, String message) {
             if (conn != null) {
-                showInfo(conn.toString() + ": " + message);
+                showInfo(conn.getRemoteSocketAddress() + ": " + message);
             } else {
                 showInfo(message);
             }

@@ -44,7 +44,7 @@ public class WebSocketClientActivity extends Activity {
     }
 
     public void onClickConnectServer(View view) {
-        WebSocketClientManager.getInstance().connectServer("192.168.3.93", 8887);
+        WebSocketClientManager.getInstance().connectServer("192.168.3.94", 8887);
     }
 
     public void onClickStopConnect(View view) {
