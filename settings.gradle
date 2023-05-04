@@ -1,4 +1,4 @@
 include ':app', ':lib-annotaions', ':lib-anno-processors'
 include ':myaidlclient'
 //include ':infraredcontroller'
-include ':mymgstudyapp'
+include ':mymgtvstudyapp'
