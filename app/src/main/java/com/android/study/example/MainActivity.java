@@ -48,6 +48,7 @@ import com.android.study.example.androidapi.ViewTestActivity;
 import com.android.study.example.androidapi.WuZhangAiTestActivity;
 import com.android.study.example.androidapi.utils.SystemSettingUtil;
 import com.android.study.example.books.BooksMainTestActivity;
+import com.android.study.example.books.ThreadTestActivity;
 import com.android.study.example.broadcast.LocalBroadcastRegisterDemoActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.leak.LeakTest1Activity;
@@ -717,5 +718,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickTestWebSocketClient(View view) {
         WebSocketClientActivity.startActivity(this);
+    }
+
+    public void onClickTestThreadLock(View view) {
+        ThreadTestActivity.startActivity(this);
     }
 }

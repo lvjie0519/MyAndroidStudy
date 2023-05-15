@@ -67,4 +67,15 @@ public class ThreadTestActivity extends AppCompatActivity {
             mTimer = null;
         }
     }
+
+    private ObjectLockTest mObjectLockTest = new ObjectLockTest();
+    public void onClickTestObjectLock(View view) {
+        mObjectLockTest.test1();
+        mObjectLockTest.test2();
+    }
+
+    public void onClickTestReentrantLock(View view) {
+        mObjectLockTest.test3();
+        mObjectLockTest.test4();
+    }
 }

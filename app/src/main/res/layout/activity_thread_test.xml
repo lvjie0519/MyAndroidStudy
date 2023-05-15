@@ -21,4 +21,18 @@
         android:textAllCaps="false"
         android:onClick="onClickStopTimer"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Object lock test"
+        android:textAllCaps="false"
+        android:onClick="onClickTestObjectLock"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ReentrantLock test"
+        android:textAllCaps="false"
+        android:onClick="onClickTestReentrantLock"/>
+
 </LinearLayout>
