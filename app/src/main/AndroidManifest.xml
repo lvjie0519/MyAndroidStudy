@@ -13,12 +13,20 @@
     <uses-feature android:name="android.hardware.location.gps" /> <!-- 在 Android 6.0 及以上，还需要打开位置权限。如果应用没有位置权限，蓝牙扫描功能不能使用（其它蓝牙操作例如连接蓝牙设备和写入数据不受影响） -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 粗略定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 精确定位 -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 录音权限 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- wifi权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- wifi权限 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- camera 相关 -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <!-- 录音权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -34,8 +42,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".websocket.WebSocketServerActivity"></activity>
-        <activity android:name=".websocket.client.WebSocketClientActivity"></activity>
+        <activity android:name=".camera.Camera2DemoActivity" />
+        <activity android:name=".websocket.WebSocketServerActivity" />
+        <activity android:name=".websocket.client.WebSocketClientActivity" />
         <activity
             android:name=".uidemo.photoview.demo.PhotoViewTestActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"

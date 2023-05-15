@@ -27,6 +27,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="相机测试"
+            android:textAllCaps="false"
+            android:onClick="onClickTestCamera"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="锁测试"
             android:textAllCaps="false"
             android:onClick="onClickTestThreadLock"/>
