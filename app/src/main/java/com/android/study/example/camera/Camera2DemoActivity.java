@@ -33,7 +33,7 @@ public class Camera2DemoActivity extends AppCompatActivity {
     private Button mTakePictureBtn2;//拍照 横,竖屏状态分别设置了一个拍照,录像的按钮
     private Button mVideoRecodeBtn2;//开始录像
     private TextView mVHScreenBtn;
-    private CameraController3 mCameraController;
+    private CameraController2 mCameraController;
     private boolean mIsRecordingVideo; //开始停止录像
     public static String BASE_PATH = Environment.getExternalStorageDirectory() + "/AAA";
 
@@ -47,7 +47,7 @@ public class Camera2DemoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_camera2_demo);
-        mCameraController = CameraController3.getInstance();
+        mCameraController = CameraController2.getInstance();
         mCameraController.init(this);
         //Activity对象
         PermissionsUtils.getInstance().checkPermissions(this, permissions, permissionsResult);
@@ -123,7 +123,8 @@ public class Camera2DemoActivity extends AppCompatActivity {
 
         WindowManager windowManager = getWindowManager();
         int orientation = getResources().getConfiguration().orientation;
-        mCameraController.initCamera(mTextureview, windowManager, orientation);
+//        mCameraController.initCamera(mTextureview, windowManager, orientation);
+        mCameraController.initCamera(mTextureview);
 
     }
 

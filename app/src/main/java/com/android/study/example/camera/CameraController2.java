@@ -208,12 +208,13 @@ public class CameraController2 {
 
     private void initImageReader(Size size){
         Log.i(TAG, "initImageReader call, width: "+size.getWidth()+", height: "+size.getHeight());
-        mImageReader = ImageReader.newInstance(size.getWidth(), size.getHeight(), ImageFormat.JPEG, 2);
+        mImageReader = ImageReader.newInstance(1080, 1920, ImageFormat.YUV_420_888, 2);
         mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
             @Override
             public void onImageAvailable(ImageReader reader) {
                 // 这里获取摄像头数据
                 Log.i(TAG, "onImageAvailable callback.");
+                mBackgroundHandler.post(new CameraController2.ImageSaver(reader.acquireNextImage(), new File("")));
             }
         }, mBackgroundHandler);
     }
@@ -237,7 +238,6 @@ public class CameraController2 {
                     mCameraCaptureSession = session;
 
                     previewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-                    previewRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_OFF);
 
                     CaptureRequest previewRequest = previewRequestBuilder.build();
                     try {
@@ -263,6 +263,50 @@ public class CameraController2 {
             mAutoFitTextureView.setSurfaceTextureListener(null);
             mAutoFitTextureView = null;
         }
+    }
+
+    private static class ImageSaver implements Runnable {
+
+        /**
+         * JPEG图像
+         */
+        private final Image mImage;
+        /**
+         * 保存图像的文件
+         */
+        private final File mFile;
+
+        public ImageSaver(Image image, File file) {
+            mImage = image;
+            mFile = file;
+        }
+
+        @Override
+        public void run() {
+            ByteBuffer buffer = mImage.getPlanes()[0].getBuffer();
+            byte[] bytes = new byte[buffer.remaining()];
+            buffer.get(bytes);
+            Log.i(TAG, "bytes.length: "+bytes.length);
+            String data = new String(bytes);
+            byte[] bytes1 = data.getBytes();
+            FileOutputStream output = null;
+            try {
+//                output = new FileOutputStream(mFile);
+//                output.write(bytes);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                mImage.close();
+                if (null != output) {
+                    try {
+                        output.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
     }
 
 }
