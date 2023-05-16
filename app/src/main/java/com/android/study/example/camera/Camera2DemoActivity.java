@@ -33,7 +33,7 @@ public class Camera2DemoActivity extends AppCompatActivity {
     private Button mTakePictureBtn2;//拍照 横,竖屏状态分别设置了一个拍照,录像的按钮
     private Button mVideoRecodeBtn2;//开始录像
     private TextView mVHScreenBtn;
-    private CameraController mCameraController;
+    private CameraController3 mCameraController;
     private boolean mIsRecordingVideo; //开始停止录像
     public static String BASE_PATH = Environment.getExternalStorageDirectory() + "/AAA";
 
@@ -47,7 +47,8 @@ public class Camera2DemoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_camera2_demo);
-        CameraController.getInstance().init(this);
+        mCameraController = CameraController3.getInstance();
+        mCameraController.init(this);
         //Activity对象
         PermissionsUtils.getInstance().checkPermissions(this, permissions, permissionsResult);
     }
@@ -65,8 +66,7 @@ public class Camera2DemoActivity extends AppCompatActivity {
         public void passPermissons() {
             //授权后的操作
             //获取相机管理类的实例
-            mCameraController = CameraController.getInstance();
-            mCameraController.setFolderPath(BASE_PATH);
+//            mCameraController.setFolderPath(BASE_PATH);
 
             initView();
             //判断当前横竖屏状态
@@ -129,7 +129,7 @@ public class Camera2DemoActivity extends AppCompatActivity {
 
     // 拍照
     public void btnOnClickTakePicture(View view) {
-        mCameraController.takePicture();
+//        mCameraController.takePicture();
     }
 
     // 开始录像
@@ -154,14 +154,14 @@ public class Camera2DemoActivity extends AppCompatActivity {
      */
     private void recordingVideo(){
         if (mIsRecordingVideo) {
-            mCameraController.stopRecordingVideo();
+//            mCameraController.stopRecordingVideo();
             mVideoRecodeBtn.setText("开始录像");
             mVideoRecodeBtn2.setText("开始录像");
             ToastUtils.showToast(this, "录像结束");
         } else {
             mVideoRecodeBtn.setText("停止录像");
             mVideoRecodeBtn2.setText("停止录像");
-            mCameraController.startRecordingVideo();
+//            mCameraController.startRecordingVideo();
             ToastUtils.showToast(this, "录像开始");
         }
         mIsRecordingVideo = !mIsRecordingVideo;
