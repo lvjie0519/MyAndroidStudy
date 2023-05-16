@@ -39,7 +39,7 @@ public class ToastUtils {
     /**
      * 切换到主线程
      */
-    private static Handler mainHandler = new Handler(Looper.getMainLooper()) {
+    public static Handler mainHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

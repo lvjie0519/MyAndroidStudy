@@ -11,11 +11,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.study.example.R;
 
+/**
+ * 参考连接
+ * https://blog.csdn.net/qq_40116418/article/details/90448461
+ * https://blog.csdn.net/irainsa/article/details/129932428
+ */
 public class Camera2DemoActivity extends AppCompatActivity {
 
     private String[] permissions = new String[]{
@@ -26,6 +32,9 @@ public class Camera2DemoActivity extends AppCompatActivity {
     };
 
     private AutoFitTextureView mTextureview;
+    private AutoFitTextureView mTextureview2;
+    private ImageView mImageView;
+
     private LinearLayout mVerticalLinear;
     private LinearLayout mHorizontalLinear;
     private Button mTakePictureBtn;//拍照
@@ -101,6 +110,9 @@ public class Camera2DemoActivity extends AppCompatActivity {
 
     private void initView() {
         mTextureview = (AutoFitTextureView) findViewById(R.id.textureview);
+        mTextureview2 = (AutoFitTextureView) findViewById(R.id.textureview_2);
+        mImageView = findViewById(R.id.iv_camera);
+
         mVerticalLinear = (LinearLayout) findViewById(R.id.vertical_linear);
         mHorizontalLinear = (LinearLayout) findViewById(R.id.horizontal_linear);
 
@@ -124,8 +136,10 @@ public class Camera2DemoActivity extends AppCompatActivity {
         WindowManager windowManager = getWindowManager();
         int orientation = getResources().getConfiguration().orientation;
 //        mCameraController.initCamera(mTextureview, windowManager, orientation);
-        mCameraController.initCamera(mTextureview);
 
+        mCameraController.setAutoFitTextureView2(mTextureview2);
+        mCameraController.setImageView(mImageView);
+        mCameraController.initCamera(mTextureview);
     }
 
     // 拍照

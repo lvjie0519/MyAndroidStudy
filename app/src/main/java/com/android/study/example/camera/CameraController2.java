@@ -4,8 +4,12 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
@@ -36,6 +40,7 @@ import android.util.SparseIntArray;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -69,6 +74,8 @@ public class CameraController2 {
 
     // camera 中的数据显示到AutoFitTextureView
     private AutoFitTextureView mAutoFitTextureView;
+    private AutoFitTextureView mAutoFitTextureView2;
+    private ImageView mImageView;
 
     private CameraCaptureSession mCameraCaptureSession;
 
@@ -208,13 +215,18 @@ public class CameraController2 {
 
     private void initImageReader(Size size){
         Log.i(TAG, "initImageReader call, width: "+size.getWidth()+", height: "+size.getHeight());
-        mImageReader = ImageReader.newInstance(1080, 1920, ImageFormat.YUV_420_888, 2);
+        mImageReader = ImageReader.newInstance(1080, 1920, ImageFormat.JPEG, 2);
         mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
             @Override
             public void onImageAvailable(ImageReader reader) {
                 // 这里获取摄像头数据
                 Log.i(TAG, "onImageAvailable callback.");
-                mBackgroundHandler.post(new CameraController2.ImageSaver(reader.acquireNextImage(), new File("")));
+                Image image = reader.acquireNextImage();
+                ByteBuffer byteBuffer = image.getPlanes()[0].getBuffer();
+                byte[] bytes = new byte[byteBuffer.remaining()];
+                byteBuffer.get(bytes);
+                mBackgroundHandler.post(new CameraController2.ImageSaver(mImageView, bytes));
+                image.close();
             }
         }, mBackgroundHandler);
     }
@@ -265,45 +277,67 @@ public class CameraController2 {
         }
     }
 
+    public void setAutoFitTextureView2(AutoFitTextureView mAutoFitTextureView) {
+        this.mAutoFitTextureView2 = mAutoFitTextureView;
+    }
+
+    public void setImageView(ImageView mImageView) {
+        this.mImageView = mImageView;
+    }
+
     private static class ImageSaver implements Runnable {
+
+        private static Paint mBitPaint;
+        private static Matrix mMatrix;
 
         /**
          * JPEG图像
          */
-        private final Image mImage;
-        /**
-         * 保存图像的文件
-         */
-        private final File mFile;
+        private final byte[] mByteBuffer;
 
-        public ImageSaver(Image image, File file) {
-            mImage = image;
-            mFile = file;
+        private AutoFitTextureView mAutoFitTextureView;
+        private ImageView mImageView;
+
+        private void initPaint(){
+            if(mBitPaint != null){
+                return;
+            }
+
+            mBitPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mBitPaint.setFilterBitmap(true);
+            mBitPaint.setDither(true);
+        }
+
+        private void initMatrix(){
+            mMatrix = new Matrix();
+            mMatrix.postRotate(90);
+        }
+
+        public ImageSaver(ImageView imageView, byte[] bytes) {
+            mByteBuffer = bytes;
+            mImageView = imageView;
+            initPaint();
+            initMatrix();
         }
 
         @Override
         public void run() {
-            ByteBuffer buffer = mImage.getPlanes()[0].getBuffer();
-            byte[] bytes = new byte[buffer.remaining()];
-            buffer.get(bytes);
-            Log.i(TAG, "bytes.length: "+bytes.length);
-            String data = new String(bytes);
-            byte[] bytes1 = data.getBytes();
-            FileOutputStream output = null;
-            try {
-//                output = new FileOutputStream(mFile);
-//                output.write(bytes);
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                mImage.close();
-                if (null != output) {
-                    try {
-                        output.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+            Log.i(TAG, "bytes.length: "+mByteBuffer.length);
+            ToastUtils.mainHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Bitmap bitmap = bytes2Bitmap(mByteBuffer, null);
+//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0,bitmap.getWidth(),bitmap.getHeight(), mMatrix, true);
+                    mImageView.setImageBitmap(bitmap);
                 }
+            });
+        }
+
+        public static Bitmap bytes2Bitmap(byte[] bytes, BitmapFactory.Options opts){
+            if ( null != opts ){
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length,opts);
+            }else{
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             }
         }
 
