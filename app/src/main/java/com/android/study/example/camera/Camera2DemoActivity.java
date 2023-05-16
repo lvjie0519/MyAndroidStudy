@@ -112,6 +112,7 @@ public class Camera2DemoActivity extends AppCompatActivity {
         mTextureview = (AutoFitTextureView) findViewById(R.id.textureview);
         mTextureview2 = (AutoFitTextureView) findViewById(R.id.textureview_2);
         mImageView = findViewById(R.id.iv_camera);
+        mImageView.setRotation(90);
 
         mVerticalLinear = (LinearLayout) findViewById(R.id.vertical_linear);
         mHorizontalLinear = (LinearLayout) findViewById(R.id.horizontal_linear);
