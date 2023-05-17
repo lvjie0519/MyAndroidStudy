@@ -220,6 +220,15 @@ public class CameraController2 {
             @Override
             public void onImageAvailable(ImageReader reader) {
                 // 这里获取摄像头数据
+                CameraCharacteristics characteristics = null;
+                try {
+                    characteristics = mCameraManager.getCameraCharacteristics(mCameraId);
+                    int sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+                    Log.i(TAG, "onImageAvailable callback. sensorOrientation: "+sensorOrientation);
+                } catch (CameraAccessException e) {
+                    e.printStackTrace();
+                }
+
                 Log.i(TAG, "onImageAvailable callback.");
                 Image image = reader.acquireNextImage();
                 ByteBuffer byteBuffer = image.getPlanes()[0].getBuffer();
@@ -298,7 +307,7 @@ public class CameraController2 {
 //                outBitmap = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
 //            }
 //
-//            Matrix matrix = CameraReader
+//            Matrix matrix =
 //
 //        } catch (CameraAccessException e) {
 //            e.printStackTrace();

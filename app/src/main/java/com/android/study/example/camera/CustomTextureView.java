@@ -7,14 +7,16 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.SurfaceTexture;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
 public class CustomTextureView extends TextureView implements TextureView.SurfaceTextureListener, Runnable{
-
+    private static final String TAG = "CustomTextureView";
     private boolean mRunning = false;
     private SurfaceTexture mSurfaceTexture;
     private Surface mSurface;
@@ -39,8 +41,6 @@ public class CustomTextureView extends TextureView implements TextureView.Surfac
     }
 
     private void init() {
-        initBitmapMatrix();
-        initBitmapPaint();
         setSurfaceTextureListener(this);
     }
 
@@ -54,16 +54,27 @@ public class CustomTextureView extends TextureView implements TextureView.Surfac
         mBitmapPaint.setDither(true);
     }
 
-    private void initBitmapMatrix(){
+    private void initBitmapMatrix(int width, int height){
         mBitmapMatrix = new Matrix();
         mBitmapMatrix.postRotate(90);
+        RectF rectF = new RectF(0, 0, width, height);
+        float centerX = rectF.centerX();
+        float centerY = rectF.centerY();
+
+        float scale = Math.max(height/width, width/height);
+        mBitmapMatrix.postScale(scale, scale, centerX, centerY);
+        mBitmapMatrix.postRotate(90, centerX, centerY);
     }
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+        Log.i(TAG, "onSurfaceTextureAvailable call, width: " + width + ", height: " + height);
         mSurfaceTexture = surface;
         mRect = new Rect(0, 0, width, height);
         mSurface = new Surface(mSurfaceTexture);
+
+        initBitmapMatrix(width, height);
+        initBitmapPaint();
 
         new Thread(this).start();
     }
@@ -121,7 +132,8 @@ public class CustomTextureView extends TextureView implements TextureView.Surfac
 
         try {
             synchronized (mSurface){
-//                canvas.drawBitmap(bitmap, mBitmapMatrix, null);
+                Log.i(TAG, "bitmap getWidth: "+bitmap.getWidth()+", getHeight: "+bitmap.getHeight());
+//                canvas.drawBitmap(bitmap, mBitmapMatrix, mBitmapPaint);
                 canvas.drawBitmap(bitmap, 0, 0, mBitmapPaint);
             }
         }catch (Exception e){
