@@ -74,7 +74,7 @@ public class CameraController2 {
 
     // camera 中的数据显示到AutoFitTextureView
     private AutoFitTextureView mAutoFitTextureView;
-    private AutoFitTextureView mAutoFitTextureView2;
+    private CustomTextureView mAutoFitTextureView2;
     private ImageView mImageView;
 
     private CameraCaptureSession mCameraCaptureSession;
@@ -225,7 +225,7 @@ public class CameraController2 {
                 ByteBuffer byteBuffer = image.getPlanes()[0].getBuffer();
                 byte[] bytes = new byte[byteBuffer.remaining()];
                 byteBuffer.get(bytes);
-                mBackgroundHandler.post(new CameraController2.ImageSaver(mImageView, bytes));
+                mBackgroundHandler.post(new CameraController2.ImageSaver(mImageView, mAutoFitTextureView2, bytes));
                 image.close();
             }
         }, mBackgroundHandler);
@@ -277,12 +277,32 @@ public class CameraController2 {
         }
     }
 
-    public void setAutoFitTextureView2(AutoFitTextureView mAutoFitTextureView) {
+    public void setAutoFitTextureView2(CustomTextureView mAutoFitTextureView) {
         this.mAutoFitTextureView2 = mAutoFitTextureView;
     }
 
     public void setImageView(ImageView mImageView) {
         this.mImageView = mImageView;
+    }
+
+    public void aa(Bitmap bitmap){
+
+//        Bitmap outBitmap;
+//        try {
+//            CameraCharacteristics characteristics = mCameraManager.getCameraCharacteristics(mCameraId);
+//            int sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+//
+//            if(sensorOrientation == 0 || sensorOrientation == 180){
+//                outBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+//            }else{
+//                outBitmap = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
+//            }
+//
+//            Matrix matrix = CameraReader
+//
+//        } catch (CameraAccessException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private static class ImageSaver implements Runnable {
@@ -295,7 +315,7 @@ public class CameraController2 {
          */
         private final byte[] mByteBuffer;
 
-        private AutoFitTextureView mAutoFitTextureView;
+        private CustomTextureView mCustomTextureView;
         private ImageView mImageView;
 
         private void initPaint(){
@@ -313,9 +333,10 @@ public class CameraController2 {
             mMatrix.postRotate(90);
         }
 
-        public ImageSaver(ImageView imageView, byte[] bytes) {
+        public ImageSaver(ImageView imageView, CustomTextureView customTextureView,  byte[] bytes) {
             mByteBuffer = bytes;
             mImageView = imageView;
+            mCustomTextureView = customTextureView;
             initPaint();
             initMatrix();
         }
@@ -323,14 +344,17 @@ public class CameraController2 {
         @Override
         public void run() {
             Log.i(TAG, "bytes.length: "+mByteBuffer.length);
-            ToastUtils.mainHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Bitmap bitmap = bytes2Bitmap(mByteBuffer, null);
-//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0,bitmap.getWidth(),bitmap.getHeight(), mMatrix, true);
-                    mImageView.setImageBitmap(bitmap);
-                }
-            });
+            Bitmap bitmap = bytes2Bitmap(mByteBuffer, null);
+            mCustomTextureView.drawBitMap(bitmap);
+
+//            ToastUtils.mainHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Bitmap bitmap = bytes2Bitmap(mByteBuffer, null);
+////                    bitmap = Bitmap.createBitmap(bitmap, 0, 0,bitmap.getWidth(),bitmap.getHeight(), mMatrix, true);
+//                    mImageView.setImageBitmap(bitmap);
+//                }
+//            });
         }
 
         public static Bitmap bytes2Bitmap(byte[] bytes, BitmapFactory.Options opts){

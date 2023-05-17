@@ -32,7 +32,7 @@ public class Camera2DemoActivity extends AppCompatActivity {
     };
 
     private AutoFitTextureView mTextureview;
-    private AutoFitTextureView mTextureview2;
+    private CustomTextureView mTextureview2;
     private ImageView mImageView;
 
     private LinearLayout mVerticalLinear;
@@ -110,7 +110,7 @@ public class Camera2DemoActivity extends AppCompatActivity {
 
     private void initView() {
         mTextureview = (AutoFitTextureView) findViewById(R.id.textureview);
-        mTextureview2 = (AutoFitTextureView) findViewById(R.id.textureview_2);
+        mTextureview2 = (CustomTextureView) findViewById(R.id.textureview_2);
         mImageView = findViewById(R.id.iv_camera);
         mImageView.setRotation(90);
 
@@ -140,6 +140,11 @@ public class Camera2DemoActivity extends AppCompatActivity {
 
         mCameraController.setAutoFitTextureView2(mTextureview2);
         mCameraController.setImageView(mImageView);
+
+        mTextureview2.setVisibility(View.VISIBLE);
+//        mTextureview2.setRotation(90);
+        mImageView.setVisibility(View.GONE);
+
         mCameraController.initCamera(mTextureview);
     }
 

@@ -17,7 +17,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <com.android.study.example.camera.AutoFitTextureView
+        <com.android.study.example.camera.CustomTextureView
             android:id="@+id/textureview_2"
             android:layout_width="match_parent"
             android:visibility="gone"
