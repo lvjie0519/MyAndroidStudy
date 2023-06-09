@@ -1,3 +1,6 @@
+include ':rtsp-client'
+include ':rtsp-server'
+include ':streaming'
 include ':app', ':lib-annotaions', ':lib-anno-processors'
 include ':myaidlclient'
 //include ':infraredcontroller'
