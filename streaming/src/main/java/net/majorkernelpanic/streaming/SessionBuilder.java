@@ -108,6 +108,7 @@ public class SessionBuilder {
 		session.setTimeToLive(mTimeToLive);
 		session.setCallback(mCallback);
 
+		// 设置音频
 		switch (mAudioEncoder) {
 		case AUDIO_AAC:
 			AACStream stream = new AACStream();
@@ -120,6 +121,7 @@ public class SessionBuilder {
 			break;
 		}
 
+		// 设置视频
 		switch (mVideoEncoder) {
 		case VIDEO_H263:
 			session.addVideoTrack(new H263Stream(mCamera));
@@ -133,6 +135,7 @@ public class SessionBuilder {
 		}
 
 		if (session.getVideoTrack()!=null) {
+			// 视频流设置
 			VideoStream video = session.getVideoTrack();
 			video.setFlashState(mFlash);
 			video.setVideoQuality(mVideoQuality);
@@ -142,6 +145,7 @@ public class SessionBuilder {
 		}
 
 		if (session.getAudioTrack()!=null) {
+			// 音频流设置
 			AudioStream audio = session.getAudioTrack();
 			audio.setAudioQuality(mAudioQuality);
 			audio.setDestinationPorts(5004);
