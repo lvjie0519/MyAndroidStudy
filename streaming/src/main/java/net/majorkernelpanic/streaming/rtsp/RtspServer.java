@@ -171,6 +171,7 @@ public class RtspServer extends Service {
 		if (!mEnabled || mRestart) stop();
 		if (mEnabled && mListenerThread == null) {
 			try {
+				Log.i(TAG,"will create RequestListener...");
 				mListenerThread = new RequestListener();
 			} catch (Exception e) {
 				mListenerThread = null;
@@ -226,12 +227,23 @@ public class RtspServer extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.i(TAG,"onStartCommand... ");
+		/**
+		 * sticky的意思是“粘性的”。使用这个返回值时，我们启动的服务跟应用程序"粘"在一起，
+		 * 如果在执行完onStartCommand后，服务被异常kill掉，系统会自动重启该服务。
+		 * 当再次启动服务时，传入的第一个参数将为null；
+		 *
+		 * START_NOT_STICKY（常量值：2）：“非粘性的”。使用这个返回值时，如果在执行完onStartCommand后，服务被异常kill掉，系统不会自动重启该服务；
+		 *
+		 * START_REDELIVER_INTENT（常量值：3）：重传Intent。使用这个返回值时，如果在执行完onStartCommand后，服务被异常kill掉，系统会自动重启该服务，并将Intent的值传入。
+		 */
 		return START_STICKY;
 	}
 
 	@Override
 	public void onCreate() {
 
+		Log.i(TAG,"onCreate... ");
 		// Let's restore the state of the service 
 		mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		mPort = Integer.parseInt(mSharedPreferences.getString(KEY_PORT, String.valueOf(mPort)));
@@ -245,6 +257,7 @@ public class RtspServer extends Service {
 
 	@Override
 	public void onDestroy() {
+		Log.i(TAG,"onDestroy... ");
 		stop();
 		mSharedPreferences.unregisterOnSharedPreferenceChangeListener(mOnSharedPreferenceChangeListener);
 	}
@@ -277,6 +290,7 @@ public class RtspServer extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
+		Log.i(TAG,"onBind... ");
 		return mBinder;
 	}
 
@@ -335,6 +349,7 @@ public class RtspServer extends Service {
 			Log.i(TAG,"RTSP server listening on port "+mServer.getLocalPort());
 			while (!Thread.interrupted()) {
 				try {
+					Log.i(TAG,"will create WorkerThread...");
 					new WorkerThread(mServer.accept()).start();
 				} catch (SocketException e) {
 					break;
@@ -368,7 +383,10 @@ public class RtspServer extends Service {
 		private Session mSession;
 
 		public WorkerThread(final Socket client) throws IOException {
+			Log.i(TAG, "WorkerThread, create WorkerThread to proc client, client: " + client.toString());
+			// 从client 读取数据
 			mInput = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			// 将数据发送给client
 			mOutput = client.getOutputStream();
 			mClient = client;
 			mSession = new Session();
