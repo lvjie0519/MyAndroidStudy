@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -68,9 +71,21 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                processQrScan(result.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void processQrScan(String qrData){
+        try {
+            JSONObject jsonObject = new JSONObject(qrData);
+            String ip = jsonObject.getString("ip");
+            int port = jsonObject.getInt("port");
+            MGWebSocketClientManager.getInstance().connectServer(ip, port);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }

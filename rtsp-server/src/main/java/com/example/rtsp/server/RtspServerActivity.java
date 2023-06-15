@@ -19,6 +19,9 @@ import net.majorkernelpanic.streaming.gl.SurfaceView;
 import net.majorkernelpanic.streaming.rtsp.RtspServer;
 import net.majorkernelpanic.streaming.video.VideoQuality;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * https://github.com/fyhertz/libstreaming
  *
@@ -58,6 +61,16 @@ public class RtspServerActivity extends AppCompatActivity {
         @Override
         public void onPreviewStarted() {
             showLog("onPreviewStarted call");
+            // rtsp://192.168.3.109:1234
+            String rtspServer = "rtsp://"+MGWebSocketClientManager.getInstance().getCurrentHostAddress()+":1234";
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("rtspServer", rtspServer);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            showLog("sendMessage: "+jsonObject.toString());
+            MGWebSocketClientManager.getInstance().sendMessage(jsonObject.toString());
         }
 
         @Override
