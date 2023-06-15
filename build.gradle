@@ -19,9 +19,17 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }
         google()
+        maven { url "http://10.200.12.54:8081/repository/mgtv-nunaios-sdk/" }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+project.ext {
+    compileSdkVersion = 29
+    minSdkVersion = 21
+    targetSdkVersion = 33
+    buildToolsVersion = '29.0.3'
 }

@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.example.rtsp.server"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -36,4 +36,11 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation("com.mgtv.tvos.link:mgtv-tvos-link-sdk:dev4test-1.1-SNAPSHOT") {
+        changing = true
+    }
+
+    // 扫码
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 }
