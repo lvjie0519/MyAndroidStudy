@@ -106,7 +106,9 @@ public class VideoQuality {
 		VideoQuality v = quality.clone();
 		int minDist = Integer.MAX_VALUE;
 		String supportedSizesStr = "Supported resolutions: ";
+		// 相机支持的图像格式列表
 		List<Size> supportedSizes = parameters.getSupportedPreviewSizes();
+		// 通过传入的quality大小，选择一个最接近相机支持的图像格式
 		for (Iterator<Size> it = supportedSizes.iterator(); it.hasNext();) {
 			Size size = it.next();
 			supportedSizesStr += size.width+"x"+size.height+(it.hasNext()?", ":"");
@@ -125,6 +127,11 @@ public class VideoQuality {
 		return v;
 	}
 
+	/**
+	 * 从相机支持的帧率范围中选择 支持的最大帧率
+	 * @param parameters
+	 * @return
+	 */
 	public static int[] determineMaximumSupportedFramerate(Camera.Parameters parameters) {
 		int[] maxFps = new int[]{0,0};
 		String supportedFpsRangesStr = "Supported frame rates: ";

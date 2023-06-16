@@ -51,9 +51,20 @@
             />
     </LinearLayout>
 
-    <VideoView
-        android:id="@+id/video_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_width="340dp"
+        android:layout_height="340dp"
+        android:background="#a12a12"
+        android:gravity="center">
+
+        <VideoView
+            android:id="@+id/video_view"
+            android:layout_width="320dp"
+            android:layout_height="160dp"
+
+            />
+
+    </LinearLayout>
+
 
 </LinearLayout>

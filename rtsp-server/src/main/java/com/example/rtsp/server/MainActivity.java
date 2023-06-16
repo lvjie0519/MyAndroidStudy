@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.rtsp.server.utils.ToastUtils;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             String ip = jsonObject.getString("ip");
             int port = jsonObject.getInt("port");
             MGWebSocketClientManager.getInstance().connectServer(ip, port);
+            ToastUtils.showToast(this, "发起连接: "+ip+":"+port);
         } catch (JSONException e) {
             e.printStackTrace();
         }

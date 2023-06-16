@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Camera;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
+
+import com.example.rtsp.server.utils.AutoSizeUtils;
 
 import net.majorkernelpanic.streaming.Session;
 import net.majorkernelpanic.streaming.SessionBuilder;
@@ -133,12 +136,15 @@ public class RtspServerActivity extends AppCompatActivity {
         mSession = SessionBuilder.getInstance()
                 .setCallback(mSessionCallback)
                 .setSurfaceView(mSurfaceView)
-                .setPreviewOrientation(90)
+                .setPreviewOrientation(0)
                 .setContext(getApplicationContext())
                 .setAudioEncoder(SessionBuilder.AUDIO_NONE)
                 .setAudioQuality(new AudioQuality(16000, 32000))
                 .setVideoEncoder(SessionBuilder.VIDEO_H264)
                 .setVideoQuality(new VideoQuality(320,240,20,500000))
+//                .setVideoQuality(new VideoQuality(AutoSizeUtils.dp2px(this, 200),AutoSizeUtils.dp2px(this, 400),20,500000))
+                .setVideoQuality(new VideoQuality(160,96,20,500000))
+//                .setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT)
                 .build();
 
         mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {

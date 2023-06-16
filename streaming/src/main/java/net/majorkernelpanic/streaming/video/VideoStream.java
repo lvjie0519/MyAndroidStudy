@@ -648,14 +648,18 @@ public abstract class VideoStream extends MediaStream {
 		}
 
 		Parameters parameters = mCamera.getParameters();
+		// 选择一个相机支持的图像格式大小
 		mQuality = VideoQuality.determineClosestSupportedResolution(parameters, mQuality);
+		// 选择一个支持的最大帧率
 		int[] max = VideoQuality.determineMaximumSupportedFramerate(parameters);
 		
 		double ratio = (double)mQuality.resX/(double)mQuality.resY;
 		mSurfaceView.requestAspectRatio(ratio);
 		
 		parameters.setPreviewFormat(mCameraImageFormat);
+		// 设置预览尺寸onPreviewFrame的尺寸
 		parameters.setPreviewSize(mQuality.resX, mQuality.resY);
+		// 设置帧率
 		parameters.setPreviewFpsRange(max[0], max[1]);
 
 		try {
