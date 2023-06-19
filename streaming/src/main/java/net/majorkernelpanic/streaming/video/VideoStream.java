@@ -662,12 +662,23 @@ public abstract class VideoStream extends MediaStream {
 		// 设置帧率
 		parameters.setPreviewFpsRange(max[0], max[1]);
 
+		// 自动对焦
+		parameters.setFocusMode(Camera.Parameters.FLASH_MODE_AUTO);
+
 		try {
 			mCamera.setParameters(parameters);
 			mCamera.setDisplayOrientation(mOrientation);
 			mCamera.startPreview();
 			mPreviewStarted = true;
 			mUpdated = true;
+
+			// 相机自动对焦完成后时通知回调
+			mCamera.autoFocus(new Camera.AutoFocusCallback() {
+				@Override
+				public void onAutoFocus(boolean success, Camera camera) {
+					Log.i(TAG, "onAutoFocus call, success:" + success);
+				}
+			});
 		} catch (RuntimeException e) {
 			destroyCamera();
 			throw e;

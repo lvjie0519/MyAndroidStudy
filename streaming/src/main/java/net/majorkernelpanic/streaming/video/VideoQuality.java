@@ -33,7 +33,7 @@ public class VideoQuality {
 	public final static String TAG = "VideoQuality";
 	
 	/** Default video stream quality. */
-	public final static VideoQuality DEFAULT_VIDEO_QUALITY = new VideoQuality(176,144,20,500000);
+	public final static VideoQuality DEFAULT_VIDEO_QUALITY = new VideoQuality(1280,720,20,500000);
 
 	/**	Represents a quality for a video stream. */ 
 	public VideoQuality() {}
@@ -104,7 +104,8 @@ public class VideoQuality {
 	 **/
 	public static VideoQuality determineClosestSupportedResolution(Camera.Parameters parameters, VideoQuality quality) {
 		VideoQuality v = quality.clone();
-		int minDist = Integer.MAX_VALUE;
+		int minDistX = Integer.MAX_VALUE;
+		int minDistY = minDistX;
 		String supportedSizesStr = "Supported resolutions: ";
 		// 相机支持的图像格式列表
 		List<Size> supportedSizes = parameters.getSupportedPreviewSizes();
@@ -112,17 +113,27 @@ public class VideoQuality {
 		for (Iterator<Size> it = supportedSizes.iterator(); it.hasNext();) {
 			Size size = it.next();
 			supportedSizesStr += size.width+"x"+size.height+(it.hasNext()?", ":"");
-			int dist = Math.abs(quality.resX - size.width);
-			if (dist<minDist) {
-				minDist = dist;
+			int distX = Math.abs(quality.resX - size.width);
+			int distY = Math.abs(quality.resY - size.height);
+			// 优先比较宽度
+			if (distX < minDistX) {
+				minDistX = distX;
 				v.resX = size.width;
 				v.resY = size.height;
+				continue;
+			}
+
+			// 宽度相同，再优先选择高度最小值
+			if (distX == minDistX && distY < minDistY) {
+				minDistY = distY;
+				v.resX = size.width;
+				v.resY = size.height;
+				continue;
 			}
 		}
+
 		Log.v(TAG, supportedSizesStr);
-		if (quality.resX != v.resX || quality.resY != v.resY) {
-			Log.v(TAG,"Resolution modified: "+quality.resX+"x"+quality.resY+"->"+v.resX+"x"+v.resY);
-		}
+		Log.v(TAG,"Resolution modified: "+quality.resX+"x"+quality.resY+"->"+v.resX+"x"+v.resY);
 		
 		return v;
 	}
