@@ -27,7 +27,13 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="相机测试"
+            android:text="相机测试1"
+            android:textAllCaps="false"
+            android:onClick="onClickTestCamera1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="相机测试2"
             android:textAllCaps="false"
             android:onClick="onClickTestCamera"/>
         <Button

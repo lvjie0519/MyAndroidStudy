@@ -52,6 +52,7 @@ import com.android.study.example.books.ThreadTestActivity;
 import com.android.study.example.broadcast.LocalBroadcastRegisterDemoActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.camera.Camera2DemoActivity;
+import com.android.study.example.camera.camera1.Camera1DemoActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
 import com.android.study.example.mainapp.MainAppTestActivity;
@@ -727,5 +728,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickTestCamera(View view) {
         Camera2DemoActivity.startActivity(this);
+    }
+
+    public void onClickTestCamera1(View view) {
+        Camera1DemoActivity.startActivity(this);
     }
 }
