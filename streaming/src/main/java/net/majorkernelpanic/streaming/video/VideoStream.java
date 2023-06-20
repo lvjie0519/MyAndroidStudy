@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+
+import net.majorkernelpanic.streaming.GlobalContext;
 import net.majorkernelpanic.streaming.MediaStream;
 import net.majorkernelpanic.streaming.Stream;
 import net.majorkernelpanic.streaming.exceptions.CameraInUseException;
@@ -43,8 +45,11 @@ import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaFormat;
 import android.media.MediaRecorder;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.os.ParcelFileDescriptor;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -72,14 +77,17 @@ public abstract class VideoStream extends MediaStream {
 	protected boolean mFlashEnabled = false;
 	protected boolean mSurfaceReady = false;
 	protected boolean mUnlocked = false;
-	protected boolean mPreviewStarted = false;
+	protected volatile boolean mPreviewStarted = false;
 	protected boolean mUpdated = false;
 	
 	protected String mMimeType;
 	protected String mEncoderName;
 	protected int mEncoderColorFormat;
 	protected int mCameraImageFormat;
-	protected int mMaxFps = 0;	
+	protected int mMaxFps = 0;
+
+	private static final int MESSAGE_AUTO_FACUS = 1001;
+	private Handler mMainHander;
 
 	/** 
 	 * Don't use this class directly.
@@ -87,6 +95,8 @@ public abstract class VideoStream extends MediaStream {
 	 */
 	public VideoStream() {
 		this(CameraInfo.CAMERA_FACING_BACK);
+
+		initMainHandler();
 	}	
 
 	/** 
@@ -97,6 +107,42 @@ public abstract class VideoStream extends MediaStream {
 	public VideoStream(int camera) {
 		super();
 		setCamera(camera);
+
+		initMainHandler();
+	}
+
+	private void initMainHandler() {
+		if(mMainHander != null){
+			return;
+		}
+
+		if(GlobalContext.getInstance().getAppContext() == null){
+			Log.e(TAG, "context is null.");
+			return;
+		}
+
+		mMainHander = new Handler(GlobalContext.getInstance().getAppContext().getMainLooper()){
+			@Override
+			public void handleMessage(@NonNull Message msg) {
+				if (msg.what == MESSAGE_AUTO_FACUS) {
+					Log.i(TAG, "handleMessage call, mPreviewStarted:" + mPreviewStarted+", current: "+VideoStream.this);
+					if (mCamera != null && mPreviewStarted) {
+						try {
+							mCamera.autoFocus(new Camera.AutoFocusCallback() {
+								@Override
+								public void onAutoFocus(boolean success, Camera camera) {
+									Log.i(TAG, "onAutoFocus call, success:" + success);
+								}
+							});
+						} catch (Exception e) {
+							Log.w(TAG, e.toString());
+						}
+						mMainHander.removeMessages(MESSAGE_AUTO_FACUS);
+						mMainHander.sendEmptyMessageDelayed(MESSAGE_AUTO_FACUS, 2000);
+					}
+				}
+			}
+		};
 	}
 
 	/**
@@ -673,12 +719,8 @@ public abstract class VideoStream extends MediaStream {
 			mUpdated = true;
 
 			// 相机自动对焦完成后时通知回调
-			mCamera.autoFocus(new Camera.AutoFocusCallback() {
-				@Override
-				public void onAutoFocus(boolean success, Camera camera) {
-					Log.i(TAG, "onAutoFocus call, success:" + success);
-				}
-			});
+			mMainHander.removeMessages(MESSAGE_AUTO_FACUS);
+			mMainHander.sendEmptyMessage(MESSAGE_AUTO_FACUS);
 		} catch (RuntimeException e) {
 			destroyCamera();
 			throw e;

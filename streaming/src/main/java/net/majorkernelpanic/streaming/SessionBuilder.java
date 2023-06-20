@@ -100,6 +100,7 @@ public class SessionBuilder {
 	 * @throws IOException 
 	 */
 	public Session build() {
+		GlobalContext.getInstance().init(mContext);
 		Session session;
 
 		session = new Session();
