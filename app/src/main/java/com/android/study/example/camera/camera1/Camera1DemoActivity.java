@@ -11,6 +11,7 @@ import android.hardware.Camera;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -18,6 +19,7 @@ import com.android.study.example.R;
 import com.android.study.example.camera.Camera2DemoActivity;
 import com.android.study.example.camera.CameraBaseActivity;
 import com.android.study.example.camera.CustomTextureView;
+import com.libyuv.util.YuvUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Iterator;
@@ -107,6 +109,8 @@ public class Camera1DemoActivity extends CameraBaseActivity {
             //开始预览
             mCamera.startPreview();
 
+            YuvUtil.init(1280, 720, 1280, 720);
+
             // 相机自动对焦完成后时通知回调
             mCamera.autoFocus(new Camera.AutoFocusCallback() {
                 @Override
@@ -146,8 +150,15 @@ public class Camera1DemoActivity extends CameraBaseActivity {
     public Bitmap getPriviewPic(byte[] data, Camera camera) {//这里传入的data参数就是onpreviewFrame中需要传入的byte[]型数据
         Camera.Size previewSize = camera.getParameters().getPreviewSize();//获取尺寸,格式转换的时候要用到
 
-//        data = rotateYUVDegree270AndMirror(data, previewSize.width, previewSize.height);
-        mirror(data, previewSize.width, previewSize.height);
+
+        long time = System.currentTimeMillis();
+        byte[] dst = new byte[data.length];
+        YuvUtil.mirrorYUV(data, 1280, 720, dst, 1280, 720, 0, 270);
+        byte[] nv21Data = new byte[data.length];
+        YuvUtil.yuvI420ToNV21(dst, nv21Data, 1280, 720);
+        YuvUtil.rotateNV21(nv21Data, data, 1280, 720, 90);
+
+        Log.i("lvjielvjie", "time cost: " + (System.currentTimeMillis() - time));
 
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         newOpts.inJustDecodeBounds = true;
