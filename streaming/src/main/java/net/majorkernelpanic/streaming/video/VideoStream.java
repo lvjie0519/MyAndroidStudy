@@ -35,6 +35,8 @@ import net.majorkernelpanic.streaming.gl.SurfaceView;
 import net.majorkernelpanic.streaming.hw.EncoderDebugger;
 import net.majorkernelpanic.streaming.hw.NV21Convertor;
 import net.majorkernelpanic.streaming.rtp.MediaCodecInputStream;
+import net.majorkernelpanic.streaming.utils.CameraDataUtils;
+
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -523,6 +525,51 @@ public abstract class VideoStream extends MediaStream {
 						if (data == null) {
 							Log.e(TAG, "Symptom of the \"Callback buffer was to small\" problem...");
 						} else {
+
+							Camera.CameraInfo camInfo = new Camera.CameraInfo();
+							Camera.getCameraInfo(mCameraId, camInfo);
+							Camera.Size previewSize = camera.getParameters().getPreviewSize();
+							int cameraRotationOffset = camInfo.orientation;
+							int mHeight = previewSize.height, mWidth = previewSize.width;
+							Log.i(TAG, "lvjielvjie cameraRotationOffset: " + cameraRotationOffset
+									+ ", mWidth: " + mWidth+ ", mHeight: " + mHeight
+									+ ", data.length: " + data.length
+									+ ", mHeight*mWidth: " + (mHeight * mWidth*3/2));
+
+
+							if (cameraRotationOffset == 270) {
+								// 目前验证该方法会花屏
+//								data = CameraDataUtils.rotateNV21Negative90(data, mWidth, mHeight); //将onPreviewFrame的
+
+								// 目前验证该方法会花屏
+//								CameraDataUtils.yuvRotate(data, 1, previewSize.width, previewSize.height, 90); //将onPreviewFrame的数据旋转
+
+//								// 方案可行，但镜像后颜色有变化
+//								byte[] outData = new byte[data.length];
+//								// 将数据旋转270度
+//								CameraDataUtils.rotateNV21(data, outData, previewSize.width, previewSize.height, 270); //
+//								// 解决镜像问题
+//								CameraDataUtils.mirrorYUVData(outData, previewSize.width, previewSize.height);
+//								data = outData;
+
+
+								// 这也是解决镜像的方法
+								byte tempData;
+								for (int i = 0; i < mHeight * 3 / 2; i++) {
+									for (int j = 0; j < mWidth / 2; j++) {
+										tempData = data[i * mWidth + j];
+										data[i * mWidth + j] = data[(i + 1) * mWidth - 1 - j];
+										data[(i + 1) * mWidth - 1 - j] = tempData;
+									}
+								}
+								byte[] outData = new byte[data.length];
+								CameraDataUtils.rotateNV21(data, outData, previewSize.width, previewSize.height, 90); //
+								data = outData;
+
+							}
+
+
+
 							convertor.convert(data, inputBuffers[bufferIndex]);
 						}
 						mMediaCodec.queueInputBuffer(bufferIndex, 0, inputBuffers[bufferIndex].position(), now, 0);
