@@ -1,0 +1,43 @@
+{
+  "buildFiles": [
+    "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\CMakeLists.txt",
+    "C:\\lvjie\\softer_setup\\Android\\Sdk\\ndk\\21.3.6528147\\build\\cmake\\android.toolchain.cmake",
+    "C:\\lvjie\\softer_setup\\Android\\Sdk\\ndk\\21.3.6528147\\build\\cmake\\platforms.cmake",
+    "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\CMakeLists.txt",
+    "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\CM_linux_packages.cmake"
+  ],
+  "cleanCommands": [
+    "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\debug\\x86\" clean"
+  ],
+  "buildTargetsCommand": "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\debug\\x86\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "yuv-Debug-x86": {
+      "artifactName": "yuv",
+      "buildCommand": "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\debug\\x86\" yuv",
+      "abi": "x86",
+      "output": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\debug\\x86\\build\\libyuv.a",
+      "runtimeFiles": []
+    },
+    "yuv_shared-Debug-x86": {
+      "artifactName": "yuv_shared",
+      "buildCommand": "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\debug\\x86\" yuv_shared",
+      "abi": "x86",
+      "output": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\build\\intermediates\\cmake\\debug\\obj\\x86\\libyuv.so",
+      "runtimeFiles": []
+    },
+    "yuvconvert-Debug-x86": {
+      "artifactName": "yuvconvert",
+      "buildCommand": "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\debug\\x86\" yuvconvert",
+      "abi": "x86",
+      "output": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\debug\\x86\\build\\yuvconvert",
+      "runtimeFiles": []
+    },
+    "yuvutil-Debug-x86": {
+      "artifactName": "yuvutil",
+      "buildCommand": "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\debug\\x86\" yuvutil",
+      "abi": "x86",
+      "output": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\build\\intermediates\\cmake\\debug\\obj\\x86\\libyuvutil.so",
+      "runtimeFiles": []
+    }
+  }
+}

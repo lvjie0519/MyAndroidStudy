@@ -1,0 +1,549 @@
+{
+  "stringTable": {
+    "0": "C:/lvjie/myprojects/MyAndroidStudy/libyuv/.cxx/cmake/release/x86",
+    "1": "--target=i686-none-linux-android21 --gcc-toolchain=C:/lvjie/softer_setup/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/lvjie/softer_setup/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Dyuvutil_EXPORTS -I../../../../src/main/cpp/libyuv/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O2 -DNDEBUG -fPIC",
+    "2": "--target=i686-none-linux-android21 --gcc-toolchain=C:/lvjie/softer_setup/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/lvjie/softer_setup/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64/sysroot -I../../../../src/main/cpp/libyuv/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O2 -DNDEBUG -fPIC",
+    "3": "--target=i686-none-linux-android21 --gcc-toolchain=C:/lvjie/softer_setup/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/lvjie/softer_setup/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64/sysroot -Dyuv_shared_EXPORTS -I../../../../src/main/cpp/libyuv/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O2 -DNDEBUG -fPIC",
+    "4": "--target=i686-none-linux-android21 --gcc-toolchain=C:/lvjie/softer_setup/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64 --sysroot=C:/lvjie/softer_setup/Android/Sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/windows-x86_64/sysroot -I../../../../src/main/cpp/libyuv/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -O2 -DNDEBUG -fPIE"
+  },
+  "buildFiles": [
+    "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\CMakeLists.txt",
+    "C:\\lvjie\\softer_setup\\Android\\Sdk\\ndk\\21.3.6528147\\build\\cmake\\android.toolchain.cmake",
+    "C:\\lvjie\\softer_setup\\Android\\Sdk\\ndk\\21.3.6528147\\build\\cmake\\platforms.cmake",
+    "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\CMakeLists.txt",
+    "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\CM_linux_packages.cmake"
+  ],
+  "cleanCommands": [
+    "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\release\\x86\" clean"
+  ],
+  "buildTargetsCommand": "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe  -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\release\\x86\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "yuvutil-Release-x86": {
+      "buildCommand": "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\release\\x86\" yuvutil",
+      "buildType": "release",
+      "toolchain": "1343486332",
+      "abi": "x86",
+      "artifactName": "yuvutil",
+      "files": [
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\YuvJni.cpp",
+          "flagsOrdinal": 1,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "headers": [],
+      "output": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\build\\intermediates\\cmake\\release\\obj\\x86\\libyuvutil.so",
+      "runtimeFiles": []
+    },
+    "yuv_shared-Release-x86": {
+      "buildCommand": "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\release\\x86\" yuv_shared",
+      "buildType": "release",
+      "toolchain": "1343486332",
+      "abi": "x86",
+      "artifactName": "yuv_shared",
+      "files": [
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare_common.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare_gcc.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare_neon.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare_neon64.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare_win.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_argb.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_from.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_from_argb.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_jpeg.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_to_argb.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_to_i420.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\cpu_id.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\mjpeg_decoder.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\mjpeg_validate.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\planar_functions.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_any.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_argb.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_common.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_dspr2.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_gcc.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_msa.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_neon.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_neon64.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_win.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_any.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_common.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_dspr2.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_gcc.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_msa.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_neon.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_neon64.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_win.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_any.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_argb.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_common.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_dspr2.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_gcc.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_msa.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_neon.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_neon64.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_win.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\video_common.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "headers": [],
+      "output": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\build\\intermediates\\cmake\\release\\obj\\x86\\libyuv.so",
+      "runtimeFiles": []
+    },
+    "yuv-Release-x86": {
+      "buildCommand": "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\release\\x86\" yuv",
+      "buildType": "release",
+      "toolchain": "1343486332",
+      "abi": "x86",
+      "artifactName": "yuv",
+      "files": [
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare_common.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare_gcc.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare_neon.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare_neon64.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\compare_win.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_argb.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_from.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_from_argb.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_jpeg.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_to_argb.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\convert_to_i420.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\cpu_id.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\mjpeg_decoder.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\mjpeg_validate.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\planar_functions.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_any.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_argb.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_common.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_dspr2.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_gcc.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_msa.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_neon.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_neon64.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\rotate_win.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_any.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_common.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_dspr2.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_gcc.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_msa.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_neon.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_neon64.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\row_win.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_any.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_argb.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_common.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_dspr2.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_gcc.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_msa.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_neon.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_neon64.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\scale_win.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        },
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\source\\video_common.cc",
+          "flagsOrdinal": 3,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "headers": [],
+      "output": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\release\\x86\\build\\libyuv.a"
+    },
+    "yuvconvert-Release-x86": {
+      "buildCommand": "C:\\lvjie\\softer_setup\\Android\\Sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe -C \"C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\release\\x86\" yuvconvert",
+      "buildType": "release",
+      "toolchain": "1343486332",
+      "abi": "x86",
+      "artifactName": "yuvconvert",
+      "files": [
+        {
+          "src": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\src\\main\\cpp\\libyuv\\util\\yuvconvert.cc",
+          "flagsOrdinal": 4,
+          "workingDirectoryOrdinal": 0
+        }
+      ],
+      "headers": [],
+      "output": "C:\\lvjie\\myprojects\\MyAndroidStudy\\libyuv\\.cxx\\cmake\\release\\x86\\build\\yuvconvert",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "1343486332": {
+      "cppCompilerExecutable": "C:\\lvjie\\softer_setup\\Android\\Sdk\\ndk\\21.3.6528147\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cc",
+    "cpp"
+  ]
+}
