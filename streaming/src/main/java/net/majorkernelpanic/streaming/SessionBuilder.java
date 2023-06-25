@@ -32,6 +32,9 @@ import net.majorkernelpanic.streaming.video.VideoStream;
 import android.content.Context;
 import android.hardware.Camera.CameraInfo;
 import android.preference.PreferenceManager;
+import android.util.Log;
+
+import com.libyuv.util.YuvUtil;
 
 /**
  * Call {@link #getInstance()} to get access to the SessionBuilder.
@@ -151,6 +154,9 @@ public class SessionBuilder {
 			audio.setAudioQuality(mAudioQuality);
 			audio.setDestinationPorts(5004);
 		}
+
+		Log.i(TAG, "mVideoQuality resX:" + mVideoQuality.resX + ", resY:" + mVideoQuality.resY);
+		YuvUtil.init(mVideoQuality.resX, mVideoQuality.resY, mVideoQuality.resX, mVideoQuality.resY);
 
 		return session;
 

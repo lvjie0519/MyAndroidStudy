@@ -57,6 +57,8 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 
+import com.libyuv.util.YuvUtil;
+
 /** 
  * Don't use this class directly.
  */
@@ -536,39 +538,14 @@ public abstract class VideoStream extends MediaStream {
 									+ ", data.length: " + data.length
 									+ ", mHeight*mWidth: " + (mHeight * mWidth*3/2));
 
-
 							if (cameraRotationOffset == 270) {
-								// 目前验证该方法会花屏
-//								data = CameraDataUtils.rotateNV21Negative90(data, mWidth, mHeight); //将onPreviewFrame的
-
-								// 目前验证该方法会花屏
-//								CameraDataUtils.yuvRotate(data, 1, previewSize.width, previewSize.height, 90); //将onPreviewFrame的数据旋转
-
-//								// 方案可行，但镜像后颜色有变化
-//								byte[] outData = new byte[data.length];
-//								// 将数据旋转270度
-//								CameraDataUtils.rotateNV21(data, outData, previewSize.width, previewSize.height, 270); //
-//								// 解决镜像问题
-//								CameraDataUtils.mirrorYUVData(outData, previewSize.width, previewSize.height);
-//								data = outData;
-
-
-								// 这也是解决镜像的方法
-								byte tempData;
-								for (int i = 0; i < mHeight * 3 / 2; i++) {
-									for (int j = 0; j < mWidth / 2; j++) {
-										tempData = data[i * mWidth + j];
-										data[i * mWidth + j] = data[(i + 1) * mWidth - 1 - j];
-										data[(i + 1) * mWidth - 1 - j] = tempData;
-									}
-								}
-								byte[] outData = new byte[data.length];
-								CameraDataUtils.rotateNV21(data, outData, previewSize.width, previewSize.height, 90); //
-								data = outData;
-
+								// 解决镜像及翻转摄像头数据
+								long time = System.currentTimeMillis();
+								byte[] dst = new byte[data.length];
+								YuvUtil.mirrorAndRotateYUV(data, mWidth, mHeight, dst, mWidth, mHeight, 90);
+								data = dst;
+								Log.i("lvjielvjie", "time cost: " + (System.currentTimeMillis() - time));
 							}
-
-
 
 							convertor.convert(data, inputBuffers[bufferIndex]);
 						}

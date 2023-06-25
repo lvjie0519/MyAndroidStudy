@@ -146,8 +146,7 @@ JNIEXPORT void JNICALL
 Java_com_libyuv_util_YuvUtil_mirrorYUV(JNIEnv *env, jclass type,
                                          jbyteArray src_, jint width,
                                          jint height, jbyteArray dst_,
-                                         jint dst_width, jint dst_height,
-                                         jint mode, jint degree) {
+                                         jint dst_width, jint dst_height) {
     jbyte *Src_data = env->GetByteArrayElements(src_, NULL);
     jbyte *Dst_data = env->GetByteArrayElements(dst_, NULL);
     //nv21转化为i420

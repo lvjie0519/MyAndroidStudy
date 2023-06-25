@@ -81,7 +81,13 @@ public class YuvUtil {
      **/
     public static native void compressYUV(byte[] src, int width, int height, byte[] dst, int dst_width, int dst_height, int mode, int degree, boolean isMirror);
 
-    public static native void mirrorYUV(byte[] src, int width, int height, byte[] dst, int dst_width, int dst_height, int mode, int degree);
+    public static void mirrorAndRotateYUV(byte[] src, int width, int height, byte[] dst, int dst_width, int dst_height, int degree) {
+        mirrorYUV(src, width, height, dst, dst_width, dst_height);
+        yuvI420ToNV21(dst, src, width, height);
+        rotateNV21(src, dst, dst_width, dst_height, degree);
+    }
+
+    public static native void mirrorYUV(byte[] src, int width, int height, byte[] dst, int dst_width, int dst_height);
 
     /**
      * yuv数据的裁剪操作
