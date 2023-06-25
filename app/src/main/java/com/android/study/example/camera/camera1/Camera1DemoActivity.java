@@ -12,8 +12,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Size;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 
 import com.android.study.example.R;
 import com.android.study.example.camera.Camera2DemoActivity;
@@ -36,7 +39,9 @@ public class Camera1DemoActivity extends CameraBaseActivity {
 
     private CustomTextureView mCameraSurfaceView2;
 
+    private int mCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
     private Camera mCamera;
+    private Camera.Size mCameraSize;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, Camera1DemoActivity.class);
@@ -80,7 +85,7 @@ public class Camera1DemoActivity extends CameraBaseActivity {
     }
 
     private void openCamera(){
-        mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_FRONT);
+        mCamera = Camera.open(mCameraId);
 
         // 监听预览的数据
         mCamera.setPreviewCallback(new Camera.PreviewCallback() {
@@ -123,6 +128,53 @@ public class Camera1DemoActivity extends CameraBaseActivity {
         }
     }
 
+    private int[] getCompatibleSize(Camera.Parameters parameters) {
+
+        Size screenSize = getScreenSize();
+        int[] resultSize = new int[2];
+
+        int minDistX = Integer.MAX_VALUE;
+        int minDistY = minDistX;
+        String supportedSizesStr = "Supported resolutions: ";
+        // 相机支持的图像格式列表
+        List<Camera.Size> supportedSizes = parameters.getSupportedPreviewSizes();
+        // 通过传入的quality大小，选择一个最接近相机支持的图像格式
+        for (Iterator<Camera.Size> it = supportedSizes.iterator(); it.hasNext();) {
+            Camera.Size size = it.next();
+            supportedSizesStr += size.width+"x"+size.height+(it.hasNext()?", ":"");
+            int distX = Math.abs(screenSize.getWidth() - size.width);
+            int distY = Math.abs(screenSize.getHeight() - size.height);
+            // 优先比较宽度
+            if (distX < minDistX) {
+                minDistX = distX;
+                resultSize[0] = size.width;
+                resultSize[1] = size.height;
+                continue;
+            }
+
+            // 宽度相同，再优先选择高度最小值
+            if (distX == minDistX && distY < minDistY) {
+                minDistY = distY;
+                resultSize[0] = size.width;
+                resultSize[1] = size.height;
+                continue;
+            }
+        }
+
+        Log.v(TAG, supportedSizesStr);
+        Log.v(TAG, "Resolution modified: " + screenSize.getWidth() + "x" + screenSize.getHeight() + "->" + resultSize[0] + "x" + resultSize[1]);
+        return resultSize;
+    }
+
+    public Size getScreenSize() {
+        WindowManager wm = (WindowManager) getSystemService(
+                Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        Size size = new Size(display.getWidth(), display.getHeight());
+        return size;
+    }
+
     private Camera.Size getMaxSize(Camera.Parameters parameters) {
         List<Camera.Size> supportedSizes = parameters.getSupportedPreviewSizes();
 
@@ -147,18 +199,34 @@ public class Camera1DemoActivity extends CameraBaseActivity {
         }
     }
 
-    public Bitmap getPriviewPic(byte[] data, Camera camera) {//这里传入的data参数就是onpreviewFrame中需要传入的byte[]型数据
+    public Bitmap getPriviewPic(byte[] data, Camera camera) {
+        //这里传入的data参数就是onpreviewFrame中需要传入的byte[]型数据
         Camera.Size previewSize = camera.getParameters().getPreviewSize();//获取尺寸,格式转换的时候要用到
 
+        Camera.CameraInfo camInfo = new Camera.CameraInfo();
+        Camera.getCameraInfo(mCameraId, camInfo);
+        int cameraRotationOffset = camInfo.orientation;
+        int mHeight = previewSize.height, mWidth = previewSize.width;
+        Log.i(TAG, "lvjielvjie cameraRotationOffset: " + cameraRotationOffset
+                + ", mWidth: " + mWidth+ ", mHeight: " + mHeight
+                + ", data.length: " + data.length
+                + ", mHeight*mWidth: " + (mHeight * mWidth*3/2));
 
-        long time = System.currentTimeMillis();
-        byte[] dst = new byte[data.length];
-        YuvUtil.mirrorYUV(data, 1280, 720, dst, 1280, 720, 0, 270);
-        byte[] nv21Data = new byte[data.length];
-        YuvUtil.yuvI420ToNV21(dst, nv21Data, 1280, 720);
-        YuvUtil.rotateNV21(nv21Data, data, 1280, 720, 90);
-
-        Log.i("lvjielvjie", "time cost: " + (System.currentTimeMillis() - time));
+        if (cameraRotationOffset == 270) {
+            long time = System.currentTimeMillis();
+            byte[] dst = new byte[data.length];
+            YuvUtil.mirrorYUV(data, 1280, 720, dst, 1280, 720);
+            byte[] nv21Data = new byte[data.length];
+            YuvUtil.yuvI420ToNV21(dst, nv21Data, 1280, 720);
+            YuvUtil.rotateNV21(nv21Data, data, 1280, 720, 90);
+            Log.i("lvjielvjie", "time cost: " + (System.currentTimeMillis() - time));
+        } else if (cameraRotationOffset == 90) {
+            long time = System.currentTimeMillis();
+            byte[] dst = new byte[data.length];
+            YuvUtil.rotateNV21(data, dst, 1280, 720, 90);
+            Log.i("lvjielvjie", "time cost: " + (System.currentTimeMillis() - time));
+            data = dst;
+        }
 
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         newOpts.inJustDecodeBounds = true;
@@ -177,106 +245,4 @@ public class Camera1DemoActivity extends CameraBaseActivity {
         Bitmap bitmap = BitmapFactory.decodeByteArray(rawImage, 0, rawImage.length, options);
         return bitmap;
     }
-
-    //镜像
-    private void mirror(byte[] yuv_temp, int w, int h) {
-        int i, j;
-
-        int a, b;
-        byte temp;
-        //mirror y
-        for (i = 0; i < h; i++) {
-            a = i * w;
-            b = (i + 1) * w - 1;
-            while (a < b) {
-                temp = yuv_temp[a];
-                yuv_temp[a] = yuv_temp[b];
-                yuv_temp[b] = temp;
-                a++;
-                b--;
-            }
-        }
-        //mirror u
-        int uindex = w * h;
-        for (i = 0; i < h / 2; i++) {
-            a = i * w / 2;
-            b = (i + 1) * w / 2 - 1;
-            while (a < b) {
-                temp = yuv_temp[a + uindex];
-                yuv_temp[a + uindex] = yuv_temp[b + uindex];
-                yuv_temp[b + uindex] = temp;
-                a++;
-                b--;
-            }
-        }
-        //mirror v
-        uindex = w * h / 4 * 5;
-        for (i = 0; i < h / 2; i++) {
-            a = i * w / 2;
-            b = (i + 1) * w / 2 - 1;
-            while (a < b) {
-                temp = yuv_temp[a + uindex];
-                yuv_temp[a + uindex] = yuv_temp[b + uindex];
-                yuv_temp[b + uindex] = temp;
-                a++;
-                b--;
-            }
-        }
-    }
-
-    //顺时针旋转90
-    private void YUV420spRotate90Clockwise(byte[] src, byte[] dst, int srcWidth, int srcHeight) {
-        int wh = srcWidth * srcHeight;
-        int uvHeight = srcHeight >> 1;
-
-        //旋转Y
-        int k = 0;
-        for (int i = 0; i < srcWidth; i++) {
-            int nPos = 0;
-            for (int j = 0; j < srcHeight; j++) {
-                dst[k] = src[nPos + i];
-                k++;
-                nPos += srcWidth;
-            }
-        }
-
-        for (int i = 0; i < srcWidth; i += 2) {
-            int nPos = wh;
-            for (int j = 0; j < uvHeight; j++) {
-                dst[k] = src[nPos + i];
-                dst[k + 1] = src[nPos + i + 1];
-                k += 2;
-                nPos += srcWidth;
-            }
-        }
-    }
-
-    private byte[] rotateYUVDegree270AndMirror(byte[] data, int imageWidth, int imageHeight) {
-        byte[] yuv = new byte[imageWidth * imageHeight * 3 / 2];
-        // Rotate and mirror the Y luma
-        int i = 0;
-        int maxY = 0;
-        for (int x = imageWidth - 1; x >= 0; x--) {
-            maxY = imageWidth * (imageHeight - 1) + x * 2;
-            for (int y = 0; y < imageHeight; y++) {
-                yuv[i] = data[maxY - (y * imageWidth + x)];
-                i++;
-            }
-        }
-        // Rotate and mirror the U and V color components
-        int uvSize = imageWidth * imageHeight;
-        i = uvSize;
-        int maxUV = 0;
-        for (int x = imageWidth - 1; x > 0; x = x - 2) {
-            maxUV = imageWidth * (imageHeight / 2 - 1) + x * 2 + uvSize;
-            for (int y = 0; y < imageHeight / 2; y++) {
-                yuv[i] = data[maxUV - 2 - (y * imageWidth + x - 1)];
-                i++;
-                yuv[i] = data[maxUV - (y * imageWidth + x)];
-                i++;
-            }
-        }
-        return yuv;
-    }
-
 }
