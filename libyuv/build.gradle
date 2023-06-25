@@ -13,6 +13,10 @@ android {
                 cppFlags ""
             }
         }
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'//支持的so包的格式
+        }
     }
     buildTypes {
         release {
@@ -29,5 +33,4 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
 }
