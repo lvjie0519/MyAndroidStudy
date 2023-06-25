@@ -11,6 +11,13 @@
     <SurfaceView
         android:id="@+id/camera_surfaceview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <com.android.study.example.camera.CustomTextureView
+        android:id="@+id/camera_surfaceview_2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 </LinearLayout>
