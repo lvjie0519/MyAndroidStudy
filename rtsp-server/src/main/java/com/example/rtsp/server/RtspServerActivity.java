@@ -136,15 +136,16 @@ public class RtspServerActivity extends AppCompatActivity {
         mSession = SessionBuilder.getInstance()
                 .setCallback(mSessionCallback)
                 .setSurfaceView(mSurfaceView)
-                .setPreviewOrientation(0)
+                .setPreviewOrientation(90)
                 .setContext(getApplicationContext())
                 .setAudioEncoder(SessionBuilder.AUDIO_NONE)
                 .setAudioQuality(new AudioQuality(16000, 32000))
                 .setVideoEncoder(SessionBuilder.VIDEO_H264)
-                .setVideoQuality(new VideoQuality(320,240,20,500000))
+//                .setVideoQuality(new VideoQuality(320,240,20,500000))
+                .setVideoQuality(new VideoQuality(1280,720,20,500000))
 //                .setVideoQuality(new VideoQuality(AutoSizeUtils.dp2px(this, 200),AutoSizeUtils.dp2px(this, 400),20,500000))
-                .setVideoQuality(new VideoQuality(160,96,20,500000))
-//                .setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT)
+//                .setVideoQuality(new VideoQuality(160,96,20,500000))
+                .setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT)
                 .build();
 
         mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
