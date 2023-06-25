@@ -486,11 +486,18 @@ public abstract class VideoStream extends MediaStream {
 			}
 		}
 
+		/**
+		 * android Camera 出来的数据一般是NV21 也就是YUV420SP
+		 * H264里面用的一般是I420(420P), 因此需要将 YUV420SP 转换为 YUV420P
+		 */
 		EncoderDebugger debugger = EncoderDebugger.debug(mSettings, mQuality.resX, mQuality.resY);
+		// 将NV21(yuv420sp)转换成yuv420p(H264编码要求此颜色格式)
 		final NV21Convertor convertor = debugger.getNV21Convertor();
 
+		// H264编码器
 		mMediaCodec = MediaCodec.createByCodecName(debugger.getEncoderName());
 		MediaFormat mediaFormat = MediaFormat.createVideoFormat("video/avc", mQuality.resX, mQuality.resY);
+//		MediaFormat mediaFormat = MediaFormat.createVideoFormat("video/avc", mQuality.resY, mQuality.resX);
 		mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, mQuality.bitrate);
 		mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, mQuality.framerate);	
 		mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT,debugger.getEncoderColorFormat());
@@ -513,8 +520,11 @@ public abstract class VideoStream extends MediaStream {
 					int bufferIndex = mMediaCodec.dequeueInputBuffer(500000);
 					if (bufferIndex>=0) {
 						inputBuffers[bufferIndex].clear();
-						if (data == null) Log.e(TAG,"Symptom of the \"Callback buffer was to small\" problem...");
-						else convertor.convert(data, inputBuffers[bufferIndex]);
+						if (data == null) {
+							Log.e(TAG, "Symptom of the \"Callback buffer was to small\" problem...");
+						} else {
+							convertor.convert(data, inputBuffers[bufferIndex]);
+						}
 						mMediaCodec.queueInputBuffer(bufferIndex, 0, inputBuffers[bufferIndex].position(), now, 0);
 					} else {
 						Log.e(TAG,"No buffer available !");
@@ -646,6 +656,7 @@ public abstract class VideoStream extends MediaStream {
 				parameters.setRecordingHint(true);
 				mCamera.setParameters(parameters);
 				mCamera.setDisplayOrientation(mOrientation);
+				Log.i(TAG, "mOrientation: "+mOrientation);
 
 				try {
 					if (mMode == MODE_MEDIACODEC_API_2) {
@@ -709,7 +720,12 @@ public abstract class VideoStream extends MediaStream {
 		parameters.setPreviewFpsRange(max[0], max[1]);
 
 		// 自动对焦
-		parameters.setFocusMode(Camera.Parameters.FLASH_MODE_AUTO);
+//		parameters.setFocusMode(Camera.Parameters.FLASH_MODE_AUTO);
+
+		if (mCameraId == CameraInfo.CAMERA_FACING_FRONT) {
+			//设置镜像效果，支持的值为flip-mode-values=off,flip-v,flip-h,flip-vh;
+			parameters.set("rotation", "180");
+		}
 
 		try {
 			mCamera.setParameters(parameters);
