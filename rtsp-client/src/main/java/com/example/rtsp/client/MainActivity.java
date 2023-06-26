@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    private VideoView mVideoView;
+    private CustomVideoView mVideoView;
     private MediaController mMediaController;
 
     @Override
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPrepared(MediaPlayer mp) {
                 showLog("监听视频装载完成..." + mVideoView.getDuration());
                 mVideoView.start();
+                mVideoView.resizeVideo(1080, 1868);
             }
         });
 
@@ -52,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
     public void onClickStartVideo(View view) {
         showLog("onClickStartVideo..." + mVideoView.getDuration());
         // 开始播放
-        mVideoView.setVideoURI(Uri.parse("rtsp://192.168.3.109:1234"));
+        String url = "rtsp://192.168.3.93:1234";
+        Toast.makeText(this, url, Toast.LENGTH_LONG).show();
+        mVideoView.setVideoURI(Uri.parse(url));
         mVideoView.requestFocus();
     }
 
