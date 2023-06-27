@@ -57,12 +57,11 @@
         android:background="@color/purple_200"
         android:orientation="vertical">
 
-        <com.example.rtsp.client.CustomVideoView
+        <com.example.rtsp.client.player.SimpleTextureViewPlayer
             android:id="@+id/video_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
             />
 
     </RelativeLayout>

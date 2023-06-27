@@ -1,6 +1,7 @@
 package com.example.rtsp.client;
 
 import android.content.Context;
+import android.graphics.Matrix;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.VideoView;
@@ -38,5 +39,26 @@ public class CustomVideoView extends VideoView {
         getHolder().setFixedSize(mWidth, mHeight);
         requestLayout();
         invalidate(); // very important, so that onMeasure will be triggered
+    }
+
+    public void postRotate(float rotateDegree) {
+        Matrix matrix = getTransformMatrix();
+        matrix.postRotate(rotateDegree, mWidth/2, mHeight/2);
+        invalidate();
+
+        setRotation(rotateDegree);
+//        updateMatrixToTexture(matrix);
+//        setRotateDegrees(getCurrentRotateDegree() + rotateDegree);
+    }
+
+    private Matrix getTransformMatrix() {
+        if (isTextureViewValid()) {
+            return getMatrix();
+        }
+        return null;
+    }
+
+    private boolean isTextureViewValid() {
+        return true;
     }
 }

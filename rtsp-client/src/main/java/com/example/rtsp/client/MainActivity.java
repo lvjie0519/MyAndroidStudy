@@ -1,5 +1,6 @@
 package com.example.rtsp.client;
 
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +11,12 @@ import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.rtsp.client.player.SimpleTextureViewPlayer;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    private CustomVideoView mVideoView;
+    private SimpleTextureViewPlayer mVideoView;
     private MediaController mMediaController;
 
     @Override
@@ -22,31 +25,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
+        initPlayer();
     }
 
     private void init() {
         mVideoView = findViewById(R.id.video_view);
+    }
 
-        mMediaController = new MediaController(this);
-        mMediaController.setAnchorView(mVideoView);
-        mVideoView.setMediaController(mMediaController);
-
-        // 设置监听视频装载完成的事件
+    private void initPlayer() {
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                showLog("监听视频装载完成..." + mVideoView.getDuration());
-                mVideoView.start();
-                mVideoView.resizeVideo(1080, 1868);
+                Log.i(TAG, "onPrepared...");
+                mp.start();
             }
         });
-
-        // 设置监听播放完成的事件
+        mVideoView.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+            @Override
+            public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+                Log.i(TAG, "onVideoSizeChanged...width: " + width + ", height: " + height);
+            }
+        });
         mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                showLog("监听播放完成...");
-                mVideoView.stopPlayback();
+                Log.i(TAG, "onCompletion...");
             }
         });
     }
@@ -56,14 +59,12 @@ public class MainActivity extends AppCompatActivity {
         // 开始播放
         String url = "rtsp://192.168.3.93:1234";
         Toast.makeText(this, url, Toast.LENGTH_LONG).show();
-        mVideoView.setVideoURI(Uri.parse(url));
-        mVideoView.requestFocus();
+        mVideoView.startPlay(url);
     }
 
     public void onClickStopVideo(View view) {
         // 停止播放
         showLog("onClickStopVideo..." + mVideoView.getDuration());
-        mVideoView.stopPlayback();
     }
 
     public void onClickPauseVideo(View view) {
@@ -78,10 +79,13 @@ public class MainActivity extends AppCompatActivity {
         mVideoView.start();
     }
 
+    private int degree = 0;
     public void onClickGetVideoInfo(View view) {
         int duration = mVideoView.getDuration();
         int currentPosition = mVideoView.getCurrentPosition();
         showLog("duration: " + duration + ", currentPosition: " + currentPosition);
+        degree+=90;
+        mVideoView.postRotate(degree%360);
     }
 
 
@@ -93,10 +97,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        // 停止播放
-        mVideoView.stopPlayback();
-        // 释放资源
-        mVideoView.suspend();
     }
 }
