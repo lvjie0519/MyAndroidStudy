@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         init();
         initPlayer();
+        FollowMeStudyManager.getIntance().setWeakReferencePlayer(mVideoView);
     }
 
     private void init() {
@@ -76,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
     public void onClickResumeVideo(View view) {
         showLog("onClickResumeVideo..." + mVideoView.getDuration());
         // 继续播放
-        mVideoView.start();
+        degree+=90;
+        mVideoView.setRotation(degree%360);
     }
 
     private int degree = 0;
@@ -97,5 +99,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        FollowMeStudyManager.getIntance().setWeakReferencePlayer(null);
     }
 }

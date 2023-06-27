@@ -59,9 +59,10 @@
 
         <com.example.rtsp.client.player.SimpleTextureViewPlayer
             android:id="@+id/video_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_width="200dp"
+            android:layout_height="320dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             />
 
     </RelativeLayout>
