@@ -117,6 +117,7 @@ public class MGWebSocketClientManager {
 
     public void sendMessage(String message) {
         if (mgWebSocketClient != null && mgWebSocketClient.isConnected()) {
+            Log.i(TAG, "will send message: " + message);
             mgWebSocketClient.sendMessage(message);
         }
     }

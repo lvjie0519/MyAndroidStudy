@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Camera;
+import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.OrientationEventListener;
 import android.view.SurfaceHolder;
 
 import com.example.rtsp.server.utils.AutoSizeUtils;
@@ -43,6 +45,9 @@ public class RtspServerActivity extends AppCompatActivity {
 
     private SurfaceView mSurfaceView;
     private Session mSession;
+
+    private OrientationEventListener mOrientationEventListener;
+    private int mLastOrientation;
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, RtspServerActivity.class);
@@ -99,11 +104,64 @@ public class RtspServerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rtsp_server);
 
         initView();
+        addListener();
         PermissionsUtils.getInstance().checkPermissions(this, permissions, permissionsResult);
     }
 
     private void initView(){
         mSurfaceView = findViewById(R.id.surface);
+    }
+
+    private void addListener() {
+        mOrientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
+            @Override
+            public void onOrientationChanged(int orientation) {
+                int resultOrientation = orientation;
+                if (resultOrientation == OrientationEventListener.ORIENTATION_UNKNOWN) {
+                    return;  //手机平放时，检测不到有效的角度
+                }
+                // 只检测是否有四个角度的改变
+                if (resultOrientation > 340 || resultOrientation < 20) {
+                    // 0度
+                    resultOrientation = 0;
+                } else if (resultOrientation > 70 && resultOrientation < 110) {
+                    // 90度
+                    resultOrientation = 90;
+                } else if (resultOrientation > 160 && resultOrientation < 200) {
+                    // 180度
+                    resultOrientation = 180;
+                } else if (resultOrientation > 250 && resultOrientation < 290) {
+                    // 270度
+                    resultOrientation = 270;
+                } else {
+                    resultOrientation = mLastOrientation;
+                }
+
+                if (mLastOrientation != resultOrientation) {
+                    Log.i(TAG, "onOrientationChanged call, orientation:" + orientation + ", resultOrientation: " + resultOrientation);
+
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("MSG_TYPE", "screen_orientation");
+                        jsonObject.put("last_orientation", mLastOrientation);
+                        jsonObject.put("current_orientation", resultOrientation);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    mLastOrientation = resultOrientation;
+                    MGWebSocketClientManager.getInstance().sendMessage(jsonObject.toString());
+                }
+            }
+        };
+
+        if (mOrientationEventListener.canDetectOrientation()) {
+            Log.v(TAG, "Can detect orientation");
+            mOrientationEventListener.enable();
+        } else {
+            Log.v(TAG, "Cannot detect orientation");
+            mOrientationEventListener.disable();
+        }
     }
 
     private PermissionsUtils.IPermissionsResult permissionsResult = new PermissionsUtils.IPermissionsResult() {
@@ -173,6 +231,7 @@ public class RtspServerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mOrientationEventListener.disable();
     }
 
     private void showLog(String message){
