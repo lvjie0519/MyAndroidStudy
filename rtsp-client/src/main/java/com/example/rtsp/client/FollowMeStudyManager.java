@@ -1,5 +1,6 @@
 package com.example.rtsp.client;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 import com.example.rtsp.client.player.SimpleTextureViewPlayer;
+import com.example.rtsp.client.player.anim.CustomValueAnimator;
 import com.mgtv.tvos.link.MGLinkFactory;
 import com.mgtv.tvos.link.interfaces.IClientProxy;
 import com.mgtv.tvos.link.websocket.MGWebSocketParamsConfig;
@@ -37,6 +39,11 @@ public class FollowMeStudyManager {
     private Handler mMainHandler;
 
     private WeakReference<SimpleTextureViewPlayer> mWeakReferencePlayer;
+
+    // 旋转和平移动画
+    private CustomValueAnimator mCustomValueAnimator;
+    private ObjectAnimator mObjectAnimatorX;
+    private ObjectAnimator mObjectAnimatorY;
 
     private FollowMeStudyManager(){}
 
@@ -115,7 +122,7 @@ public class FollowMeStudyManager {
                 try {
                     int lastOrientation = jsonObject.getInt("last_orientation");
                     int currentOrientation = jsonObject.getInt("current_orientation");
-                    updatePlayerOrientation(lastOrientation, currentOrientation);
+                    updatePlayerByClientScreen(lastOrientation, currentOrientation);
                 } catch (JSONException e) {
 
                 }
@@ -134,11 +141,72 @@ public class FollowMeStudyManager {
         this.mWeakReferencePlayer = new WeakReference<>(player);
     }
 
-    private void updatePlayerOrientation(int lastOrientation, int currentOrientation) {
-        Log.i(TAG, "updatePlayerOrientation call,  lastOrientation: " + lastOrientation + ", currentOrientation:" + currentOrientation);
-        if (mWeakReferencePlayer.get() != null) {
-            mWeakReferencePlayer.get().setRotation(currentOrientation);
+    private void updatePlayerByClientScreen(int lastOrientation, int currentOrientation) {
+        mMainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.i(TAG, "updatePlayerOrientation call,  lastOrientation: " + lastOrientation + ", currentOrientation:" + currentOrientation);
+                if (mWeakReferencePlayer.get() != null) {
+                    updatePlayerRotation(mWeakReferencePlayer.get(), lastOrientation, currentOrientation);
+                    updatePlayerPosition(mWeakReferencePlayer.get(), lastOrientation, currentOrientation);
+                }
+            }
+        });
+    }
+
+    private void updatePlayerRotation(SimpleTextureViewPlayer player, int lastOrientation, int currentOrientation) {
+        if(mCustomValueAnimator == null){
+            mCustomValueAnimator = new CustomValueAnimator() {
+                @Override
+                protected void onAnimProgress(float percent, int value) {
+                    player.setRotation(value);
+                }
+
+                @Override
+                protected void onAnimEnd() {
+
+                }
+            };
+
+            mCustomValueAnimator.setParams(lastOrientation, currentOrientation);
         }
+
+        mCustomValueAnimator.updateParams(lastOrientation, currentOrientation);
+        mCustomValueAnimator.start();
+    }
+
+    public void updatePlayerPosition(SimpleTextureViewPlayer player,  int lastOrientation, int currentOrientation) {
+        int halfWidth = player.getWidth() / 2;
+        int halfHeight = player.getHeight() / 2;
+        int scrollX = Math.abs((halfHeight - halfWidth + 1) / 4);
+
+        Log.i(TAG, "translate call, currentOrientation: " + currentOrientation + ", halfWidth:" + halfWidth + ", halfHeight:" + halfHeight+", scrollX:"+scrollX);
+
+        if (mObjectAnimatorX == null) {
+            mObjectAnimatorX = ObjectAnimator.ofFloat(player, "translationX", 0);
+            mObjectAnimatorX.setDuration(1000);
+        }
+
+        if (mObjectAnimatorY == null) {
+            mObjectAnimatorY = ObjectAnimator.ofFloat(player, "translationY", 0);
+            mObjectAnimatorY.setDuration(1000);
+        }
+
+        if (currentOrientation == 0 || currentOrientation == 180) {
+            float[] x = {0f};
+            mObjectAnimatorX.setFloatValues(x);
+            mObjectAnimatorY.setFloatValues(x);
+        } else {
+            float startX = 0;
+            float[] x = {startX + 0f, startX - scrollX, startX - scrollX * 2, startX - scrollX * 3, startX - scrollX * 4};
+            float[] y = {startX + 0f, startX + scrollX, startX + scrollX * 2, startX + scrollX * 3, startX + scrollX * 4};
+
+            mObjectAnimatorX.setFloatValues(x);
+            mObjectAnimatorY.setFloatValues(y);
+        }
+
+        mObjectAnimatorX.start();
+        mObjectAnimatorY.start();
     }
 
     private void showLog(String message) {

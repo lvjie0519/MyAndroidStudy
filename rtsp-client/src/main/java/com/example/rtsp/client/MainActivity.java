@@ -1,5 +1,6 @@
 package com.example.rtsp.client;
 
+import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.rtsp.client.player.SimpleTextureViewPlayer;
+import com.example.rtsp.client.player.anim.CustomValueAnimator;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -83,11 +85,60 @@ public class MainActivity extends AppCompatActivity {
 
     private int degree = 0;
     public void onClickGetVideoInfo(View view) {
-        int duration = mVideoView.getDuration();
-        int currentPosition = mVideoView.getCurrentPosition();
-        showLog("duration: " + duration + ", currentPosition: " + currentPosition);
-        degree+=90;
-        mVideoView.postRotate(degree%360);
+        // 正常旋转动画
+        CustomValueAnimator customValueAnimator = new CustomValueAnimator(){
+
+            @Override
+            protected void onAnimProgress(float percent, int value) {
+                mVideoView.setRotation(value);
+            }
+
+            @Override
+            protected void onAnimEnd() {
+                degree+=90;
+            }
+        };
+        customValueAnimator.setParams(degree, degree+90);
+        customValueAnimator.start();
+
+        translate(degree+90);
+    }
+
+    private void translate(int degree) {
+
+
+
+        int halfWidth = mVideoView.getWidth() / 2;
+        int halfHeight = mVideoView.getHeight() / 2;
+        int scrollX = Math.abs((halfHeight - halfWidth + 1) / 4);
+
+        Log.i(TAG, "translate call, degree: " + degree + ", halfWidth:" + halfWidth + ", halfHeight:" + halfHeight+", scrollX:"+scrollX);
+
+        if (degree % 360 == 0 || degree % 360 == 180) {
+
+            float startX = 0;
+            float[] x = {startX + 0f};
+            ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(mVideoView, "translationX", x);
+            objectAnimatorX.setDuration(1000);
+            objectAnimatorX.start();
+
+            float[] y = {startX + 0f};
+            ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(mVideoView, "translationY", y);
+            objectAnimatorY.setDuration(1000);
+            objectAnimatorY.start();
+
+        } else {
+            float startX = 0;
+            float[] x = {startX + 0f, startX - scrollX, startX - scrollX * 2, startX - scrollX * 3, startX - scrollX * 4};
+            ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(mVideoView, "translationX", x);
+            objectAnimatorX.setDuration(1000);
+            objectAnimatorX.start();
+
+            float[] y = {startX + 0f, startX + scrollX, startX + scrollX * 2, startX + scrollX * 3, startX + scrollX * 4};
+            ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(mVideoView, "translationY", y);
+            objectAnimatorY.setDuration(1000);
+            objectAnimatorY.start();
+        }
     }
 
 
