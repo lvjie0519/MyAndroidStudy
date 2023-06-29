@@ -675,8 +675,15 @@ public abstract class VideoStream extends MediaStream {
 				// setRecordingHint(true) is a very nice optimization if you plane to only use the Camera for recording
 				Parameters parameters = mCamera.getParameters();
 				if (parameters.getFlashMode()!=null) {
+					// 是否有闪光模式，如果有，则设置闪光模式（闪光灯开启或关闭）
 					parameters.setFlashMode(mFlashEnabled?Parameters.FLASH_MODE_TORCH:Parameters.FLASH_MODE_OFF);
 				}
+
+				/**
+				 * 此函数是提高MediaRecorder录制摄像头视频性能的
+				 * 技巧:如果你的应用是专为录像写的,那么在启动你的预览之前调用setRecordingHint(boolean)并传入true,这样可以帮你减少启动录制的时间
+				 * 在部分手机上面预览界面可能会变形，原因目前不明，为了兼容性,可注释掉
+				 */
 				parameters.setRecordingHint(true);
 				mCamera.setParameters(parameters);
 				mCamera.setDisplayOrientation(mOrientation);
@@ -735,8 +742,15 @@ public abstract class VideoStream extends MediaStream {
 		int[] max = VideoQuality.determineMaximumSupportedFramerate(parameters);
 		
 		double ratio = (double)mQuality.resX/(double)mQuality.resY;
+
+		/**
+		 * 设置SurfaceView的显示比例,
+		 * 默认情况下，SurfaceView会根据图像的原始尺寸进行显示，如果图像的宽高比与SurfaceView的宽高比不一致，就会出现图像拉伸或压缩的情况。
+		 * 通过调用requestAspectRatio方法，可以设置SurfaceView的显示比例，以保持图像的原始宽高比。
+		 */
 		mSurfaceView.requestAspectRatio(ratio);
-		
+
+		// 设置相机的预览图像格式
 		parameters.setPreviewFormat(mCameraImageFormat);
 		// 设置预览尺寸onPreviewFrame的尺寸
 		parameters.setPreviewSize(mQuality.resX, mQuality.resY);
@@ -745,11 +759,6 @@ public abstract class VideoStream extends MediaStream {
 
 		// 自动对焦
 //		parameters.setFocusMode(Camera.Parameters.FLASH_MODE_AUTO);
-
-		if (mCameraId == CameraInfo.CAMERA_FACING_FRONT) {
-			//设置镜像效果，支持的值为flip-mode-values=off,flip-v,flip-h,flip-vh;
-			parameters.set("rotation", "180");
-		}
 
 		try {
 			mCamera.setParameters(parameters);

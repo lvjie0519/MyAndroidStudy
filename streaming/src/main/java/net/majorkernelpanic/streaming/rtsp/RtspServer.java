@@ -376,7 +376,9 @@ public class RtspServer extends Service {
 	class WorkerThread extends Thread implements Runnable {
 
 		private final Socket mClient;
+		// 将数据发送给client
 		private final OutputStream mOutput;
+		// 从client读取数据
 		private final BufferedReader mInput;
 
 		// Each client has an associated session
@@ -472,7 +474,15 @@ public class RtspServer extends Service {
 			    /* ********************************************************************************** */
                 if (request.method.equalsIgnoreCase("DESCRIBE")) {
 
-                    // Parse the requested URI and configure the session
+					/**
+					 * DESCRIBE 主要功能：从服务器获取流媒体文件格式信息,从服务器获取流媒体文件传输信息
+					 * 关键字段：
+					 * Content-Type：一般是SDP
+					 * Content-length：一般是SDP的长度
+					 * 特殊说明：媒体信息通过SDP协议给出,例如这个例子中服务器回复range:clock=20180503T064832.00Z-20180510T064832.00Z，
+					 * 告诉客户端服务器的可时移range，并且是clock(绝对时间描述)，也就是PLAY阶段请求的时间是ISO 8601时间戳标准
+					 */
+					// Parse the requested URI and configure the session
                     mSession = handleRequest(request.uri, mClient);
                     mSessions.put(mSession, null);
                     mSession.syncConfigure();
@@ -492,7 +502,7 @@ public class RtspServer extends Service {
 
                 /* ********************************************************************************** */
                 /* ********************************* Method OPTIONS ********************************* */
-                /* ********************************************************************************** */
+                /* ****************** OPTIONS 主要功能：获取服务器/客户端支持的能力集 ***************** */
                 else if (request.method.equalsIgnoreCase("OPTIONS")) {
                     response.status = Response.STATUS_OK;
                     response.attributes = "Public: DESCRIBE,SETUP,TEARDOWN,PLAY,PAUSE\r\n";
@@ -503,7 +513,15 @@ public class RtspServer extends Service {
                 /* ********************************** Method SETUP ********************************** */
                 /* ********************************************************************************** */
                 else if (request.method.equalsIgnoreCase("SETUP")) {
-                    Pattern p;
+					/**
+					 * SETUP 主要功能：与服务器协商流媒体传输方式，此过程中，建立RTP通道
+					 * 关键字段：
+					 * Transport：指明服务器支持的传输方式及传输端口，地址等等信息。
+					 * 在例子中参数MP2T/RTP/UDP指明服务器传输媒体数据将使用UDP传输；参数server_port=8000-8001;source=239.2.1.232指明了服务器的地址和端口号;
+					 * destination=192.168.1.4指明客户端地址，这个例子中为内网地址，对于这种情况需要做NAT穿透。
+					 * 特殊说明：需要注意的是，媒体服务器的地址source=239.2.1.232，为组播地址，需要加入RTP组播来拉流。（但在此例子中，我试过使用该地址拉流也没数据）
+					 */
+					Pattern p;
                     Matcher m;
                     int p2, p1, ssrc, trackId, src[];
                     String destination;
@@ -546,6 +564,7 @@ public class RtspServer extends Service {
                     mSession.getTrack(trackId).setDestinationPorts(p1, p2);
 
                     boolean streaming = isStreaming();
+                    // 会启动各个流（视频流和音频流）
                     mSession.syncStart(trackId);
                     if (!streaming && isStreaming()) {
                         postMessage(MESSAGE_STREAMING_STARTED);
@@ -570,7 +589,23 @@ public class RtspServer extends Service {
                 /* ********************************** Method PLAY *********************************** */
                 /* ********************************************************************************** */
                 else if (request.method.equalsIgnoreCase("PLAY")) {
-                    String requestAttributes = "RTP-Info: ";
+					/**
+					 * PLAY 主要功能：与服务器协商流媒体播放
+					 * 关键字段：
+					 * Range:播放时间支持两种格式，Range: npt=0.0-end或者Range:clock=20100318T021919.35Z-20100318T031919.80Z
+					 * 方法1 位置描述，相对时间描述——npt(normalplay time)
+					 * •beginning      节目起始点
+					 * •now            当前播放点
+					 * •end            节目结束点
+					 * •相对时间        媒体的相对时间
+					 * 方法2 时间描述，绝对时间描述——clock，ISO 8601时间戳标准
+					 * •直接用数字形式表示与起始点的时间
+					 *
+					 * Scale：播放速度 例如1倍速，Scale: 1.0
+					 * 特殊说明：RTP-Info是前段回复我们的媒体服务器信息，可以看到这里和之前setup阶段前端回复的source地址并不一样。
+					 * （这才是媒体服务器的地址，这地方的冲突，可能是服务器写的不标准）
+					 */
+					String requestAttributes = "RTP-Info: ";
                     if (mSession.trackExists(0))
                         requestAttributes += "url=rtsp://" + mClient.getLocalAddress().getHostAddress() + ":" + mClient.getLocalPort() + "/trackID=" + 0 + ";seq=0,";
                     if (mSession.trackExists(1))
