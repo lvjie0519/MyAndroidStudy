@@ -298,6 +298,7 @@ public class RtpSocket implements Runnable {
 				mOldTimestamp = mTimestamps[mBufferOut];
 				if (mCount++>30) {
 					if (mTransport == TRANSPORT_UDP) {
+						Log.d(TAG, "send UDP packet, mBufferOut: " + mBufferOut + ", len: " + mPackets[mBufferOut].getLength());
 						mSocket.send(mPackets[mBufferOut]);
 					} else {
 						sendTCP();
@@ -316,7 +317,7 @@ public class RtpSocket implements Runnable {
 	private void sendTCP() {
 		synchronized (mOutputStream) {
 			int len = mPackets[mBufferOut].getLength();
-			Log.d(TAG,"sent "+len);
+			Log.d(TAG,"sendTCP sent "+len);
 			mTcpHeader[2] = (byte) (len>>8);
 			mTcpHeader[3] = (byte) (len&0xFF);
 			try {

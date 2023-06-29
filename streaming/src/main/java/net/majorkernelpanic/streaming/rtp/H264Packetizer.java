@@ -22,6 +22,8 @@ import java.io.IOException;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import net.majorkernelpanic.streaming.RtspTag;
+
 /**
  * 
  *   RFC 3984.
@@ -116,9 +118,11 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 
 				oldtime = System.nanoTime();
 				// We read a NAL units from the input stream and we send them
+				Log.i(RtspTag.MSG_SEND, "H264Packetizer run, start send data. streamType: "+streamType);
 				send();
 				// We measure how long it took to receive NAL units from the phone
 				duration = System.nanoTime() - oldtime;
+				Log.i(RtspTag.MSG_SEND, "H264Packetizer run, end send data. duration: "+duration/1000000);
 
 				stats.push(duration);
 				// Computes the average duration of a NAL unit
@@ -193,7 +197,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 			super.send(rtphl+stapa.length);
 		}
 
-		//Log.d(TAG,"- Nal unit length: " + naluLength + " delay: "+delay/1000000+" type: "+type);
+		Log.d(TAG,"- Nal unit length: " + naluLength + " delay: "+delay/1000000+" type: "+type);
 
 		// Small NAL unit => Single NAL unit 
 		if (naluLength<=MAXPACKETSIZE-rtphl-2) {
@@ -203,7 +207,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 			socket.updateTimestamp(ts);
 			socket.markNextPacket();
 			super.send(naluLength+rtphl);
-			//Log.d(TAG,"----- Single NAL unit - len:"+len+" delay: "+delay);
+			Log.d(TAG,"----- Single NAL unit - len:"+len+" delay: "+delay);
 		}
 		// Large NAL unit => Split nal unit 
 		else {
@@ -230,7 +234,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 				super.send(len+rtphl+2);
 				// Switch start bit
 				header[1] = (byte) (header[1] & 0x7F); 
-				//Log.d(TAG,"----- FU-A unit, sum:"+sum);
+				Log.d(TAG,"----- FU-A unit, sum:"+sum);
 			}
 		}
 	}

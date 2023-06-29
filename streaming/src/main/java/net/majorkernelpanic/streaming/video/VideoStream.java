@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 import net.majorkernelpanic.streaming.GlobalContext;
 import net.majorkernelpanic.streaming.MediaStream;
+import net.majorkernelpanic.streaming.RtspTag;
 import net.majorkernelpanic.streaming.Stream;
 import net.majorkernelpanic.streaming.exceptions.CameraInUseException;
 import net.majorkernelpanic.streaming.exceptions.ConfNotSupportedException;
@@ -500,18 +501,37 @@ public abstract class VideoStream extends MediaStream {
 
 		// H264编码器
 		mMediaCodec = MediaCodec.createByCodecName(debugger.getEncoderName());
+		// width和height是视频分辨率的宽度和高度
 		MediaFormat mediaFormat = MediaFormat.createVideoFormat("video/avc", mQuality.resX, mQuality.resY);
-//		MediaFormat mediaFormat = MediaFormat.createVideoFormat("video/avc", mQuality.resY, mQuality.resX);
 		mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, mQuality.bitrate);
 		mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, mQuality.framerate);	
 		mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT,debugger.getEncoderColorFormat());
+		/**
+		 * 一个用于定义视频编码器关键帧（I帧）间隔的常量。
+		 * 关键帧是视频编码中的重要帧，它包含完整的图像信息，而非仅仅是变化的部分，其他帧（如P帧和B帧）则通常只包含变化的部分。
+		 *
+		 * KEY_I_FRAME_INTERVAL常量表示视频编码器在生成关键帧之间的间隔，单位是秒。
+		 * 通过设置这个参数，可以控制视频编码器生成关键帧的频率，进而影响视频的编码质量和压缩效率。
+		 *
+		 * 可以调整KEY_I_FRAME_INTERVAL的值来平衡视频的编码质量和压缩效率。较小的间隔值会产生更高质量的视频，但会增加编码数据量和压缩时间。
+		 * 较大的间隔值会减少数据量和压缩时间，但可能会降低视频质量。
+		 *
+		 * 需要注意的是，KEY_I_FRAME_INTERVAL的具体作用和效果可能因视频编码器的实现、设备硬件和视频内容的特性而有所差异。
+		 * 因此，在进行视频编码时，建议根据实际测试和需求进行调整和优化。
+		 */
 		mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
 		mMediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
 		mMediaCodec.start();
 
 		Camera.PreviewCallback callback = new Camera.PreviewCallback() {
+
+			/**
+			 * System.nanoTime()  纳秒
+			 * android系统开机到当前的时间, 重启android系统后该值会重置为0
+			 */
 			long now = System.nanoTime()/1000, oldnow = now, i=0;
 			ByteBuffer[] inputBuffers = mMediaCodec.getInputBuffers();
+
 			@Override
 			public void onPreviewFrame(byte[] data, Camera camera) {
 				oldnow = now;
@@ -521,6 +541,7 @@ public abstract class VideoStream extends MediaStream {
 					//Log.d(TAG,"Measured: "+1000000L/(now-oldnow)+" fps.");
 				}
 				try {
+					// 方法获取一个可用的输入缓冲区索引
 					int bufferIndex = mMediaCodec.dequeueInputBuffer(500000);
 					if (bufferIndex>=0) {
 						inputBuffers[bufferIndex].clear();
@@ -547,8 +568,12 @@ public abstract class VideoStream extends MediaStream {
 								Log.i("lvjielvjie", "time cost: " + (System.currentTimeMillis() - time));
 							}
 
+							// 将NV21(yuv420sp)转换成yuv420p(H264编码要求此颜色格式)
 							convertor.convert(data, inputBuffers[bufferIndex]);
 						}
+
+						// 将输入缓冲区提交给MediaCodec, now: 当前数据的时间戳，单位是微秒；
+						Log.i(RtspTag.MSG_SEND, "Camera onPreviewFrame call, add data to MediaCodec....");
 						mMediaCodec.queueInputBuffer(bufferIndex, 0, inputBuffers[bufferIndex].position(), now, 0);
 					} else {
 						Log.e(TAG,"No buffer available !");

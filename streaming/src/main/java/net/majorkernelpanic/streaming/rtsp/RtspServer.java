@@ -33,6 +33,8 @@ import java.util.Locale;
 import java.util.WeakHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import net.majorkernelpanic.streaming.RtspTag;
 import net.majorkernelpanic.streaming.Session;
 import net.majorkernelpanic.streaming.SessionBuilder;
 import android.app.Service;
@@ -398,7 +400,7 @@ public class RtspServer extends Service {
 			Request request;
 			Response response;
 
-			Log.i(TAG, "Connection from "+mClient.getInetAddress().getHostAddress());
+			Log.i(RtspTag.MAIN_TAG, "Connection from "+mClient.getInetAddress().getHostAddress());
 
 			while (!Thread.interrupted()) {
 
@@ -451,6 +453,7 @@ public class RtspServer extends Service {
 			mSession.release();
 
 			try {
+				Log.i(RtspTag.MAIN_TAG, "Client disconnected， Client: " + mClient.getInetAddress().getHostAddress());
 				mClient.close();
 			} catch (IOException ignore) {}
 
@@ -460,6 +463,7 @@ public class RtspServer extends Service {
 
 		public Response processRequest(Request request) throws IllegalStateException, IOException {
 			Response response = new Response(request);
+			Log.i(RtspTag.MAIN_TAG, "processRequest call, receive client method :" + request.method);
 
             //Ask for authorization unless this is an OPTIONS request
             if(!isAuthorized(request) && !request.method.equalsIgnoreCase("OPTIONS"))
