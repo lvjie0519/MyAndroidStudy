@@ -10,17 +10,17 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="启动 rstp server"
+        android:text="扫码"
         android:textAllCaps="false"
-        android:onClick="onClickOpenRstpServerPage"
+        android:onClick="onClickOpenQrPage"
         />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="扫码"
+        android:text="启动 rstp server"
         android:textAllCaps="false"
-        android:onClick="onClickOpenQrPage"
+        android:onClick="onClickOpenRstpServerPage"
         />
 
     <LinearLayout
