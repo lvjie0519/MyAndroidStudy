@@ -37,7 +37,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".camera.camera1.Camera1DemoActivity"></activity>
+        <activity android:name=".sqlite.SqliteTestActivity"></activity>
+        <activity android:name=".camera.camera1.Camera1DemoActivity" />
         <activity android:name=".camera.Camera2DemoActivity" />
         <activity android:name=".websocket.WebSocketServerActivity" />
         <activity android:name=".websocket.client.WebSocketClientActivity" />

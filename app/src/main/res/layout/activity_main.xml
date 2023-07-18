@@ -27,6 +27,12 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="数据库测试"
+            android:textAllCaps="false"
+            android:onClick="onClickTestSqlite"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="相机测试1"
             android:textAllCaps="false"
             android:onClick="onClickTestCamera1"/>
