@@ -96,6 +96,13 @@
             android:text="删除表"
             android:onClick="onClickDeleteTable"
             />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="其他测试"
+            android:onClick="onClickOtherTest"
+            />
     </LinearLayout>
 
     <TextView

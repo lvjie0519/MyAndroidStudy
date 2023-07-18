@@ -216,6 +216,7 @@ public class MySqliteHelper extends SQLiteOpenHelper {
 
     private synchronized void ensureDatabase(String tableName) {
         if (mDb != null && mDb.isOpen()) {
+            createTableIfNotExists(mDb, tableName);
             return;
         }
 

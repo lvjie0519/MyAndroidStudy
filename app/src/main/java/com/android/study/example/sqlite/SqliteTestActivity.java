@@ -112,4 +112,15 @@ public class SqliteTestActivity extends AppCompatActivity {
     private void showMessageToView(String message){
         mTvShowInfo.setText(message);
     }
+
+    public void onClickOtherTest(View view) {
+        int size = 100;
+        for(int i=0; i<size; i++){
+            String tableName = "table_"+i;
+            String key = "key_"+i;
+            String value = "value_"+i;
+
+            mSqliteHelper.addDataToTable(tableName, key, value);
+        }
+    }
 }
