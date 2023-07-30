@@ -17,7 +17,11 @@
         android:theme="@style/Theme.MyAndroidStudy">
         <activity
             android:name=".webview.WebViewTestActivity"
-            android:exported="true" />
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            />
         <activity
             android:name=".localnet.LocalNetScanActivity"
             android:exported="true" />
