@@ -79,9 +79,9 @@ public class WebViewTestActivity extends AppCompatActivity {
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
 //        mWebView.loadUrl("file:///android_asset/upload_image.html");
-        mWebView.loadUrl("https://haokan.baidu.com/v?pd=wisenatural&vid=21794045913693680");
+        mWebView.loadUrl("https://mixtest.mixiaoedu.com/banpai/#/");
 
-//        this.mWebView.setWebViewClient(new InnerWebViewClient());
+        this.mWebView.setWebViewClient(new InnerWebViewClient());
 
         this.mWebView.setWebChromeClient(new InsideWebChromeClient());
 
@@ -132,6 +132,24 @@ public class WebViewTestActivity extends AppCompatActivity {
             mCustomView = null;
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             super.onHideCustomView();
+        }
+    }
+
+    private class InnerWebViewClient extends WebViewClient{
+        @Nullable
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            String url = request.getUrl().toString();
+            Log.i("lvjie", "shouldInterceptRequest url: "+url);
+            return super.shouldInterceptRequest(view, request);
+        }
+
+        @Nullable
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+            String tempUrl = url;
+//            Log.i("lvjie", "shouldInterceptRequest url: "+url);
+            return super.shouldInterceptRequest(view, url);
         }
     }
 
