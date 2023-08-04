@@ -16,6 +16,19 @@
             android:orientation="horizontal">
 
             <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClickGetAndroidId"
+                android:text="获取唯一序列号"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
                 android:id="@+id/btn_get_screen_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

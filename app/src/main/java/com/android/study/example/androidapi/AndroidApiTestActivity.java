@@ -24,6 +24,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -892,6 +893,33 @@ public class AndroidApiTestActivity extends AppCompatActivity {
         intent.setData(Uri.parse("content://com.sangfor.emm.providers.media/external/images/media"));
         datas = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         Log.i("lvjie", "size: "+datas.size());   // 数据为1
+    }
+
+    public void onClickGetAndroidId(View view) {
+
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            // 没有权限，申请权限
+//            String [] permissions = {Manifest.permission.READ_PHONE_STATE};
+//            ActivityCompat.requestPermissions(this, permissions,1);
+//        } else {
+//            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//            String deviceId = telephonyManager.getDeviceId();
+//            Log.i("lvjie", "1-deviceId: "+deviceId);
+//        }
+
+
+        String deviceId;
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        } else {
+            final TelephonyManager mTelephony = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            if (mTelephony.getDeviceId() != null) {
+                deviceId = mTelephony.getDeviceId();
+            } else {
+                deviceId = Settings.Secure.getString(getContentResolver(),Settings.Secure.ANDROID_ID);
+            }
+        }
     }
 
     private static class NetworkChangeReceiver extends BroadcastReceiver {
