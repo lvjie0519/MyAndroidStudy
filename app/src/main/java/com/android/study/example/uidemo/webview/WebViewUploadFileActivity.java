@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.GeolocationPermissions;
+import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -108,6 +109,7 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
         mWebView.requestFocus();
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        mWebView.addJavascriptInterface(new WebAppInterface(), "AndroidJsInterface");
         mWebView.loadUrl("file:///android_asset/upload_image.html");
 //        mWebView.loadUrl("https://mail.qq.com/");
 //        mWebView.loadUrl("https://m.sogou.com/web/searchList.jsp?s_from=pcsearch&keyword=百度");
@@ -254,6 +256,13 @@ public class WebViewUploadFileActivity extends AppCompatActivity {
         }
     }
 
+    private class WebAppInterface {
 
+        @JavascriptInterface
+        public void finishPage() {
+            Log.i("lvjie", "js finishPage call.");
+            finish();
+        }
+    }
 
 }

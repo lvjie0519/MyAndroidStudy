@@ -10,11 +10,18 @@
 	input {
 		font-size:40px;
 	}
-</style>
+	</style>
+
+	<script type="text/javascript">
+        function finishPage() {
+            AndroidJsInterface.finishPage();
+        }
+    </script>
 </head>
 <body>
 <div align="center">
 	<form action="" enctype="application/x-www-form-urlencoded">
+		<button onclick="finishPage()">返回</button><br><br>
 		1. 文件选择(accept 未传递任何参数)：<input type="file" /><br><br>
 		2. 文件选择(accept 传递*/*)：<input type="file" accept="*/*" /><br><br>
 		3. 文件选择(accept 传递image/*)：<input type="file" accept="image/*" /><br><br>
