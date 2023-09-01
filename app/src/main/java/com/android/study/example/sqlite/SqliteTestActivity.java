@@ -5,12 +5,20 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.study.example.R;
+
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 public class SqliteTestActivity extends AppCompatActivity {
 
@@ -123,4 +131,35 @@ public class SqliteTestActivity extends AppCompatActivity {
             mSqliteHelper.addDataToTable(tableName, key, value);
         }
     }
+
+    private String tbName = "tbName";
+    private String tbKey = "tbKey";
+    private String encodeDada = "";
+    public void onClickGenerateSeckey(View view) {
+        String tbValue = mSqliteHelper.getDataFromTable(tbName, tbKey);
+
+        if(TextUtils.isEmpty(tbValue)){
+            tbValue = DesUtil.generateKey();
+            mSqliteHelper.addDataToTable(tbName, tbKey, tbValue);
+        }
+
+        showToast(tbValue);
+        Log.i("lvjie", "secretKey: "+tbValue);
+    }
+
+    public void onClickEncryptData(View view) {
+        String originData = "410028110@qq.com";
+        String secretKey = mSqliteHelper.getDataFromTable(tbName, tbKey);
+
+        encodeDada = DesUtil.encode(secretKey, originData);
+        Log.i("lvjie", "onClickEncryptData originData: "+originData+",  encodeDada: "+encodeDada);
+    }
+
+    public void onClickDecryptData(View view) {
+        String secretKey = mSqliteHelper.getDataFromTable(tbName, tbKey);
+        String originData = DesUtil.decode(secretKey, encodeDada);
+        Log.i("lvjie", "onClickDecryptData originData: "+originData+",  encodeDada: "+encodeDada);
+    }
+
+
 }

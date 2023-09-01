@@ -25,7 +25,7 @@ import com.android.study.example.R;
  *
  * MMKV 优势
  * 1、数据格式及更新范围优化
- * SharedPreferences 采用 xml 数据存储，每次读写操作都会全局更新；MMKV 采用 protobuf 数据存储，更紧密，支持局部更新
+ * SharedPreferences 采用 xml 数据存储，每次读写操作都会全局更新；MMKV 采用 protobuf（二进制编码方式） 数据存储，更紧密，支持局部更新
  * 2、文件耗时操作优化
  * MMKV 采用 MMap 内存映射的方式取代 I/O 操作，使用 一次拷贝技术提高更新速度；
  *

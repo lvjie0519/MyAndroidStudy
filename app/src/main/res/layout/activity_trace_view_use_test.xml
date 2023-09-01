@@ -11,7 +11,13 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="方法耗时测试"
+        android:text="Debug.startMethodTracing测试"
         android:onClick="onClickFuncTimeCost"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trace.beginSection测试"
+        android:onClick="onClickTraceMethod"/>
 
 </LinearLayout>

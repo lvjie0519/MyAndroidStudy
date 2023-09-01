@@ -2,8 +2,10 @@ package com.android.study.example.performance_optimization;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Printer;
 import android.view.View;
 
 import com.android.study.example.R;
@@ -23,5 +25,11 @@ public class PerformOptMainTestActivity extends AppCompatActivity {
 
     public void openTraceViewUseTestActivity(View view) {
         TraceViewUseTestActivity.startActivity(this);
+        Looper.getMainLooper().setMessageLogging(new Printer() {
+            @Override
+            public void println(String x) {
+                
+            }
+        });
     }
 }

@@ -1,10 +1,14 @@
 package com.android.study.example.uidemo.animation;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -107,6 +111,13 @@ public class AnimationDemoActivity extends AppCompatActivity {
 
         objectAnimatorX.start();
         objectAnimatorY.start();
+
+        objectAnimatorX.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Log.i("lvjielvjie", "getAnimatedValue: "+animation.getAnimatedValue());
+            }
+        });
 
         startX+=240;
         startY+=90f;

@@ -25,6 +25,14 @@
             />
 
         <Button
+            android:id="@+id/btn_activity_perform_opt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="性能优化测试"
+            android:textAllCaps="false"
+            android:onClick="openPerformOptActivity"/>
+
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="数据库测试"
@@ -300,13 +308,6 @@
             android:textAllCaps="false"
             android:onClick="onClickThirdLibTestActivity"/>
 
-        <Button
-            android:id="@+id/btn_activity_perform_opt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="性能优化测试"
-            android:textAllCaps="false"
-            android:onClick="openPerformOptActivity"/>
         <Button
             android:id="@+id/btn_activity_wuzhangai"
             android:layout_width="wrap_content"

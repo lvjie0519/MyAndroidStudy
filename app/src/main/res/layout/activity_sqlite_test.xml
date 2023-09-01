@@ -104,6 +104,34 @@
             android:onClick="onClickOtherTest"
             />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取获取秘钥"
+            android:onClick="onClickGenerateSeckey"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="加密数据"
+            android:onClick="onClickEncryptData"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="解密数据"
+            android:onClick="onClickDecryptData"
+            />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_show_info"

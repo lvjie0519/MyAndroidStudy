@@ -484,6 +484,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void openPerformOptActivity(View view) {
         PerformOptMainTestActivity.startActivity(this);
+//        ImagePicker.with(this)
+//                .setFolderMode(true)
+//                .setFolderTitle("选择文件夹")
+//                .setDirectoryName("Sample")
+//                .setMultipleMode(false)
+//                .setShowCamera(true)
+//                .setMaxSize(1)
+//                .setLimitMessage("超出文件选择限制")
+//                .setRequestCode(2)
+//                .start();
     }
 
     public void openWuZhangAiTestPage(View view) {
