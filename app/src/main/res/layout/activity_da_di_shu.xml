@@ -33,6 +33,11 @@
 
     <com.android.study.example.game.dadishu.WhackMoleView
         android:id="@+id/whackMoleView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <com.android.study.example.game.dadishu.stickfigure.StickFigureView
+        android:id="@+id/stickFigureView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
