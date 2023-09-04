@@ -6,7 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 使用蓝牙所需要的权限 -->
@@ -39,7 +40,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".sqlite.SqliteTestActivity"></activity>
+        <activity
+            android:name=".game.dadishu.DaDiShuActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".sqlite.SqliteTestActivity" />
         <activity android:name=".camera.camera1.Camera1DemoActivity" />
         <activity android:name=".camera.Camera2DemoActivity" />
         <activity android:name=".websocket.WebSocketServerActivity" />

@@ -25,6 +25,13 @@
             />
 
         <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="打地鼠"
+            android:textSize="14sp"
+            android:textAllCaps="false"
+            android:onClick="openMouseActivity"/>
+        <Button
             android:id="@+id/btn_activity_perform_opt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
