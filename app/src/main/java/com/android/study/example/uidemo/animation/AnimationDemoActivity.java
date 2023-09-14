@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.android.study.example.R;
 import com.android.study.example.utils.ToastUtil;
@@ -27,6 +30,8 @@ public class AnimationDemoActivity extends AppCompatActivity {
     private View scanView;
     private Animation animation;
 
+    private LinearLayout mLayoutViewAnim;
+
     public static void startActivity(Context context){
         Intent intent = new Intent(context, AnimationDemoActivity.class);
         context.startActivity(intent);
@@ -38,9 +43,12 @@ public class AnimationDemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_animation_demo);
 
         initView();
+        initAnima();
     }
 
     private void initView(){
+        mLayoutViewAnim = findViewById(R.id.layout_beat_mouse);
+
         scaleAnimView = findViewById(R.id.view_anim);
         findViewById(R.id.btn_anim).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,5 +129,24 @@ public class AnimationDemoActivity extends AppCompatActivity {
 
         startX+=240;
         startY+=90f;
+    }
+
+    private ImageView ivBeatMouseGraph;
+    public void btnOnClickBeatMouseGraph(View view) {
+//        if(ivBeatMouseGraph == null){
+//            ivBeatMouseGraph = findViewById(R.id.iv_beat_mouse_graph);
+//        }
+//
+//        AnimationDrawable animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.beat_mouse_graph);
+//        ivBeatMouseGraph.setBackground(animationDrawable);
+//        animationDrawable.start();
+    }
+
+    private void initAnima(){
+        BeatMouseAnimView beatMouseAnimView = new BeatMouseAnimView(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(200, 200);
+        beatMouseAnimView.setLayoutParams(layoutParams);
+
+        mLayoutViewAnim.addView(beatMouseAnimView);
     }
 }

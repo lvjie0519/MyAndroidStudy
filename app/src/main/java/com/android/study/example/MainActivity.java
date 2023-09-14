@@ -8,6 +8,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -85,6 +88,9 @@ import com.android.study.example.websocket.WebSocketServerActivity;
 import com.android.study.example.websocket.client.WebSocketClientActivity;
 import com.annotaions.example.MyAnnotation;
 import com.jaeger.library.StatusBarUtil;
+import com.yanzhenjie.album.Action;
+import com.yanzhenjie.album.Album;
+import com.yanzhenjie.album.AlbumFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -750,7 +756,74 @@ public class MainActivity extends AppCompatActivity {
         SqliteTestActivity.startActivity(this);
     }
 
+    private SoundPool soundPool;
+    private int soundId;
     public void openMouseActivity(View view) {
-        DaDiShuActivity.startActivity(this);
+//        DaDiShuActivity.startActivity(this);
+
+        if(soundPool == null){
+            soundPool = new SoundPool.Builder()
+                    .setMaxStreams(5)
+                    .setAudioAttributes(new AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_MUSIC).build())
+                    .build();
+
+//            soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        }
+        soundId = soundPool.load(this, R.raw.beat_moue, 1);
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                soundPool.play(sampleId, 1.0f, 1.0f, 0, 0, 1.0f);
+            }
+        });
+    }
+
+    private ArrayList<AlbumFile> mAlbumFiles = new ArrayList<>();
+    private void openImagePick(){
+        Album.image(this) // Image selection.
+                .multipleChoice()
+//                .camera()
+                .columnCount(2)
+                .selectCount(6)
+                .checkedList(mAlbumFiles)
+//                .filterSize() // Filter the file size.
+//                .filterMimeType() // Filter file format.
+//                .afterFilterVisibility() // Show the filtered files, but they are not available.
+                .onResult(new Action<ArrayList<AlbumFile>>() {
+                    @Override
+                    public void onAction(@NonNull ArrayList<AlbumFile> result) {
+                    }
+                })
+                .onCancel(new Action<String>() {
+                    @Override
+                    public void onAction(@NonNull String result) {
+                    }
+                })
+                .start();
+    }
+
+    private void openVideoPick(){
+        Album.video(this) // Video selection.
+                .multipleChoice()
+                .camera(true)
+                .columnCount(2)
+                .selectCount(6)
+                .checkedList(mAlbumFiles)
+//                .filterSize()
+//                .filterMimeType()
+//                .filterDuration()
+//                .afterFilterVisibility() // Show the filtered files, but they are not available.
+                .onResult(new Action<ArrayList<AlbumFile>>() {
+                    @Override
+                    public void onAction(@NonNull ArrayList<AlbumFile> result) {
+                        Log.i("lvjie", ""+result.size());
+                    }
+                })
+                .onCancel(new Action<String>() {
+                    @Override
+                    public void onAction(@NonNull String result) {
+                    }
+                })
+                .start();
     }
 }
