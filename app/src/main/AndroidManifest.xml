@@ -40,7 +40,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".uidemo.selfdefineview.SelfDefineViewTestActivity"></activity>
+        <activity android:name=".androidapi.SoundPoolTestActivity"></activity>
+        <activity android:name=".uidemo.selfdefineview.SelfDefineViewTestActivity" />
         <activity
             android:name=".game.dadishu.DaDiShuActivity"
             android:screenOrientation="landscape" />

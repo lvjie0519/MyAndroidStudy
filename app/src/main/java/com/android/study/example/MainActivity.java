@@ -46,6 +46,7 @@ import com.android.study.example.androidapi.OrientationTestActivity;
 import com.android.study.example.androidapi.ScreenAdapterTestActivity;
 import com.android.study.example.androidapi.ShareIsolationTestActivity;
 import com.android.study.example.androidapi.SharedPreferencesTestActivity;
+import com.android.study.example.androidapi.SoundPoolTestActivity;
 import com.android.study.example.androidapi.SurfaceViewDrawDemoActivity;
 import com.android.study.example.androidapi.ViewTestActivity;
 import com.android.study.example.androidapi.WuZhangAiTestActivity;
@@ -828,5 +829,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .start();
+    }
+
+    public void openSoundPoolTestActivity(View view) {
+        SoundPoolTestActivity.startActivity(this);
     }
 }
