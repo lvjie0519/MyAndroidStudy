@@ -78,6 +78,7 @@ import com.android.study.example.uidemo.picker.PickerTestActivity;
 import com.android.study.example.uidemo.screenshot.ScreenshotTestActivity;
 import com.android.study.example.uidemo.search.RvSearchAdapter;
 import com.android.study.example.uidemo.search.SearchEditTestActivity;
+import com.android.study.example.uidemo.selfdefineview.SelfDefineViewTestActivity;
 import com.android.study.example.uidemo.webview.AgentwebTestActivity;
 import com.android.study.example.uidemo.webview.WebViewDemoActivity;
 import com.android.study.example.uidemo.webview.WebViewJsDemoActivity;
@@ -761,21 +762,23 @@ public class MainActivity extends AppCompatActivity {
     public void openMouseActivity(View view) {
 //        DaDiShuActivity.startActivity(this);
 
-        if(soundPool == null){
-            soundPool = new SoundPool.Builder()
-                    .setMaxStreams(5)
-                    .setAudioAttributes(new AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_MUSIC).build())
-                    .build();
+//        if(soundPool == null){
+//            soundPool = new SoundPool.Builder()
+//                    .setMaxStreams(5)
+//                    .setAudioAttributes(new AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_MUSIC).build())
+//                    .build();
+//
+////            soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+//        }
+//        soundId = soundPool.load(this, R.raw.beat_moue, 1);
+//        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+//            @Override
+//            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+//                soundPool.play(sampleId, 1.0f, 1.0f, 0, 0, 1.0f);
+//            }
+//        });
 
-//            soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
-        }
-        soundId = soundPool.load(this, R.raw.beat_moue, 1);
-        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                soundPool.play(sampleId, 1.0f, 1.0f, 0, 0, 1.0f);
-            }
-        });
+        SelfDefineViewTestActivity.startActivity(this);
     }
 
     private ArrayList<AlbumFile> mAlbumFiles = new ArrayList<>();
