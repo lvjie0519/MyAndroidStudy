@@ -57,6 +57,7 @@ import com.android.study.example.broadcast.LocalBroadcastRegisterDemoActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.camera.Camera2DemoActivity;
 import com.android.study.example.camera.camera1.Camera1DemoActivity;
+import com.android.study.example.filepicker.VideoPickerActivity;
 import com.android.study.example.game.dadishu.DaDiShuActivity;
 import com.android.study.example.leak.LeakTest1Activity;
 import com.android.study.example.leak.LeakTestInstance;
@@ -834,5 +835,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void openSoundPoolTestActivity(View view) {
         SoundPoolTestActivity.startActivity(this);
+    }
+
+    public void openFilePickerActivity(View view) {
+        VideoPickerActivity.startActivity(this, VideoPickerActivity.class);
     }
 }

@@ -27,6 +27,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="视频 测试"
+            android:textSize="14sp"
+            android:textAllCaps="false"
+            android:onClick="openFilePickerActivity"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="SoundPool 测试"
             android:textSize="14sp"
             android:textAllCaps="false"

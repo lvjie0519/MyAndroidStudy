@@ -83,4 +83,10 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <!-- MaxHeightLayout属性 -->
+    <declare-styleable name="MaxHeightLayout">
+        <attr name="mhl_HeightRatio" format="reference|float" />
+        <attr name="mhl_HeightDimen" format="reference|dimension" />
+    </declare-styleable>
+
 </resources>
