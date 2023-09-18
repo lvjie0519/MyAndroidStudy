@@ -779,7 +779,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        SelfDefineViewTestActivity.startActivity(this);
+//        SelfDefineViewTestActivity.startActivity(this);
+        openVideoPick();
     }
 
     private ArrayList<AlbumFile> mAlbumFiles = new ArrayList<>();
