@@ -1,3 +1,4 @@
+include ':mx-filepicker'
 include ':libyuv'
 include ':rtsp-client'
 include ':rtsp-server'
