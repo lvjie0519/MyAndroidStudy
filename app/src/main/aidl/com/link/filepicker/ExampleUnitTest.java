@@ -1,4 +1,4 @@
-package com.mgtv.link.mx_filepicker;
+package com.link.filepicker;
 
 import org.junit.Test;
 

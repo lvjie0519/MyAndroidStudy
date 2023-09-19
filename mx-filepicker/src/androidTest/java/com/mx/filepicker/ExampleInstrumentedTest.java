@@ -1,4 +1,4 @@
-package com.mgtv.link.mx_filepicker;
+package com.mx.filepicker;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -20,6 +20,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.mgtv.link.mx_filepicker.test", appContext.getPackageName());
+        assertEquals("com.mx.filepicker.test", appContext.getPackageName());
     }
 }
