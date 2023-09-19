@@ -80,6 +80,7 @@ dependencies {
     implementation "org.java-websocket:Java-WebSocket:1.5.1"
 
     implementation project(':libyuv')
+    implementation project(':mx-filepicker')
 
     implementation 'com.yanzhenjie:album:2.1.3'
 
