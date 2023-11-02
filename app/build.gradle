@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: MyBuildScrPlugin
+apply plugin: 'com.example.gradle.plugin'
 
 def configInfo = rootProject.ext.android
 

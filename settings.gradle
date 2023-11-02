@@ -1,3 +1,4 @@
+include ':GradlePlugin'
 include ':mx-filepicker'
 include ':libyuv'
 include ':rtsp-client'

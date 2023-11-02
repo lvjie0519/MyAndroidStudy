@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+    id 'java-gradle-plugin'
+}
+
+gradlePlugin {
+    plugins {
+        // 声明插件信息，这里的 myCustomPlugin 名字随意
+        myCustomPlugin {
+            // 插件ID
+            id = 'com.example.gradle.plugin'
+            // 插件的实现类
+            implementationClass = 'com.example.gradle.plugin.CustomPlugin'
+        }
+    }
+}
+
+dependencies {
+    implementation gradleApi() // gradle task
+}
