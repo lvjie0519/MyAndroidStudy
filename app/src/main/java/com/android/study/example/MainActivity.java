@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -90,6 +91,7 @@ import com.android.study.example.websocket.WebSocketServerActivity;
 import com.android.study.example.websocket.client.WebSocketClientActivity;
 import com.annotaions.example.MyAnnotation;
 import com.jaeger.library.StatusBarUtil;
+import com.mx.filepicker.Constant;
 import com.mx.filepicker.VideoPickerActivity;
 import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
@@ -838,6 +840,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openFilePickerActivity(View view) {
-        VideoPickerActivity.startActivity(this, VideoPickerActivity.class);
+        String brand = Build.BRAND;
+        String model = Build.MODEL;
+        int version = Build.VERSION.SDK_INT ;
+
+//        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(intent, 1001);
+        VideoPickerActivity.startActivity(this, VideoPickerActivity.class, 1001);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

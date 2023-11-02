@@ -1,5 +1,7 @@
 package com.mx.filepicker;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,6 +50,12 @@ public class VideoPickerActivity extends BaseActivity {
     private LinearLayout ll_folder;
     private RelativeLayout rl_done;
     private RelativeLayout tb_pick;
+
+    public static void startActivity(Activity activity, Class<?> cls, int requestCode){
+        Intent intent = new Intent(activity, cls);
+        intent.putExtra(Constant.MAX_NUMBER, 1);
+        activity.startActivityForResult(intent, requestCode);
+    }
 
     @Override
     void permissionGranted() {
