@@ -17,4 +17,9 @@ gradlePlugin {
 
 dependencies {
     implementation gradleApi() // gradle task
+
+    implementation("com.android.tools.build:gradle:4.1.2")
+    implementation 'org.ow2.asm:asm:9.2'
+    implementation 'org.ow2.asm:asm-util:9.2'
+    implementation 'org.ow2.asm:asm-commons:9.2'
 }
