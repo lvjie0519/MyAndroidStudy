@@ -2,6 +2,8 @@ package com.android.study.example;
 
 import android.app.Application;
 import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import com.android.study.example.broadcast.CommonGlobalReceiverManager;
@@ -19,8 +21,9 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-//        initGlobalCrash();
+        initGlobalCrash();
 //        initLeakCanary();
+        trycatchAppException();
         registerBroadcast();
 
         InstallReceiver.registerReceiver(this);
@@ -62,5 +65,41 @@ public class MainApplication extends Application {
                 e.printStackTrace();
             }
         });
+    }
+
+    /**
+     *
+     */
+    private void trycatchAppException(){
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                //主线程异常拦截
+                while (true) {
+                    try {
+                        Looper.loop();//主线程的异常会从这里抛出
+                    } catch (Throwable e) {
+                        Log.e("lvjie", e.toString());
+                    }
+                }
+            }
+        });
+
+//        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                // 制造崩溃
+//                Log.i("lvjie", "执行崩溃...");
+//                int i = 1/0;
+//            }
+//        }, 100);
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.i("lvjie", "执行崩溃...");
+//                int i = 1/0;
+//            }
+//        }).start();
     }
 }
