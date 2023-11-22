@@ -49,6 +49,7 @@ public class MainApplication extends Application {
 
     /**
      * 全局crash 监控
+     * https://mp.weixin.qq.com/s/DElEJx6D2Tt3D0qpX3MEOg
      */
     private void initGlobalCrash(){
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
