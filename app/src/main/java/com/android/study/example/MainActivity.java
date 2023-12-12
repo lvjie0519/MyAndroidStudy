@@ -33,6 +33,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.study.example.androidapi.AndroidApiTestActivity;
@@ -118,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
     private OkHttpClient mClient;
     private Request mRequest;
 
+    private LinearLayout mLayout;
+
     public static void startActivity(Context context){
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
@@ -156,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        TextView textView = findViewById(R.id.tv_test_info);
 //        textView.setTextIsSelectable(true);
+
+        mLayout = findViewById(R.id.layout_root);
 
         findViewById(R.id.btn_books_test).setOnClickListener(new View.OnClickListener() {
             @Override
