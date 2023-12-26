@@ -97,5 +97,37 @@ public ActivityManagerService(Context systemContext) {
 
 
 ## WMS启动流程
+https://zhuanlan.zhihu.com/p/648953292
+
+简单代码时序：
+SystemServer.java
+-->startOtherServices()
+    WindowManagerService.java
+     // 1. 创建了一个 WMS 对象
+    -->main(...)
+    // 初始化非常多的变量，例如 包含显示相关的窗口容器 RootWindowContainer、刷新相关的 Surface、Activity 相关的ActivityManager
+    -->new WindowManagerService(...)
+// 返回WindowManagerService对象，接下来在startOtherServices会继续调用WindowManagerService中的方法
+WindowManagerService.java
+-->onInitReady()
+// 初始化显示器大小
+-->displayReady()
+-->systemReady()
+
+
 
 ## PMS启动流程
+https://juejin.cn/post/7208188047707177015
+https://juejin.cn/post/7209201396846854199
+
+它负责了系统种应用的安装，卸载，解析，查询等等功能。
+MS 启动的时候会对系统和安装的应用进行扫描并对扫描的应用进行解析，把他们的四大组件添加到 ComponentResolver 中对应的集合，后续启动的时候，就会从 ComponentResolver 中取。
+
+简单代码时序：
+SystemServer.java
+-->startBootstrapServices()
+    // PackageManagerService.java  构造PackageManagerService对象，添加到ServiceManager中
+    -->PackageManagerService.main(...)
+        // 1. 扫描frameworkDir、
+        -->new PackageManagerService(...)
+    
