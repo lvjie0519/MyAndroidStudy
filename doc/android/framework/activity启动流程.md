@@ -23,3 +23,12 @@ Zygote 收到 AMS 的请求后，会执行 fork() 系统调用，创建一个新
 需要注意的是，上述描述是基于 Android 系统的一般工作原理，具体实现细节可能因 Android 版本的不同而有所差异。
 
 
+### Activity 生命周期方法启动
+ActivityThread.java
+-->handleLaunchActivity()
+    -->performLaunchActivity(ActivityClientRecord r, Intent customIntent)
+        // Instrumentation.java  调用Instrumentation newActivity 构造一个Activity对象并返回
+        -->newActivity(ClassLoader cl, String className,Intent intent)
+        // Activity.java
+        // 1. 会创建一个PhoneWindow， 
+        -->attach(...)
