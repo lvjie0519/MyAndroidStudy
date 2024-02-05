@@ -10,7 +10,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/GradlePlugin" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/lib-anno-processors" />
             <option value="$PROJECT_DIR$/lib-annotaions" />
             <option value="$PROJECT_DIR$/libyuv" />
