@@ -40,7 +40,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".filepicker.VideoPickerActivity"></activity>
+        <activity
+            android:name=".androidapi.CustomStatusBarActivity"
+            />
+        <activity android:name=".filepicker.VideoPickerActivity" />
         <activity android:name=".androidapi.SoundPoolTestActivity" />
         <activity android:name=".uidemo.selfdefineview.SelfDefineViewTestActivity" />
         <activity

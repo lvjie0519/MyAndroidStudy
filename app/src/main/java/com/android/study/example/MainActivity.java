@@ -40,6 +40,7 @@ import com.android.study.example.androidapi.AndroidApiTestActivity;
 import com.android.study.example.androidapi.AndroidOOMActivity;
 import com.android.study.example.androidapi.AudioDemoTestActivity;
 import com.android.study.example.androidapi.BlueMainTestActivity;
+import com.android.study.example.androidapi.CustomStatusBarActivity;
 import com.android.study.example.androidapi.HandlerTestActivity;
 import com.android.study.example.androidapi.LifeCycleTestActivity;
 import com.android.study.example.androidapi.NetworkTestActivity;
@@ -858,5 +859,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    public void openCustomStatusBarActivity(View view) {
+        CustomStatusBarActivity.startActivity(this);
     }
 }
