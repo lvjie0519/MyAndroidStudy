@@ -8,10 +8,10 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 
 import com.android.study.example.R;
+import com.android.study.example.androidapi.customstatusbar.SystemBroadcastReceiver;
 
 public class CustomStatusBarActivity extends AppCompatActivity {
 
@@ -24,6 +24,8 @@ public class CustomStatusBarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_status_bar);
+
+        SystemBroadcastReceiver.getInstance().registerReceiver(this);
     }
 
     @Override
@@ -57,5 +59,11 @@ public class CustomStatusBarActivity extends AppCompatActivity {
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SystemBroadcastReceiver.getInstance().unregisterReceiver(this);
     }
 }
