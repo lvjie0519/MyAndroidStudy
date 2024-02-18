@@ -8,12 +8,12 @@ Linux 内核启动：
 init 进程启动：
 当内核完成基本的初始化工作后，它会启动 init 进程。init 是 Android 系统中的第一个用户空间进程，它的主要任务是执行 /init.rc 文件中的指令来启动其他系统服务。
 
-System Server 启动：
-init 进程会启动 System Server，这是一个包含了 Android 系统中许多核心服务的进程。
-这些服务包括 Activity Manager Service (AMS)、Window Manager Service (WMS)、Package Manager Service (PMS) 等。
-
 Zygote 启动：
-在 System Server 中，Zygote 进程会被启动。Zygote 是一个特殊的进程，它负责孵化新的应用程序进程。Zygote 会在启动时预加载一些核心库和资源，以便于快速地创建新进程。
+Zygote进程是由init进程通过解析init.rc文件后fork生成的。Zygote 是一个特殊的进程，它负责孵化新的应用程序进程。Zygote 会在启动时预加载一些核心库和资源，以便于快速地创建新进程。
+
+System Server 启动：
+Zygote进程fork出System Server进程，System Server是Zygote孵化的第一个进程，地位非常重要。这是一个包含了 Android 系统中许多核心服务的进程。
+这些服务包括 Activity Manager Service (AMS)、Window Manager Service (WMS)、Package Manager Service (PMS) 等。
 
 应用程序启动：
 当用户启动一个应用程序时，AMS 会通过 socket 向 Zygote 发送请求，要求其 fork 出一个新的子进程。新进程继承了 Zygote 的内存空间，并开始执行指定的应用程序代码。
@@ -24,6 +24,14 @@ Zygote 启动：
 启动 Launcher 应用：
 在大多数情况下，当系统启动完成后，最后一个步骤是启动 Launcher 应用，也就是主屏幕应用。Launcher 应用显示可供用户使用的应用程序图标和其他快捷方式。
 需要注意的是，上述描述是基于 Android 系统的一般工作原理，具体实现细节可能因 Android 版本的不同而有所差异。此外，随着系统的不断更新和发展，启动流程可能会发生变化。
+
+#### 1、Zygote进程与AMS 为什么通过socket发送消息而不是Binder?
+1) 时间顺序问题
+Binder 由 server、client、驱动三部分组成，server都会向ServerManager 进程 进行注册， client 从ServerManager 进程中获取server proxy， ServerManager 进程和Zygote进程都是init进程启动的，
+如果使用binder，可能ServerManager 进程还没启动完成；
+2）多线程问题
+Linux中，fork进程其实并不是完美的fork，linux设计之初只考虑到了主线程的fork，也就是说如果主进程中存在子线程，那么fork进程中，
+其子线程的锁状态，挂起状态等等都是不可恢复的，只有主进程的才可以恢复。
 
 ## AMS启动流程
 它负责管理应用程序的生命周期，包括应用的启动、切换、销毁等操作。
