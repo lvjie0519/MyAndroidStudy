@@ -1,6 +1,7 @@
 package com.android.study.example;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
     private Request mRequest;
 
     private LinearLayout mLayout;
+    private TextView mTvInfo;
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, MainActivity.class);
@@ -158,8 +160,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView(){
 
-//        TextView textView = findViewById(R.id.tv_test_info);
-//        textView.setTextIsSelectable(true);
+        mTvInfo = findViewById(R.id.tv_test_info);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mTvInfo.setText("子线程中更新数据");
+            }
+        }).start();
 
         mLayout = findViewById(R.id.layout_root);
 
@@ -862,6 +869,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openCustomStatusBarActivity(View view) {
-        CustomStatusBarActivity.startActivity(this);
+//        CustomStatusBarActivity.startActivity(this);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mTvInfo.setText("再次子线程中更新数据");
+                mTvInfo.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            }
+        }).start();
     }
 }
