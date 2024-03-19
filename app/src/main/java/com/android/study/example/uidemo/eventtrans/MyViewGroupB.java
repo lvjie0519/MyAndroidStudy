@@ -38,7 +38,7 @@ public class MyViewGroupB extends LinearLayout {
     protected void onDraw(Canvas canvas) {
 
         super.onDraw(canvas);
-        Log.i("lvjie", "MyViewGroupB  onDraw...");
+        Log.i("lvjie", "MyViewGroupB  onDraw..."+canvas);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class MyViewGroupB extends LinearLayout {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-        Log.i("lvjie", "MyViewGroupB  before super dispatchDraw...");
+        Log.i("lvjie", "MyViewGroupB  before super dispatchDraw..."+canvas);
         super.dispatchDraw(canvas);
         Log.i("lvjie", "MyViewGroupB  after super dispatchDraw...");
     }

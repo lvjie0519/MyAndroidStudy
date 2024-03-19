@@ -56,7 +56,7 @@ public class MyViewC extends android.support.v7.widget.AppCompatTextView{
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.i("lvjie", "MyViewC  onDraw...");
+        Log.i("lvjie", "MyViewC  onDraw..."+canvas);
     }
 }
 

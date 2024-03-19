@@ -24,7 +24,8 @@ public void requestLayout() {
 
 
 为什么在activity onCreate 中子线程更新UI不会抛出异常？
-在ActivityThread的handleResumeActivity方法中，该方法首先会执行performResumeActivity即会执行到activity的onResume, 接下来会调用activity的makeVisible()方法，该方法会调用WindowManagerImpl的addView方法。
+在ActivityThread的handleResumeActivity方法中，该方法首先会执行performResumeActivity即会执行到activity的onResume, 接下来会调用activity的makeVisible()方法，
+该方法会调用WindowManagerImpl的addView方法。
 ```
 void makeVisible() {
     if (!mWindowAdded) {
@@ -70,3 +71,15 @@ View、ViewRootImpl、Window、WindowManager 之间有什么关系？
 每个应用程序窗口的 DecorView 都有一个与之关联的 ViewRootImpl 对象，这种关联关系是由 WindowManager 来维护的，WindowManager里面有两个list列表，保存两者对象。
 
 
+### View 的onDraw Canvas对象， 父View和子View都是同一个Canvas对象吗？ 
+结论： 不是同一个Canvas， 每个View，都是在View 的draw方法重新创建一个Canvas对象的。并且Canvas对象的宽高是当前View的宽高
+代码执行过程：
+![图片alt文字](./View_onDraw.png)
+最终代码：
+```
+public RenderNode updateDisplayListIfDirty() {
+    ...
+    final RecordingCanvas canvas = renderNode.beginRecording(width, height);
+    ... 
+}
+```

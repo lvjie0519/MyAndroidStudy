@@ -66,6 +66,21 @@
 
             </com.android.study.example.uidemo.eventtrans.MyViewGroupA>
 
+<!--            <com.android.study.example.uidemo.eventtrans.MyViewC-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:text="事件分发2"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textColor="#333333"-->
+<!--                android:background="#fedcbd"/>-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="10dp"
+                android:background="#333333"
+                />
+
 
 
             <Button
