@@ -46,6 +46,7 @@ public class PhotoViewTestActivity extends Activity {
 
     public static void startActivity(Context context){
         Intent intent = new Intent(context, PhotoViewTestActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -66,6 +67,7 @@ public class PhotoViewTestActivity extends Activity {
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         addListener();
+        Log.i("lvjielvjie", "PhotoViewTestActivity onCreate...");
     }
 
     private void addListener(){

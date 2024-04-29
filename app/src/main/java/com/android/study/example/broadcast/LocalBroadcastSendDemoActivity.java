@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.study.example.R;
+import com.android.study.example.uidemo.photoview.demo.PhotoViewTestActivity;
+
 /**
  * 本地广播发送
  */
@@ -22,12 +24,16 @@ public class LocalBroadcastSendDemoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_broadcast_send_demo);
+        Log.i("lvjielvjie", "LocalBroadcastSendDemoActivity onCreate...");
     }
 
     public void onClickSendBroadcastMsg(View view) {
-        Intent intent = new Intent("action.com.android.study.example.broadcast");
-        intent.setPackage(getPackageName());        // 添加包名，则只有相同包名的进程可以收到广播信息
-        sendBroadcast(intent);
+//        Intent intent = new Intent("action.com.android.study.example.broadcast");
+//        intent.setPackage(getPackageName());        // 添加包名，则只有相同包名的进程可以收到广播信息
+//        sendBroadcast(intent);
+
+        Log.i("lvjielvjie", "LocalBroadcastSendDemoActivity onCreate...");
+        PhotoViewTestActivity.startActivity(this);
     }
 
     public void onClickReStartApp(View view) {

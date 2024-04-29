@@ -58,6 +58,7 @@ import com.android.study.example.androidapi.utils.SystemSettingUtil;
 import com.android.study.example.books.BooksMainTestActivity;
 import com.android.study.example.books.ThreadTestActivity;
 import com.android.study.example.broadcast.LocalBroadcastRegisterDemoActivity;
+import com.android.study.example.broadcast.LocalBroadcastSendDemoActivity;
 import com.android.study.example.butterknife.MyButterKnifeTestActivity;
 import com.android.study.example.camera.Camera2DemoActivity;
 import com.android.study.example.camera.camera1.Camera1DemoActivity;
@@ -870,12 +871,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void openCustomStatusBarActivity(View view) {
 //        CustomStatusBarActivity.startActivity(this);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mTvInfo.setText("再次子线程中更新数据");
-                mTvInfo.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                mTvInfo.setText("再次子线程中更新数据");
+//                mTvInfo.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+//            }
+//        }).start();
+
+        Log.i("lvjielvjie", "LocalBroadcastSendDemoActivity will start...");
+//        LocalBroadcastSendDemoActivity.startActivity(this);
+        Log.i("lvjielvjie", "sleep start...");
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.i("lvjielvjie", "sleep end...");
     }
 }

@@ -69,6 +69,12 @@ public void addView(View view, ViewGroup.LayoutParams params,
 
 View、ViewRootImpl、Window、WindowManager 之间有什么关系？
 每个应用程序窗口的 DecorView 都有一个与之关联的 ViewRootImpl 对象，这种关联关系是由 WindowManager 来维护的，WindowManager里面有两个list列表，保存两者对象。
+ViewRootImpl 是服务 和 窗口 之间通信的桥梁。ViewRootImpl的创建上面已经说明， ViewRootImpl里面持有了DecorView对象。
+
+ViewRootImpl本身职责的体现：
+1.链接WindowManager和DecorView的纽带，更广一点可以说是Window和View之间的纽带；
+2.完成View的绘制过程，包括measure、layout、draw过程；
+3.向DecorView分发收到的用户发起的InputEvent事件。
 
 
 ### View 的onDraw Canvas对象， 父View和子View都是同一个Canvas对象吗？ 
