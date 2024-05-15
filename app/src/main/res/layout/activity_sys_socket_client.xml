@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".socket.SysSocketClientActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp">
+
+        <EditText
+            android:id="@+id/et_server_ip"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="输入IP"
+            android:text="192.168.3.224" />
+
+        <EditText
+            android:id="@+id/et_server_port"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="输入Port"
+            android:text="8899" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="连接服务"
+            android:layout_marginLeft="10dp"
+            android:onClick="onClickConnectServer"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="断开连接"
+            android:layout_marginLeft="10dp"
+            android:onClick="onClickDisConnectServer"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp">
+        <EditText
+            android:id="@+id/et_count"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:hint="次数"
+            android:text=""
+            android:inputType="number"
+            />
+        <EditText
+            android:id="@+id/et_data_size"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:hint="数据量"
+            android:layout_marginLeft="8dp"
+            android:text=""
+            android:inputType="number"
+            />
+        <Button
+            android:id="@+id/btn_statistic_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="开始统计"
+            android:onClick="onClickStartStatistic"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_showInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="#333333"
+        android:textSize="14sp"/>
+
+</LinearLayout>
