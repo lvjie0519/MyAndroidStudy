@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mymgstudyapp.localnet.LocalNetScanActivity;
+import com.example.mymgstudyapp.webview.WebViewTestActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,5 +18,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickOpenLocalNetScanPage(View view) {
         LocalNetScanActivity.startActivity(this);
+    }
+
+    public void onClickOpenWebViewTestPage(View view) {
+        WebViewTestActivity.startActivity(this);
     }
 }

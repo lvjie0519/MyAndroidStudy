@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -18,6 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyAndroidStudy">
         <activity android:name=".localnet.NetTestActivity"></activity>
+        <activity
+            android:name=".webview.WebViewTestActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            />
         <activity
             android:name=".localnet.LocalNetScanActivity"
             android:exported="true" />

@@ -14,4 +14,11 @@
         android:textAllCaps="false"
         android:onClick="onClickOpenLocalNetScanPage"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WebView测试"
+        android:textAllCaps="false"
+        android:onClick="onClickOpenWebViewTestPage"/>
+
 </LinearLayout>
